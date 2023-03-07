@@ -5,6 +5,19 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+
+    <color name="orange_100">#F56508</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="gray_500">#343434</color>
+    <color name="gray_400">#959595</color>
+    <color name="gray_300">#BABABA</color>
+    <color name="gray_200">#DFDFDF</color>
+    <color name="gray_100">#ECECEC</color>
+    
+    <color name="sub_beige">#FFF7F2</color>
+    <color name="sub_brown_200">#AB4A0B</color>
+    <color name="sub_brown_100">#F5B68D</color>
+    <color name="sub_pink">#FF3A3A</color>
+
 </resources>
