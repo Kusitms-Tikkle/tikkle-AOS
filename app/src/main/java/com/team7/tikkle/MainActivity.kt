@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity() {
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 Log.d("토큰 정보 보기 실패", "error")
-            }
-            else if (tokenInfo != null) {
+            } else if (tokenInfo != null) {
                 Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, SigninActivity::class.java)
                 intent.putExtra("token", tokenInfo)
@@ -52,7 +51,8 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
                     }
                     error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
                         Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
                     }
                     error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     error.toString() == AuthErrorCause.ServerError.toString() -> {
                         Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
@@ -73,8 +74,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-            else if (token != null) {
+            } else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 // Log.d("Token", token.accessToken.toString())
                 val intent = Intent(this, SigninActivity::class.java)
@@ -88,49 +88,51 @@ class MainActivity : AppCompatActivity() {
         val btnKakaoLogin = findViewById<ImageButton>(R.id.btnKakaoLogin) // 로그인 버튼
 
         btnKakaoLogin.setOnClickListener {
-            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
 
-            }else{
+            } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        initBottomNavigation()
-    }
-
-    private fun initBottomNavigation(){
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frm, ChallengeFragment())
-            .commitAllowingStateLoss()
-
-        binding.mainBnv.setOnItemSelectedListener{ item ->
-            when (item.itemId) {
-                R.id.challengeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, ChallengeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.homeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, HomeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.mypageFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, MypageFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-            }
-            false
+//        initBottomNavigation()
         }
     }
 }
+
+//    private fun initBottomNavigation(){
+//
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.main_frm, ChallengeFragment())
+//            .commitAllowingStateLoss()
+//
+//        binding.mainBnv.setOnItemSelectedListener{ item ->
+//            when (item.itemId) {
+//                R.id.challengeFragment -> {
+//                    supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frm, ChallengeFragment())
+//                        .commitAllowingStateLoss()
+//                    return@setOnItemSelectedListener true
+//                }
+//
+//                R.id.homeFragment -> {
+//                    supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frm, HomeFragment())
+//                        .commitAllowingStateLoss()
+//                    return@setOnItemSelectedListener true
+//                }
+//
+//                R.id.mypageFragment -> {
+//                    supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frm, MypageFragment())
+//                        .commitAllowingStateLoss()
+//                    return@setOnItemSelectedListener true
+//                }
+//            }
+//            false
+//        }
+//    }
+//}
 
