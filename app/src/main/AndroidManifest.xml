@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- 인터넷 사용 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:allowBackup="true"
         android:name=".GlobalApplication"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -19,8 +18,38 @@
         android:theme="@style/Theme.Tikkle"
         tools:targetApi="31">
         <activity
+            android:name=".ConsumptionTypeActivity_7"
+            android:exported="false" />
+        <activity
+            android:name=".ConsumptionTypeActivity_6"
+            android:exported="false" />
+        <activity
+            android:name=".ConsumptionTypeActivity_5"
+            android:exported="false" />
+        <activity
+            android:name=".ConsumptionTypeActivity_4"
+            android:exported="false" />
+        <activity
+            android:name=".ConsumptionTypeActivity_3"
+            android:exported="false" />
+        <activity
+            android:name=".ConsumptionTypeActivity_2"
+            android:exported="false" />
+        <activity
+            android:name=".ConsumptionTypeActivity_1"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".SigninActivity"
             android:exported="false">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -28,15 +57,7 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"
@@ -54,7 +75,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
                 <data
                     android:host="oauth"
                     android:scheme="kakao4f444e8815868b65a842725e9610b1d0" />
