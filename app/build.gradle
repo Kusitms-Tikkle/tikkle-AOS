@@ -8,12 +8,12 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 android {
     namespace 'com.team7.tikkle'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.team7.tikkle"
-        minSdk 28
-        targetSdk 32
+        minSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -38,12 +38,13 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
 
-    dataBinding {
-        enabled = true
+        dataBinding {
+            enabled = true
 
+        }
     }
 }
 
@@ -78,4 +79,7 @@ dependencies {
     //GA
     implementation platform('com.google.firebase:firebase-bom:30.0.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
