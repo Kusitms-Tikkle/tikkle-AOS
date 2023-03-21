@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
+
 Properties properties = new  Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
@@ -9,10 +10,9 @@ android {
     namespace 'com.team7.tikkle'
     compileSdk 33
 
-
     defaultConfig {
         applicationId "com.team7.tikkle"
-        minSdk 28
+        minSdk 31
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -37,11 +37,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding = true
-    }
-    dataBinding {
-        enabled = true
+
+        dataBinding {
+            enabled = true
+
+        }
     }
 }
 
@@ -50,30 +53,32 @@ dependencies {
     def lifecycle_version = "2.5.1"
     def retrofit_version = "2.9.0"
     def nav_version = "2.5.3"
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     //Splash
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
     //kakao Login
     implementation "com.kakao.sdk:v2-all:2.13.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation "com.kakao.sdk:v2-user:2.13.0" // 카카오 로그인
 
     //Retrofit
-//    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-
-
-//    //레트로핏 로깅 인터셉터
-//    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
+    //implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //implementation "com.squareup.retrofit2:retrofit:2.8.2"
+    //레트로핏 로깅 인터셉터
+    //implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+
 
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -95,4 +100,8 @@ dependencies {
     //kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     //For java 8
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }

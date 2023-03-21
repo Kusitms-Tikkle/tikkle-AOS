@@ -12,8 +12,10 @@
     <color name="gray_500">#343434</color>
     <color name="gray_400">#959595</color>
     <color name="gray_300">#BABABA</color>
+    <color name="gray_600">#3F3F3F</color>
     <color name="gray_200">#DFDFDF</color>
     <color name="gray_100">#ECECEC</color>
+
     
     <color name="sub_beige">#FFF7F2</color>
     <color name="sub_brown_200">#AB4A0B</color>
