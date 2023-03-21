@@ -10,4 +10,7 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
     id 'androidx.navigation.safeargs' version '2.5.3' apply false   //navigation
     id 'com.google.gms.google-services' version '4.3.10' apply false    // firebase
+    }
+task clean(type: Delete) {
+delete rootProject.buildDir
 }

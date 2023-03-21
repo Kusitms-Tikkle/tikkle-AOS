@@ -21,5 +21,7 @@
     <color name="sub_brown_200">#AB4A0B</color>
     <color name="sub_brown_100">#F5B68D</color>
     <color name="sub_pink">#FF3A3A</color>
+    <color name="sub_red">#F95D5D</color>
+
 
 </resources>
