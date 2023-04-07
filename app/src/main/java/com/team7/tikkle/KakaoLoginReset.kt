@@ -7,6 +7,6 @@ class KakaoLoginReset : Application() {
     override fun onCreate() {
         super.onCreate()
         // Kakao SDK 초기화 - 네이티브 앱 키
-        KakaoSdk.init(this, "{KAKAO_NATIVE_APP_KEY}")
+        KakaoSdk.init(this, "kakao4f444e8815868b65a842725e9610b1d0")
     }
 }

@@ -36,7 +36,8 @@
         <ImageView
             android:id="@+id/bgTikkle"
             android:layout_width="match_parent"
-            android:layout_height="528dp"
+            android:layout_height="528sp"
+            android:background="@android:color/transparent"
             android:src="@drawable/bg_signin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
