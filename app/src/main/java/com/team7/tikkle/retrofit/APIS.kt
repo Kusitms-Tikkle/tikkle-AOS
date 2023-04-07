@@ -11,5 +11,5 @@ interface APIS {
         @Body accessToken : PostLogin
     ) : Call<LoginResponse>
     @GET("/login/{nickname}/exists")
-    suspend fun getAlbum(@Path(value = "nickname")nickname:String) : Response<ResponseNamecheck>
+    suspend fun nameCheck(@Path(value = "nickname")nickname:String) : Response<ResponseNamecheck>
 }

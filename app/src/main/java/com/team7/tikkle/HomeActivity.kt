@@ -26,14 +26,6 @@ class HomeActivity : AppCompatActivity() {
 
         initBottomNavigation()
 
-//        drawerLayout = findViewById( MypageFragment.R.id.main_drawer_layout)
-//        drawerToggle = ActionBarDrawerToggle(
-//            this, drawerLayout, R.string.open_drawer, R.string.close_drawer
-//        )
-//        drawerLayout.addDrawerListener(drawerToggle)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setHomeButtonEnabled(true)
-
     }
 
     private fun initBottomNavigation(){
@@ -68,26 +60,4 @@ class HomeActivity : AppCompatActivity() {
             false
         }
     }
-
-//    fun setDrawerListener(listener: MyDrawerListener) {
-//        drawerToggle.syncState()
-//        drawerToggle.setToolbarNavigationClickListener {
-//            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//                drawerLayout.closeDrawer(GravityCompat.START)
-//            } else {
-//                drawerLayout.openDrawer(GravityCompat.START)
-//            }
-//        }
-//        drawerToggle.drawerArrowDrawable.color = ContextCompat.getColor(this, R.color.white)
-//        drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
-//            override fun onDrawerOpened(drawerView: View) {
-//                listener.onDrawerOpened()
-//            }
-//
-//            override fun onDrawerClosed(drawerView: View) {
-//                listener.onDrawerClosed()
-//            }
-//        })
-//    }
-
 }
