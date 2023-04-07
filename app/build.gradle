@@ -27,7 +27,8 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles 'proguard-rules.pro', 'proguard-debug.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
     compileOptions {
@@ -67,15 +68,11 @@ dependencies {
     //kakao Login
     implementation "com.kakao.sdk:v2-all:2.13.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation "com.kakao.sdk:v2-user:2.13.0" // 카카오 로그인
-
-    //Retrofit
-    //implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    //implementation "com.squareup.retrofit2:retrofit:2.8.2"
     //레트로핏 로깅 인터셉터
     //implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
 
@@ -105,5 +102,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-
 }
+

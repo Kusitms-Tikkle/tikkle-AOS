@@ -10,6 +10,11 @@ interface APIS {
     fun signUp(
         @Body accessToken : PostLogin
     ) : Call<LoginResponse>
+
     @GET("/login/{nickname}/exists")
+
     suspend fun nameCheck(@Path(value = "nickname")nickname:String) : Response<ResponseNamecheck>
+
+    @GET("/challenge/recommendation")
+    suspend fun getRecommendation(): RecommendationResponse
 }
