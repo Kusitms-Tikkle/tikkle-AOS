@@ -24,6 +24,7 @@ interface APIS {
     suspend fun nameCheck(@Path(value = "nickname") nickname: String) : Response<ResponseNamecheck>
 
     //유형별 챌린지 추천
-    @GET("/challenge/recommendation")
-    suspend fun getRecommendation(): RecommendationResponse
+    @GET("/challenge/recommendation/test")
+    suspend fun getRecommendation(
+    ) : Call<RecommendationResponse>
 }
