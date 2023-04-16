@@ -1,10 +1,10 @@
-package com.team7.tikkle
+package com.team7.tikkle.consumptionType
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
+import com.team7.tikkle.R
 
 class ConsumptionTypeActivity_1 : AppCompatActivity() {
 

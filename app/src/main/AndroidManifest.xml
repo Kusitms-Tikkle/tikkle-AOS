@@ -18,19 +18,19 @@
         tools:targetApi="31">
 
         <activity
+            android:name=".consumptionType.ConsumptionIntroActivity"
+            android:exported="true" >
+
+        </activity>
+        <activity
             android:name=".SigninActivity2"
             android:exported="false" />
-            
         <activity
             android:name=".SigninActivity1"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        
+
         <activity
             android:name=".SigninActivity"
             android:exported="false">
@@ -38,11 +38,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
-           
         <activity
             android:name=".HomeActivity"
             android:exported="true">
@@ -51,40 +49,44 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".SplashActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ConsumptionTypeActivity_7"
+            android:name=".consumptionType.ConsumptionTypeActivity_7"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionTypeActivity_6"
+            android:name=".consumptionType.ConsumptionTypeActivity_6"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionTypeActivity_5"
+            android:name=".consumptionType.ConsumptionTypeActivity_5"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionTypeActivity_4"
+            android:name=".consumptionType.ConsumptionTypeActivity_4"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionTypeActivity_3"
+            android:name=".consumptionType.ConsumptionTypeActivity_3"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionTypeActivity_2"
+            android:name=".consumptionType.ConsumptionTypeActivity_2"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionTypeActivity_1"
+            android:name=".consumptionType.ConsumptionTypeActivity_1"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".MainActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -98,7 +100,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-    
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

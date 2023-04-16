@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConsumptionTypeActivity_3">
+    tools:context=".consumptionType.ConsumptionTypeActivity_3">
 
     <!-- 메뉴바 -->
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -92,8 +92,8 @@ tools:context=".SigninActivity1">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.358"
         app:layout_constraintStart_toEndOf="@+id/enterNick"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.115"
+        app:layout_constraintTop_toBottomOf="@+id/string1"
+        app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/btn_nickname_check" />
 
     <EditText

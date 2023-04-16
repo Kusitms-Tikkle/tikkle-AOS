@@ -2,6 +2,7 @@ package com.team7.tikkle
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
@@ -23,6 +24,9 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val myAccessToken = this.intent.getStringExtra("accessToken").toString()
+        Log.d("Home : accessToken 값", myAccessToken)
 
         initBottomNavigation()
 

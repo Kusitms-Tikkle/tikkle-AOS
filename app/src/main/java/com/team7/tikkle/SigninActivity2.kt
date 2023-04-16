@@ -4,28 +4,44 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import com.team7.tikkle.data.ExtraInfoResponse
+import com.team7.tikkle.data.User
 import com.team7.tikkle.databinding.ActivitySignin2Binding
 import com.team7.tikkle.retrofit.APIS
+import com.team7.tikkle.retrofit.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SigninActivity2 : AppCompatActivity() {
     private lateinit var binding : ActivitySignin2Binding
     private lateinit var retService: APIS
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignin2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.warning.setVisibility(View.INVISIBLE)
 
-        binding.privacy.setOnClickListener {
+        //서버 연결을 위한 intent값 받아오기
+        val mynickname = this.intent.getStringExtra("nickname").toString()
+        val myid = this.intent.getIntExtra("id", 0)
+        var myisChecked = false
+
+        //개인정보처리방침
+       binding.privacy.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
-
         binding.btnprivacy.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
 
+
+        //checkBox 전체선택
         binding.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.checkBox1.isChecked = true
@@ -36,12 +52,15 @@ class SigninActivity2 : AppCompatActivity() {
             }
         }
 
+        //checkBox1,2 체크 여부에 따라 버튼 활성화
         binding.checkBox1.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.warning.setVisibility(View.INVISIBLE)
                 binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
                 binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
                 binding.btnDone.setOnClickListener {
+                    Log.d("추가정보 요청 값", "$myid + $mynickname + $myisChecked")
+                    postData(myid, mynickname, myisChecked)
 //                    startActivity(Intent(this, SigninActivity1::class.java))
                 }
             } else {
@@ -51,13 +70,61 @@ class SigninActivity2 : AppCompatActivity() {
                 binding.checkBox.isChecked = false
             }
         }
-
+        //checkBox1,2 체크 여부에 따라 버튼 활성화
         binding.checkBox2.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 //서버에게 마케팅 수신 동의 값 전달
+                myisChecked = true
+
             } else {
+                myisChecked = false
                 binding.checkBox.isChecked = false
             }
         }
+    }
+
+    //서버에게 닉네임, 마케팅 수신 동의 값 전달
+    fun postData(id: Int, nickname: String, isChecked: Boolean) {
+        val apiService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
+        val requestBody = APIS.RequestBody(nickname, isChecked)
+
+        apiService.updateData(id, requestBody).enqueue(object : Callback<ExtraInfoResponse> {
+            override fun onResponse(call: Call<ExtraInfoResponse>, response: Response<ExtraInfoResponse>) {
+                if (response.isSuccessful) {
+                    // 요청 성공
+                    Log.d("로그인 추가정보 통신 성공, 요청 성공", response.toString())
+                    Log.d("로그인 추가정보 통신 성공, 요청 성공", response.body().toString())
+                    //acessToken보내기
+                    val myAccessToken = response.body()?.result?.accessToken
+                    //User에 accessToken 저장
+                    data class User(
+                        var useraccesstoken: String,
+                    )
+                    // User 클래스의 인스턴스 생성
+                    val user = User(myAccessToken.toString())
+
+                    // useraccesstoken 속성 사용
+                    val accessToken = user.useraccesstoken
+
+                    // accessToken 변수 출력
+//                    println("Access token: $accessToken")
+
+
+                    val intent = Intent(this@SigninActivity2, HomeActivity::class.java)
+                    intent.putExtra("accessToken", myAccessToken)
+                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                    finish()
+                } else {
+                    // 요청 실패
+                    Log.d("로그인 추가정보 통신 성공, 요청 실패", response.toString())
+                    Log.d("로그인 추가정보 통신 성공, 요청 실패", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ExtraInfoResponse>, t: Throwable) {
+                // 네트워크 에러 또는 예외 발생
+                Log.d("로그인 추가정보 통신 실패", "전송 실패")
+            }
+        })
     }
 }

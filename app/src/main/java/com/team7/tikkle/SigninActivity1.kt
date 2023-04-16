@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -12,7 +13,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.liveData
 import com.team7.tikkle.data.ResponseNamecheck
-import com.team7.tikkle.databinding.ActivityEditProfileBinding
 import com.team7.tikkle.databinding.ActivitySignin1Binding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
@@ -21,7 +21,6 @@ import retrofit2.Response
 class SigninActivity1 : AppCompatActivity() {
     private lateinit var binding : ActivitySignin1Binding
     private lateinit var retService: APIS
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +63,14 @@ class SigninActivity1 : AppCompatActivity() {
                 binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
 
                 binding.btnDone.setOnClickListener{
-                    startActivity(Intent(this, SigninActivity2::class.java))
+                    val intent = getIntent()
+                    val myId = intent.getIntExtra("id", 0)
+                    Log.d("SigninActivity1 id값", "$myId")
+                    val intent1 = Intent(this, SigninActivity2::class.java)
+                    intent1.putExtra("nickname", inputText)
+                    intent1.putExtra("id", myId)
+                    startActivity(intent1)
+                    finish()
                 }
             }
             else{

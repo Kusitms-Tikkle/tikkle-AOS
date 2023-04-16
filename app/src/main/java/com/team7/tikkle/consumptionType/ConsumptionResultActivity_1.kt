@@ -1,4 +1,4 @@
-package com.team7.tikkle
+package com.team7.tikkle.consumptionType
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
