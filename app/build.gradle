@@ -74,8 +74,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //레트로핏 로깅 인터셉터
-    //implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
-
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
 
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -102,5 +101,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+    //viewmodel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
 }
+
 
