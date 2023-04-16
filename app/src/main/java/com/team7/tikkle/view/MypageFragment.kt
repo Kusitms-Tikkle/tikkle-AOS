@@ -18,8 +18,7 @@ class MypageFragment : Fragment() {
         binding = FragmentMypageBinding.inflate(inflater, container, false)
 
         binding.btnEditMyprofile.setOnClickListener {
-            val intent = Intent(activity, EditProfileActivity::class.java)
-                startActivity(intent)
+            startActivity(Intent(activity, EditProfileActivity::class.java))
         }
 
         return binding.root

@@ -12,9 +12,11 @@ interface APIS {
     ) : Call<LoginResponse>
 
     @GET("/login/{nickname}/exists")
-    suspend fun getAlbum(@Path(value = "nickname")nickname:String) : Response<ResponseNamecheck>
+    suspend fun nameCheck(@Path(value = "nickname")nickname:String) : Response<ResponseNamecheck>
+
 
     @GET("/challenge/recommendation/test")
     suspend fun getRecommendation(
     ) : Call<RecommendationResponse>
+
 }
