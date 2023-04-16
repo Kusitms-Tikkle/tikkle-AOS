@@ -14,7 +14,7 @@ interface APIS {
     @GET("/login/{nickname}/exists")
     suspend fun getAlbum(@Path(value = "nickname")nickname:String) : Response<ResponseNamecheck>
 
-    @GET("/challenge/recommendation")
-    suspend fun getRecommendation(): RecommendationResponse
-
+    @GET("/challenge/recommendation/test")
+    suspend fun getRecommendation(
+    ) : Call<RecommendationResponse>
 }
