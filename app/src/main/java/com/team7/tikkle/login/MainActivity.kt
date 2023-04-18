@@ -1,4 +1,4 @@
-package com.team7.tikkle
+package com.team7.tikkle.login
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -10,6 +10,8 @@ import android.widget.Toast
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.team7.tikkle.HomeActivity
+import com.team7.tikkle.R
 import com.team7.tikkle.data.LoginResponse
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
@@ -124,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                                     val intent = Intent(this@MainActivity, SigninActivity1::class.java)
                                     intent.putExtra("id", id)
                                     startActivity(intent)
-//                                    finish()
+                                    finish()
                                 } else { //signIn일 경우
                                     Log.d("로그인 signIn", "signIn")
 

@@ -1,10 +1,9 @@
-package com.team7.tikkle
+package com.team7.tikkle.login
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageButton
 import android.widget.TextView
+import com.team7.tikkle.R
 
 class SigninActivity : AppCompatActivity() {
 

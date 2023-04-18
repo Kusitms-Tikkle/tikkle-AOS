@@ -1,4 +1,4 @@
-package com.team7.tikkle
+package com.team7.tikkle.login
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk

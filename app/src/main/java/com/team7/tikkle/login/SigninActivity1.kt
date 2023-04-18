@@ -1,4 +1,4 @@
-package com.team7.tikkle
+package com.team7.tikkle.login
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.liveData
+import com.team7.tikkle.R
 import com.team7.tikkle.data.ResponseNamecheck
 import com.team7.tikkle.databinding.ActivitySignin1Binding
 import com.team7.tikkle.retrofit.APIS

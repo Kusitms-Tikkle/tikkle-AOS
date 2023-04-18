@@ -1,4 +1,4 @@
-package com.team7.tikkle
+package com.team7.tikkle.login
 
 import android.content.Intent
 import android.graphics.Color
@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.team7.tikkle.HomeActivity
+import com.team7.tikkle.R
 import com.team7.tikkle.data.ExtraInfoResponse
-import com.team7.tikkle.data.User
 import com.team7.tikkle.databinding.ActivitySignin2Binding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient

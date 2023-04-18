@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 Properties properties = new  Properties()
@@ -103,6 +104,14 @@ dependencies {
 
     //viewmodel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+
+    // roomDB
+    def room_version = "2.4.3"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+
 }
 
 
