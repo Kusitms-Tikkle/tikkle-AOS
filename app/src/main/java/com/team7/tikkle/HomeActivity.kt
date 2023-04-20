@@ -51,6 +51,8 @@ class HomeActivity : AppCompatActivity() {
 //            }
 //        }
 
+        //PR용
+
         initBottomNavigation()
 
     }
