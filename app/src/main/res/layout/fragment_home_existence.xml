@@ -4,12 +4,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.HomeExistenceFragment">
 
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:id="@+id/string9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="%"
+            android:textColor="@color/orange_100"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.877"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/beach_container"
+            app:layout_constraintVertical_bias="0.04" />
 
+        <TextView
+            android:id="@+id/percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="64"
+            android:textColor="@color/orange_100"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/string9"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/beach_container"
+            app:layout_constraintVertical_bias="0.04" />
 
         <TextView
             android:id="@+id/textView2"
@@ -48,7 +80,7 @@
             android:fontFamily="@font/pretendard_semibold"
             android:text="쿠쿠콧구멍"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.064"
@@ -63,7 +95,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:text="@string/mypage_text1"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -82,10 +114,10 @@
             android:background="@drawable/calendar_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mynickname"
-            app:layout_constraintVertical_bias="0.033">
+            app:layout_constraintVertical_bias="0.05">
 
 
             <ImageView
@@ -93,7 +125,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="11dp"
-                android:src="@drawable/ic_calendar_empty"
+                android:src="@drawable/ic_calendar_empty_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tue"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -105,7 +137,7 @@
                 android:id="@+id/tue"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_calendar_empty"
+                android:src="@drawable/ic_calendar_empty_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/wed"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -116,7 +148,7 @@
                 android:id="@+id/wed"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_calendar_empty"
+                android:src="@drawable/ic_calendar_empty_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/thu"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -127,7 +159,7 @@
                 android:id="@+id/thu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_calendar_empty"
+                android:src="@drawable/ic_calendar_empty_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fri"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -138,7 +170,7 @@
                 android:id="@+id/fri"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_calendar_empty"
+                android:src="@drawable/ic_calendar_empty_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/sat"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -149,7 +181,7 @@
                 android:id="@+id/sat"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_calendar_empty"
+                android:src="@drawable/ic_calendar_empty_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/sun"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -160,7 +192,7 @@
                 android:id="@+id/sun"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_calendar_empty"
+                android:src="@drawable/ic_calendar_empty_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -287,17 +319,19 @@
             app:layout_constraintHorizontal_bias="0.13"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/beach_container"
-            app:layout_constraintVertical_bias="0.03" />
+            app:layout_constraintVertical_bias="0.04" />
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:max="100"
             android:progress="0"
+            android:progressDrawable="@drawable/progress"
             app:layout_constraintBottom_toTopOf="@+id/challenge_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -308,10 +342,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/challenge_container"
             android:layout_width="match_parent"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
             android:layout_height="93dp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="36dp"
+            android:layout_marginRight="60dp"
             android:background="@drawable/edittext_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -359,23 +393,59 @@
                 app:layout_constraintStart_toEndOf="@+id/string3"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
-                app:tint="@color/black"/>
+                app:tint="@color/black" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <ImageView
-            android:id="@+id/icon"
-            android:layout_width="170dp"
-            android:layout_height="152dp"
-            android:src="@drawable/ic_nomission"
+            android:id="@+id/next"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_next"
+            app:layout_constraintBottom_toBottomOf="@+id/challenge_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/challenge_container"
+            app:layout_constraintTop_toTopOf="@+id/challenge_container"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/before"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/btn_before"
+            app:layout_constraintBottom_toBottomOf="@+id/challenge_container"
+            app:layout_constraintEnd_toStartOf="@+id/challenge_container"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/challenge_container"
+            app:layout_constraintVertical_bias="0.5" />
+
+
+        <TextView
+            android:id="@+id/string5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="오늘의 미션"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.13"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/challenge_container"
-            app:layout_constraintVertical_bias="0.191" />
+            app:layout_constraintVertical_bias="0.1" />
 
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="409dp"
+            android:layout_height="254dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/string5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    </ScrollView>-->
 </layout>

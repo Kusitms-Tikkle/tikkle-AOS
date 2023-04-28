@@ -138,18 +138,18 @@ class MainActivity : AppCompatActivity() {
                                     Log.d("로그인 accessToken값", "$myAccessToken")
 
                                     //intent로 accessToken값 넘기기
-                                    val intent = Intent(this@MainActivity, ConsumptionTypeActivity_1::class.java)
-                                    intent.putExtra("accessToken", myAccessToken)
-                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
-                                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                                    finish()
-
-                                    //signIn인 경우 Home 화면으로 넘어감
-                                    //intent로 accessToken값 넘기기
-//                                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+//                                    val intent = Intent(this@MainActivity, ConsumptionTypeActivity_1::class.java)
 //                                    intent.putExtra("accessToken", myAccessToken)
+//                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
 //                                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 //                                    finish()
+
+                                    //signIn인 경우 Home 화면으로 넘어감
+//                                    intent로 accessToken값 넘기기
+                                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                                    intent.putExtra("accessToken", myAccessToken)
+                                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                                    finish()
                                 }
                                 
 

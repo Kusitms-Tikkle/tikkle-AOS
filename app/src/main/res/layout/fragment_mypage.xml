@@ -78,8 +78,8 @@
 
         <ImageView
             android:id="@+id/btnEditMyprofile"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.224"
@@ -96,7 +96,7 @@
             android:backgroundTint="@color/white"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
-            android:text="쿠쿠콧구멍"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:gravity="center"
-            android:text="전통적 알뜰형"
+            android:text=""
             android:fontFamily="@font/pretendard_regular"
             android:textColor="@color/orange_100"
             android:textSize="19sp"
