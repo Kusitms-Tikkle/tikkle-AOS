@@ -6,5 +6,6 @@
     <string name="bold_text2">정확한 소비유형 분석을 통해\n<b>필요한 소비 챌린지</b>를 찾아드릴게요.</string>
     <string name="underline_text1"><u>나중에 하기</u></string>
     <string name="mypage_text1"><b>님, </b>알뜰한 한 달 완성까지 </string>
+    <string name="challenge_complete"><u>원래 시작이 반인 거 알죠?</u></string>
 
 </resources>
