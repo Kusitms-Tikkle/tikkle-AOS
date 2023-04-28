@@ -10,8 +10,11 @@ import android.widget.Toast
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
+import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
+import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_7
 import com.team7.tikkle.data.LoginResponse
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
@@ -135,10 +138,18 @@ class MainActivity : AppCompatActivity() {
                                     Log.d("로그인 accessToken값", "$myAccessToken")
 
                                     //intent로 accessToken값 넘기기
-                                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                                    val intent = Intent(this@MainActivity, ConsumptionTypeActivity_1::class.java)
                                     intent.putExtra("accessToken", myAccessToken)
+                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
                                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                                     finish()
+
+                                    //signIn인 경우 Home 화면으로 넘어감
+                                    //intent로 accessToken값 넘기기
+//                                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+//                                    intent.putExtra("accessToken", myAccessToken)
+//                                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                                    finish()
                                 }
                                 
 

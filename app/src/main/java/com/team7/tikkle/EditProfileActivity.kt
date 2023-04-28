@@ -37,6 +37,8 @@ class EditProfileActivity : AppCompatActivity() {
 
         }
 
+
+
     }
 
     private fun inputNicknameCheck() {

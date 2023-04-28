@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 class PreferenceUtil (context: Context){
 
-    // SharedPreferences 인스턴스 생성
+    // SharedPreferences 인스턴스 생성 : 싱글턴 패턴
     private val prefs: SharedPreferences =
         context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)
 

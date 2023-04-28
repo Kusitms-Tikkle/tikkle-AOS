@@ -4,17 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.lifecycleScope
 import com.team7.tikkle.databinding.ActivityHomeBinding
-import com.team7.tikkle.login.GlobalApplication
 import com.team7.tikkle.roomdb.UserDatabase
 import com.team7.tikkle.roomdb.UserViewModel
 import com.team7.tikkle.view.ChallengeFragment
 import com.team7.tikkle.view.HomeFragment
 import com.team7.tikkle.view.MypageFragment
-import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding

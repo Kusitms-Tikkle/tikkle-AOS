@@ -26,9 +26,10 @@ class ConsumptionTypeActivity_7 : AppCompatActivity() {
         btn1.setOnClickListener {
             btn1.setImageResource(R.drawable.btn_test_activated)
 
-            t = "T"
+            // (T) 자기 중심 소비형
+            t = "x"
             // 여기 다음 페이지로 수정해야 함 !
-            val intent = Intent(this, ConsumptionTypeActivity_7::class.java)
+            val intent = Intent(this, ConsumptionResultActivity_1::class.java)
             intent.putExtra("a", a)
             intent.putExtra("b", b)
             intent.putExtra("c", c)
@@ -43,8 +44,9 @@ class ConsumptionTypeActivity_7 : AppCompatActivity() {
         btn2.setOnClickListener {
             btn2.setImageResource(R.drawable.btn_test_activated)
 
-            t = "A1"
-            val intent = Intent(this, ConsumptionTypeActivity_7::class.java)
+            // (A) 타인/외부 영향 소비형 -> A1
+            t = "y"
+            val intent = Intent(this, ConsumptionResultActivity_1::class.java)
             intent.putExtra("a", a)
             intent.putExtra("b", b)
             intent.putExtra("c", c)
@@ -59,8 +61,9 @@ class ConsumptionTypeActivity_7 : AppCompatActivity() {
         btn3.setOnClickListener {
             btn3.setImageResource(R.drawable.btn_test_activated)
 
-            t = "A2"
-            val intent = Intent(this, ConsumptionTypeActivity_7::class.java)
+            // (A) 타인/외부 영향 소비형 (불행형) -> A2
+            t = "z"
+            val intent = Intent(this, ConsumptionResultActivity_1::class.java)
             intent.putExtra("a", a)
             intent.putExtra("b", b)
             intent.putExtra("c", c)
