@@ -4,229 +4,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".consumptionType.ConsumptionIntroActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    <!-- 메뉴바 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/bg_item_line">
 
-        <!--     메뉴바 -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/btn_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="신청 완료"
+            android:textColor="@color/gray_500"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/pretendard_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/bg_item_line">
-
-            <TextView
-                android:id="@+id/titleText"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/white"
-                android:gravity="center"
-                android:text="소비유형 검사"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--        view-->
-
-        <TextView
-            android:id="@+id/string1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="안녕하세요, "
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/string3"
-            app:layout_constraintHorizontal_bias="0.282"
-            app:layout_constraintStart_toStartOf="@+id/string3"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.15" />
-
-        <TextView
-            android:id="@+id/mynickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:gravity="center"
-            android:text="나는야 시연"
-            android:textColor="@color/orange_100"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/string1"
-            app:layout_constraintStart_toEndOf="@+id/string1"
-            app:layout_constraintTop_toTopOf="@+id/string1" />
-
-        <TextView
-            android:id="@+id/string2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="님!"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/mynickname"
-            app:layout_constraintStart_toEndOf="@+id/mynickname"
-            app:layout_constraintTop_toTopOf="@+id/mynickname" />
-
-        <TextView
-            android:id="@+id/string3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/bold_text1"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string1"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/string4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="우리 함께 해야 할 것이 있어요."
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string3"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/imageMyprofile"
-            android:layout_width="192dp"
-            android:layout_height="136dp"
-            android:layout_marginTop="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string4"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/moamany" />
-
-        <TextView
-            android:id="@+id/string5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:text="바로 "
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/string3"
-            app:layout_constraintHorizontal_bias="0.069"
-            app:layout_constraintStart_toStartOf="@+id/string3"
-            app:layout_constraintTop_toBottomOf="@+id/imageMyprofile"
-            app:layout_constraintVertical_bias="0.004" />
-
-        <TextView
-            android:id="@+id/mynickname1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:gravity="center"
-            android:text="나는야 시연"
-            android:textColor="@color/orange_100"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/string5"
-            app:layout_constraintStart_toEndOf="@+id/string5"
-            app:layout_constraintTop_toTopOf="@+id/string5" />
-
-        <TextView
-            android:id="@+id/string6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="님의 소비유형과 맞는"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/mynickname1"
-            app:layout_constraintStart_toEndOf="@+id/mynickname1"
-            app:layout_constraintTop_toTopOf="@+id/mynickname1" />
-
-        <TextView
-            android:id="@+id/string7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="티끌이 색 찾기~"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string5"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/string8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/bold_text2"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string7"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/challengeName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/bg_button_orange"
-            android:gravity="center"
-            android:text="나의 소비유형 알아보기"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string8"
-            app:layout_constraintVertical_bias="0.7" />
-
-        <TextView
-            android:id="@+id/nicknameCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/underline_text1"
-            android:textColor="@color/orange_100"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/challengeName"
-            app:layout_constraintVertical_bias="0.2" />
-
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+        android:background="@drawable/bg_challenge_complete">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="89dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="나와 어울리는"
+            android:textColor="@color/black_100"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="형용사"
+            android:textColor="@color/black_100"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView5_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="를 찾아드릴게요"
+            android:textColor="@color/black_100"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/textView5_1"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="이용자"
+            android:textColor="@color/orange_100"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5_1" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="님의 티끌이는"
+            android:textColor="@color/gray_500"
+            android:textSize="14dp"
+            tools:layout_editor_absoluteX="77dp"
+            tools:layout_editor_absoluteY="151dp" />
+
+        <TextView
+            android:id="@+id/textView7_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="어떤 모습일까요?"
+            android:textColor="@color/gray_500"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="330dp"
+            android:layout_height="42dp"
+            android:layout_marginBottom="70dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/bg_button_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="나의 소비유형 알아보기"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+            app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+            app:layout_constraintStart_toStartOf="@+id/imageButton2"
+            app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="379dp"
+            android:layout_height="145dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/bg_consumption_intro"
+            app:layout_constraintBottom_toTopOf="@+id/imageButton2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/underline_text1"
+            android:textColor="@color/orange_100"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>
