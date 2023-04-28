@@ -1,4 +1,4 @@
-package com.team7.tikkle.login
+package com.team7.tikkle
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
@@ -9,7 +9,7 @@ class GlobalApplication : Application() {
         lateinit var prefs: PreferenceUtil
     }
     override fun onCreate() {
-        GlobalApplication.prefs = PreferenceUtil(applicationContext)
+        prefs = PreferenceUtil(applicationContext)
         super.onCreate()
         KakaoSdk.init(this, "4f444e8815868b65a842725e9610b1d0")
     }

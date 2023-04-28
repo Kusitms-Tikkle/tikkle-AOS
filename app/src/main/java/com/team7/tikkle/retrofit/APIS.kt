@@ -1,12 +1,12 @@
 package com.team7.tikkle.retrofit
 
-import com.team7.tikkle.data.ExtraInfoResponse
 import com.team7.tikkle.data.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 interface APIS {
+
     //카카오 로그인
     @POST("/login/oauth/kakao")
     @FormUrlEncoded
@@ -19,6 +19,13 @@ interface APIS {
     @POST("/login/extraInfo/{id}")
     fun updateData(@Path("id") id: Int, @Body requestBody: RequestBody): Call<ExtraInfoResponse>
 
+    //사용자 mbti 유형 등록
+    @POST("accounts/mbti/{type}")
+    fun postMbtiResult(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("type") type: String
+    ): Call<ResponseMbti>
+
     //닉네임 중복 확인
     @GET("/login/{nickname}/exists")
     suspend fun nameCheck(@Path(value = "nickname") nickname: String) : Response<ResponseNamecheck>
@@ -27,4 +34,6 @@ interface APIS {
     @GET("/challenge/recommendation/test")
     suspend fun getRecommendation(
     ) : Call<RecommendationResponse>
+
+
 }
