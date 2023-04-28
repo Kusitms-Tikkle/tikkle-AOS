@@ -26,6 +26,12 @@ interface APIS {
         @Path("type") type: String
     ): Call<ResponseMbti>
 
+    //마이페이지 사용자 정보 조회
+    @GET("/accounts")
+    suspend fun getMyPage(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): Response<ResponseMyPage>
+
     //닉네임 중복 확인
     @GET("/login/{nickname}/exists")
     suspend fun nameCheck(@Path(value = "nickname") nickname: String) : Response<ResponseNamecheck>

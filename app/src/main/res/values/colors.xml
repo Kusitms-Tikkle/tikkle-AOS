@@ -10,12 +10,13 @@
     <color name="orange_500">#FFFAF3</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+    <color name="gray_600">#3F3F3F</color>
     <color name="gray_500">#343434</color>
     <color name="gray_400">#959595</color>
     <color name="gray_350">#777777</color>
     <color name="gray_300">#BABABA</color>
-    <color name="gray_600">#3F3F3F</color>
     <color name="gray_200">#DFDFDF</color>
+    <color name="gray_150">#F6F6F6</color>
     <color name="gray_100">#ECECEC</color>
 
     
