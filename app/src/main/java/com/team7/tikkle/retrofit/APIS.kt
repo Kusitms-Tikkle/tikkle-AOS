@@ -65,7 +65,25 @@ interface APIS {
     ): Response<ResponseTodo>
 
 
+    //챌린지별 챌린지 신청 여부 조회
+    @GET("/participate/challenge/check/{id}")
+    fun challengeCheck(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ChallengeCheck>
 
+    //챌린지 디테일 조회
+    @GET("/challenge/detail/{id}")
+    fun challengeDetail(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ChallengeDetail>
 
+    // 챌린지 참여
+    @POST("/participate/challenge/{id}")
+    fun challengeJoin(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ChallengeJoin>
 
 }

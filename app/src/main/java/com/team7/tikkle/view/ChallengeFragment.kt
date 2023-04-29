@@ -7,13 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.team7.tikkle.EditProfileActivity
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
+import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_2
 import com.team7.tikkle.databinding.FragmentChallengeBinding
-import com.team7.tikkle.databinding.FragmentMypageBinding
-import kotlin.concurrent.fixedRateTimer
+
 
 class ChallengeFragment : Fragment() {
 
@@ -25,8 +23,54 @@ class ChallengeFragment : Fragment() {
         binding.challenge1.setOnClickListener {
             val challengeDetail = ChallengeDetailFragment()
             val challengeEdit = ChallengeEditFragment()
+            val bundle = Bundle()
+            bundle.putString("ChallengeNum", "1")
+            challengeDetail.arguments = bundle
+
             fragmentManager?.beginTransaction()?.apply {
-                //replase(R.id.ViewConstraintlayout, challengeDetail)
+                replace(R.id.View_constraint_layout, challengeDetail)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        binding.challenge2.setOnClickListener {
+            val challengeDetail = ChallengeDetailFragment()
+            val challengeEdit = ChallengeEditFragment()
+            val bundle = Bundle()
+            bundle.putString("ChallengeNum", "2")
+            challengeDetail.arguments = bundle
+
+            fragmentManager?.beginTransaction()?.apply {
+                replace(R.id.View_constraint_layout, challengeDetail)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        binding.challenge3.setOnClickListener {
+            val challengeDetail = ChallengeDetailFragment()
+            val challengeEdit = ChallengeEditFragment()
+            val bundle = Bundle()
+            bundle.putString("ChallengeNum", "3")
+            challengeDetail.arguments = bundle
+
+            fragmentManager?.beginTransaction()?.apply {
+                replace(R.id.View_constraint_layout, challengeDetail)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        binding.challenge4.setOnClickListener {
+            val challengeDetail = ChallengeDetailFragment()
+            val challengeEdit = ChallengeEditFragment()
+            val bundle = Bundle()
+            bundle.putString("ChallengeNum", "4")
+            challengeDetail.arguments = bundle
+
+            fragmentManager?.beginTransaction()?.apply {
+                replace(R.id.View_constraint_layout, challengeDetail)
                 addToBackStack(null)
                 commit()
             }
