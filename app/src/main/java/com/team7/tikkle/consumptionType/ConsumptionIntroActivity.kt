@@ -31,8 +31,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
             Spannable.SPAN_INCLUSIVE_INCLUSIVE // 텍스트 범위
         )
 
-        binding.string4.text = spannableString
-
+//        binding.string4.text = spannableString
 
         val text1 = "티끌이의 색깔을 찾는 것이랍니다."
         val spannableString1 = SpannableString(text1)
@@ -43,9 +42,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
             0, 13, // 배경색을 설정할 문자열의 시작과 끝 인덱스
             Spannable.SPAN_INCLUSIVE_INCLUSIVE // 텍스트 범위
         )
-
-        binding.string7.text = spannableString1
+//        binding.string7.text = spannableString1
 
     }
-
 }
