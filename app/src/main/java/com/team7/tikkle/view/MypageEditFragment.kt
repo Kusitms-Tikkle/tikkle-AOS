@@ -1,60 +1,113 @@
 package com.team7.tikkle.view
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.team7.tikkle.R
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.team7.tikkle.GlobalApplication
+import com.team7.tikkle.databinding.FragmentMypageEditBinding
+import com.team7.tikkle.login.MainActivity
+import com.team7.tikkle.retrofit.APIS
+import com.team7.tikkle.retrofit.RetrofitClient
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MypageEditFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MypageEditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
+    private lateinit var retService: APIS
+    lateinit var binding: FragmentMypageEditBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mypage_edit, container, false)
+
+        binding = FragmentMypageEditBinding.inflate(inflater, container, false)
+        //retrofit
+        retService = RetrofitClient
+            .getRetrofitInstance()
+            .create(APIS::class.java)
+
+        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+        Log.d("MypageEditFragment", "userAccessToken : $userAccessToken")
+
+        binding.logout.setOnClickListener {
+            logout(userAccessToken)
+        }
+
+        binding.accountDeletion.setOnClickListener{
+            delete(userAccessToken)
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MypageEditFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MypageEditFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun logout(token: String) {
+        lifecycleScope.launch {
+            try {
+                val response = retService.logout(token)
+
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    // TODO: Handle successful response
+                    Log.d("logout", "logout")
+                    Log.d("logout", "responseBody : $responseBody")
+
+                    Toast.makeText(activity, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
+
+
+                } else {
+                    // TODO: Handle error response
+                    Log.d("logout error", "logout error")
+                    Toast.makeText(activity, "로그아웃에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                 }
+            } catch (e: Exception) {
+                // TODO: Handle exception
+                Log.d("logout error", "logout error")
+                Toast.makeText(activity, "로그아웃에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
+        }
     }
+
+    fun delete(token: String) {
+        lifecycleScope.launch {
+            try {
+                val response = retService.delete(token)
+
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    // TODO: Handle successful response
+                    Log.d("accountDeletion", "accountDeletion")
+                    Log.d("accountDeletion", "accountDeletion : $responseBody")
+
+                    Toast.makeText(activity, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
+
+
+                } else {
+                    // TODO: Handle error response
+                    Log.d("accountDeletion error", "accountDeletion error")
+                    Toast.makeText(activity, "회원탈퇴에 실패하였습니다.1", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                // TODO: Handle exception
+                Log.d("accountDeletion error", "accountDeletion error")
+                Toast.makeText(activity, "회원탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
 }

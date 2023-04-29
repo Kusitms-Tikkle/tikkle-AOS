@@ -35,7 +35,7 @@ class MypageFragment : Fragment() {
             .create(APIS::class.java)
 
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-
+        Log.d("MypageFragment", "userAccessToken : $userAccessToken")
 
         //프로필 수정 버튼 클릭시 EditProfileActivity로 이동
         binding.btnEditMyprofile.setOnClickListener {
@@ -63,6 +63,10 @@ class MypageFragment : Fragment() {
                     var userLabel = myPageData?.result?.label?.toString()
                     val userImage = myPageData?.result?.imageUrl?.toString()
 
+//                    if (userName != null) {
+//                        GlobalApplication.prefs.setString("userNickname", userName)
+//                    }
+
                     binding.mynickname.text = userName
                     binding.myconsumption.text = userLabel
                     // myPageData를 이용하여 fragment에서 필요한 작업 수행
@@ -75,23 +79,6 @@ class MypageFragment : Fragment() {
                 Log.e(TAG, "Exception: ${e.message}", e)
             }
         }
-
-        //retrofit
-//        val call = retService.postMbtiResult(userAccessToken, checkmyconsumption)
-//        call.enqueue(object : Callback<ResponseMbti> {
-//            override fun onResponse(call: Call<ResponseMbti>, response: Response<ResponseMbti>) {
-//                if (response.isSuccessful) {
-//                    val result = response.body()
-//                    Log.d("MainActivity", "Result: $result")
-//                } else {
-//                    Log.e("MainActivity", "Error: ${response.errorBody()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseMbti>, t: Throwable) {
-//                Log.e("MainActivity", "Error: ${t.localizedMessage}")
-//            }
-//        })
 
         // 데이터 조회
 //        val userNickname = GlobalApplication.prefs.getString("userNickname", "티끌")
