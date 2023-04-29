@@ -31,14 +31,11 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.nicknameTv.setOnClickListener {
             inputNicknameCheck()
-//            var nickname = inputNickname()
-//            Log.d("MyTag", nickname)
-//            getRequestWithPathParameters(nickname)
-
         }
 
-
-
+        binding.btnDone.setOnClickListener{
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
     }
 
     private fun inputNicknameCheck() {

@@ -41,9 +41,10 @@ interface APIS {
     ) : Response<ResponseNamecheck>
 
     //유형별 챌린지 추천
-    @GET("/challenge/recommendation/test")
+    @GET("/challenge/recommendation")
     suspend fun getRecommendation(
-    ) : Call<RecommendationResponse>
+        @Header("X-ACCESS-TOKEN") token: String,
+    ) : Response<RecommendationResponse>
 
     //로그아웃
     @PATCH("/accounts/log-out")
@@ -63,6 +64,13 @@ interface APIS {
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path(value = "date") date: String
     ): Response<ResponseTodo>
+
+    //홈 화면 Progress 조회
+    @GET("/accounts/progressbar")
+    suspend fun progress(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+    ): Response<ResponseProgress>
+
 
 
 
