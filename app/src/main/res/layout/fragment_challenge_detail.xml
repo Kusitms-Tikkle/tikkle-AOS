@@ -52,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/challenge_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -81,7 +81,7 @@
                 android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                app:layout_constraintTop_toBottomOf="@+id/challenge_img" />
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -101,7 +101,7 @@
                 android:fontFamily="@font/pretendard_regular"
                 android:lineSpacingExtra="10dp"
                 android:paddingBottom="20dp"
-                android:text="문장1 입니다 졸려요\n문장2 입니다 안녕하세요\n문장3 입니다 반갑습니다요\n문장4 입니다 힘을 내야겠지요?"
+                android:text="검소한 소비습관을 가지고 싶은데\n어떻게 시작해야할 지 모르시겠다고요?\n그럴땐 일주일에 딱 한번, 無심기데이를 가져보세요.\n매주 하루만 성공해도 무심기로 두툼해진 지갑을 만나볼 수 있어요!\n(교통비, 공과금은 제외입니다)"
                 android:textColor="@color/gray_500"
                 android:textSize="12dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +119,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
-
 
             <TextView
                 android:id="@+id/textView10"
