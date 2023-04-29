@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         android:background="@color/gray_120">
 
-
     <!-- 메뉴바 -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout1"
@@ -110,8 +109,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
@@ -125,15 +125,74 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="30dp"
                 android:text="수행미션"
-                android:textSize="12dp"
                 android:textColor="@color/gray_300"
-                tools:layout_editor_absoluteX="12dp"
-                tools:layout_editor_absoluteY="13dp" />
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="18dp"
+                android:text="날짜"
+                android:textColor="@color/gray_300"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_challenge_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                tools:listitem="@layout/item_challenge_todo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-     </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/btn_do"
+            android:layout_width="330dp"
+            android:layout_height="42dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/bg_button_orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/btn_do_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            android:text="챌린지 신청하기"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_do"
+            app:layout_constraintEnd_toEndOf="@+id/btn_do"
+            app:layout_constraintStart_toStartOf="@+id/btn_do"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 </FrameLayout>
