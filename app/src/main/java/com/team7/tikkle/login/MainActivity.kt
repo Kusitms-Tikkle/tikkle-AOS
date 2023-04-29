@@ -43,11 +43,6 @@ class MainActivity : AppCompatActivity() {
                 Log.e("토큰 정보 보기 실패", "error")
             } else if (tokenInfo != null) {
                 Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
-                //확인용 activity 전환
-//                val intent = Intent(this, SigninActivity::class.java)
-//                intent.putExtra("token", tokenInfo)
-//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                finish()
             }
         }
 
@@ -87,16 +82,6 @@ class MainActivity : AppCompatActivity() {
                 }
             } else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                // Log.d("Token", token.accessToken.toString())
-                //서버에 access token 전송
-//                val mytoken = token.accessToken
-//                uploadAccessToken(mytoken)
-
-                //확인용 activity 전환
-//                val intent = Intent(this, SigninActivity::class.java)
-//                intent.putExtra("tokenInfo", token.accessToken)
-//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                finish()
 
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
 //                binding.tvAccessToken.text = "access token : \n${token.accessToken}\n"

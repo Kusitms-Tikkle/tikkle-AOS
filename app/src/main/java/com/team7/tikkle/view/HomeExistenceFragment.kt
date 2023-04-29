@@ -8,46 +8,87 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.team7.tikkle.HomeActivity
-import com.team7.tikkle.R
+import com.team7.tikkle.*
 import com.team7.tikkle.databinding.FragmentHomeExistenceBinding
+import com.team7.tikkle.retrofit.APIS
+import com.team7.tikkle.retrofit.RetrofitClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeExistenceFragment : Fragment() {
+    private lateinit var retService: APIS
     lateinit var binding: FragmentHomeExistenceBinding
     lateinit var homeActivity: HomeActivity
     val cal = Calendar.getInstance()
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)
+
     //이달의 마지막 달
     val lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var homeRecyclerViewAdapter: HomeRecyclerViewAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_home_existence, container, false)
+
         binding = FragmentHomeExistenceBinding.inflate(inflater, container, false)
+
+        //nickname
+        val userNickname = GlobalApplication.prefs.getString("userNickname", "")
+        binding.mynickname.text = userNickname
+
+        //retrofit
+        retService = RetrofitClient
+            .getRetrofitInstance()
+            .create(APIS::class.java)
+
+        // ViewModel 초기화
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        // RecyclerView 어댑터 초기화
+        homeRecyclerViewAdapter = HomeRecyclerViewAdapter { task ->
+            // 아이템 클릭 리스너 구현 (필요한 경우)
+        }
+
+        // RecyclerView 구성
+        val recyclerView: RecyclerView = binding.recyclerview
+        recyclerView.adapter = homeRecyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // ViewModel과 RecyclerView 어댑터 연결
+        viewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
+            homeRecyclerViewAdapter.updateTasks(tasks)
+        })
 
         homeActivity = context as HomeActivity
         //calendar
         val today: String? = doDayOfWeek()
 
-        val recyclerView = binding.recyclerview
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
 
-        //한달 남은 날짜
+        //한달 남은 날짜 (D-day)
         var restMonth = lastDayOfMonth - cal.get(Calendar.DATE) + 1
         binding.restMonth.text = restMonth.toString()
-//        binding.restMonth.text = "23"
 
-        //프로그레스바
+        //progressBar
         //서버에서 progress 받아와서 수정 필요
         var progress = 60
         val progressBar = binding.progressBar
         progressBar.progress = progress
 
-
         return binding.root
     }
+
 
     private fun doDayOfWeek(): String? {
 

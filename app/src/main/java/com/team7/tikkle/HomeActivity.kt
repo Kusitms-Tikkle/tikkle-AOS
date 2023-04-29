@@ -55,6 +55,8 @@ class HomeActivity : AppCompatActivity() {
                     val myPageData: ResponseMyPage? = response.body()
                     Log.d("HomeActivity", "Result: $myPageData")
                     userName = myPageData?.result?.nickname?.toString()!!
+                    Log.d("HomeActivity", "닉네임: $userName")
+                    GlobalApplication.prefs.setString("userNickname", userName)
 
                 } else {
                     // Error handling
@@ -67,10 +69,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         // 데이터 저장
-        GlobalApplication.prefs.setString("userNickname", userName)
-//        GlobalApplication.prefs.setString("userAccessToken", myAccessToken)
 
-
+        GlobalApplication.prefs.setString("userAccessToken", userAccessToken)
 
         //room db에 accessToken과 nickname 넣기
         // User 정보를 가져오고 UI 업데이트
@@ -81,8 +81,6 @@ class HomeActivity : AppCompatActivity() {
 //                updateUI(it.nickname, it.userAccessToken)
 //            }
 //        }
-
-        //PR용
 
         initBottomNavigation()
 
