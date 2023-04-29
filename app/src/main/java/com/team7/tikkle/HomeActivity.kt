@@ -1,11 +1,13 @@
 package com.team7.tikkle
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.team7.tikkle.consumptionType.ConsumptionResultActivity_1
 import com.team7.tikkle.data.ResponseMyPage
 import com.team7.tikkle.databinding.ActivityHomeBinding
 import com.team7.tikkle.retrofit.APIS
@@ -38,6 +40,10 @@ class HomeActivity : AppCompatActivity() {
             .getRetrofitInstance()
             .create(APIS::class.java)
 
+        //ConsumptionResultActivity_1 확인용
+//        val intent = Intent(this, ConsumptionResultActivity_1::class.java)
+//        startActivity(intent)
+
 
         val userAccessToken = this.intent.getStringExtra("accessToken").toString()
         Log.d("Home : accessToken 값", userAccessToken)
@@ -69,9 +75,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
         // 데이터 저장
-
-        GlobalApplication.prefs.setString("userAccessToken", userAccessToken)
-
         //room db에 accessToken과 nickname 넣기
         // User 정보를 가져오고 UI 업데이트
 //        lifecycleScope.launch {

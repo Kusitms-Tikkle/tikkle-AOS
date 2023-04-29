@@ -12,11 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.*
+import com.team7.tikkle.data.ResponseMyPage
+import com.team7.tikkle.data.ResponseProgress
 import com.team7.tikkle.databinding.FragmentHomeExistenceBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
+import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
@@ -41,8 +45,8 @@ class HomeExistenceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home_existence, container, false)
-
         binding = FragmentHomeExistenceBinding.inflate(inflater, container, false)
+        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
 
         //nickname
         val userNickname = GlobalApplication.prefs.getString("userNickname", "")
@@ -82,9 +86,29 @@ class HomeExistenceFragment : Fragment() {
 
         //progressBar
         //서버에서 progress 받아와서 수정 필요
-        var progress = 60
-        val progressBar = binding.progressBar
-        progressBar.progress = progress
+
+
+        lifecycleScope.launch {
+            try {
+                val response = retService.progress(userAccessToken)
+                if (response.isSuccessful) {
+                    // Response body를 ResponseMyPage 타입으로 변환
+                    val myProgress: ResponseProgress? = response.body()
+                    Log.d("Home progress", "Progress : $myProgress")
+                    var progress = myProgress?.result?.toInt()
+                    val progressBar = binding.progressBar
+                    progressBar.progress = progress!!.toInt()
+                    binding.percent.text = progress.toString()
+
+                } else {
+                    // Error handling
+                    Log.d(ContentValues.TAG, "Error: ${response.code()} ${response.message()}")
+                }
+            } catch (e: Exception) {
+                // Exception handling
+                Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
+            }
+        }
 
         return binding.root
     }
@@ -145,24 +169,24 @@ class HomeExistenceFragment : Fragment() {
         val nWeek: Int = cal.get(Calendar.DAY_OF_WEEK)
         if (nWeek == 1) {
             strWeek = "일"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.sun.setImageResource(R.drawable.ic_calendar_today)
             binding.textsun.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 2) {
             strWeek = "월"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.mon.setImageResource(R.drawable.ic_calendar_today)
             binding.textmon.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 3) {
             strWeek = "화"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.tue.setImageResource(R.drawable.ic_calendar_today)
             binding.texttue.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 4) {
             strWeek = "수"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.wed.setImageResource(R.drawable.ic_calendar_today)
             binding.textwed.setTextColor(Color.parseColor("#F56508"))
 
         } else if (nWeek == 5) {
             strWeek = "목"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.thu.setImageResource(R.drawable.ic_calendar_today)
             binding.textthu.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 6
         ) {
@@ -186,3 +210,4 @@ class HomeExistenceFragment : Fragment() {
 
 
 }
+

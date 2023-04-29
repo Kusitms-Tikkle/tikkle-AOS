@@ -110,6 +110,9 @@ class MainActivity : AppCompatActivity() {
                                     val id = receivedLoginItem.result.id.toInt()
                                     Log.d("회원가입 id값", "$id")
 
+//                                    val myAccessToken = receivedLoginItem.result.accessToken.toString()
+//                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
+
                                     //intent로 id값 넘기기
                                     val intent = Intent(this@MainActivity, SigninActivity1::class.java)
                                     intent.putExtra("id", id)
@@ -130,7 +133,8 @@ class MainActivity : AppCompatActivity() {
 //                                    finish()
 
                                     //signIn인 경우 Home 화면으로 넘어감
-//                                    intent로 accessToken값 넘기기
+//                                    intent로 accessToken값 넘기기 & sharedPreference에 저장
+                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
                                     val intent = Intent(this@MainActivity, HomeActivity::class.java)
                                     intent.putExtra("accessToken", myAccessToken)
                                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -145,10 +149,10 @@ class MainActivity : AppCompatActivity() {
 
                             when (response.code()) {
                                 1000 -> {
-                                    Log.d("로그인 성공", "1000굿")
+                                    Log.d("로그인 성공", "1000")
                                 }
                                 400 -> {
-                                    Log.d("로그인 실패", "400badㅠㅠㅠ")
+                                    Log.d("로그인 실패", "400")
                                 }
                             }
                         }

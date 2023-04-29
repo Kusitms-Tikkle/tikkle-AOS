@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
 import com.team7.tikkle.data.ExtraInfoResponse
@@ -106,6 +107,8 @@ class SigninActivity2 : AppCompatActivity() {
 
                     // useraccesstoken 속성 사용
                     val accessToken = user.useraccesstoken
+
+                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
 
                     // accessToken 변수 출력
 //                    println("Access token: $accessToken")
