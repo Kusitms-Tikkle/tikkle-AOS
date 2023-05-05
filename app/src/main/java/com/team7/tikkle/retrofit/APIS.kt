@@ -65,25 +65,45 @@ interface APIS {
     ): Response<ResponseTodo>
 
 
-    //챌린지별 챌린지 신청 여부 조회
+    // Challenge : 챌린지 별 챌린지 신청 여부 조회
     @GET("/participate/challenge/check/{id}")
     fun challengeCheck(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path("id") id: Int
     ): Call<ChallengeCheck>
 
-    //챌린지 디테일 조회
+    // ChallengeDetail : 챌린지 세부 정보 조회(챌린지 참여 X)
     @GET("/challenge/detail/{id}")
     fun challengeDetail(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path("id") id: Int
     ): Call<ChallengeDetail>
 
-    // 챌린지 참여
+    // ChallengeDetail : 챌린지 참여 개수 조회
+    @GET("/participate/challenge/check")
+    fun challengeCount(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): Call<ResponseChallengeCount>
+
+    // ChallengeDetail : 챌린지 참여 신청
     @POST("/participate/challenge/{id}")
     fun challengeJoin(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path("id") id: Int
-    ): Call<ChallengeJoin>
+    ): Call<ResponseChallengeJoin>
+
+    // ChallengeEdit : 챌린지 세부 정보 조회(챌린지 참여 O)
+    @GET("/challenge/detail/participate/{id}")
+    fun challengeEdit(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ChallengeDetail>
+
+    // ChallengeEdit : 챌린지 삭제
+    @DELETE("/participate/challenge/{id}")
+    fun challengeDelete(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeDelete>
 
 }

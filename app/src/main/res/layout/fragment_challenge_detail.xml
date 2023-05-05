@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.ChallengeDetailFragment">
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -52,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
             <ImageView
-                android:id="@+id/challenge_img"
+                android:id="@+id/challengeImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -65,9 +67,9 @@
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="75dp"
+                android:layout_marginStart="40dp"
                 android:src="@drawable/ic_union_left"
-                app:layout_constraintEnd_toStartOf="@+id/challengeName"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/challengeName" />
 
             <TextView
@@ -81,26 +83,26 @@
                 android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/challenge_img" />
+                app:layout_constraintTop_toBottomOf="@+id/challengeImg" />
 
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="75dp"
+                android:layout_marginEnd="40dp"
                 android:src="@drawable/ic_union_right"
                 app:layout_constraintBottom_toBottomOf="@+id/challengeName"
-                app:layout_constraintStart_toEndOf="@+id/challengeName" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/challengeInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:lineSpacingExtra="10dp"
-                android:paddingBottom="20dp"
+                android:lineSpacingExtra="0dp"
+                android:paddingBottom="25dp"
                 android:text="검소한 소비습관을 가지고 싶은데\n어떻게 시작해야할 지 모르시겠다고요?\n그럴땐 일주일에 딱 한번, 無심기데이를 가져보세요.\n매주 하루만 성공해도 무심기로 두툼해진 지갑을 만나볼 수 있어요!\n(교통비, 공과금은 제외입니다)"
                 android:textColor="@color/gray_500"
                 android:textSize="12dp"
@@ -111,7 +113,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
@@ -173,8 +175,11 @@
             android:id="@+id/btn_do"
             android:layout_width="330dp"
             android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="100dp"
             android:background="@android:color/transparent"
             android:src="@drawable/bg_button_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
@@ -184,14 +189,15 @@
             android:id="@+id/btn_do_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="챌린지 신청하기"
             android:textColor="@color/white"
             android:textSize="13dp"
-            android:text="챌린지 신청하기"
             app:layout_constraintBottom_toBottomOf="@+id/btn_do"
             app:layout_constraintEnd_toEndOf="@+id/btn_do"
             app:layout_constraintStart_toStartOf="@+id/btn_do"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
+            app:layout_constraintTop_toTopOf="@+id/btn_do" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
-</FrameLayout>
+        </ScrollView>
+    </FrameLayout>
+</layout>
