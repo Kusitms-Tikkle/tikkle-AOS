@@ -4,7 +4,7 @@ data class TodoResult(
     val id: Int,
     val title: String,
     val color: String,
-    val checked: Boolean
+    var checked: Boolean
 )
 data class ResponseTodo (
     val isSuccess: Boolean,

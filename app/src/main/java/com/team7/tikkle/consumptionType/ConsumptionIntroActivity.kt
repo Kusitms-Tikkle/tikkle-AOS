@@ -1,5 +1,6 @@
 package com.team7.tikkle.consumptionType
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.BackgroundColorSpan
 import androidx.annotation.ColorInt
+import com.team7.tikkle.GlobalApplication
+import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.databinding.ActivityConsumptionIntroBinding
 import com.team7.tikkle.databinding.ActivityEditProfileBinding
 import com.team7.tikkle.retrofit.APIS
@@ -31,6 +34,9 @@ class ConsumptionIntroActivity : AppCompatActivity() {
             Spannable.SPAN_INCLUSIVE_INCLUSIVE // 텍스트 범위
         )
 
+        //닉네임
+        binding.textView7.text = GlobalApplication.prefs.getString("userNickname", "")
+
 //        binding.string4.text = spannableString
 
         val text1 = "티끌이의 색깔을 찾는 것이랍니다."
@@ -43,6 +49,19 @@ class ConsumptionIntroActivity : AppCompatActivity() {
             Spannable.SPAN_INCLUSIVE_INCLUSIVE // 텍스트 범위
         )
 //        binding.string7.text = spannableString1
+
+        binding.btnConsumptionType.setOnClickListener(){
+            val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+        //homeActivity로 이동
+        binding.btnHome.setOnClickListener(){
+            val intent = Intent(this, HomeActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
 
     }
 }

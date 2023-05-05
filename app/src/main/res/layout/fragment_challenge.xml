@@ -44,11 +44,12 @@
             <ImageView
                 android:id="@+id/imageView12"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_challenge_content_banner" />
+                app:srcCompat="@drawable/ic_banner" />
 
             <TextView
                 android:id="@+id/textView12"

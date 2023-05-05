@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.team7.tikkle.GlobalApplication
+import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.databinding.FragmentMypageEditBinding
 import com.team7.tikkle.login.MainActivity
 import com.team7.tikkle.retrofit.APIS
@@ -63,7 +64,8 @@ class MypageEditFragment : Fragment() {
                     Log.d("logout", "responseBody : $responseBody")
 
                     Toast.makeText(activity, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(activity, MainActivity::class.java)
+                    GlobalApplication.prefs.setString("userNickname", "")
+                    val intent = Intent(activity, HomeActivity::class.java)
                     startActivity(intent)
 
 
@@ -91,6 +93,9 @@ class MypageEditFragment : Fragment() {
                     Log.d("accountDeletion", "accountDeletion")
                     Log.d("accountDeletion", "accountDeletion : $responseBody")
 
+                    //내부 저장 데이터 삭제
+                    GlobalApplication.prefs.setString("userNickname", "")
+                    GlobalApplication.prefs.setString("userAccessToken", "")
                     Toast.makeText(activity, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)

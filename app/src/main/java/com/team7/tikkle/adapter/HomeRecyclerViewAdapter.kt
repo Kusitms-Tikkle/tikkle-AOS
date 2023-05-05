@@ -1,9 +1,15 @@
 package com.team7.tikkle
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.data.TodoResult
 import androidx.lifecycle.Observer
@@ -13,8 +19,7 @@ import androidx.lifecycle.observe
 class HomeRecyclerViewAdapter (
     private val tasks: MutableList<TodoResult> = mutableListOf(),
     private val clickListener:(TodoResult)->Unit,
-    ) : RecyclerView.Adapter<MyViewHolder>() {
-
+) : RecyclerView.Adapter<MyViewHolder>() {
     fun updateTasks(newTasks: List<TodoResult>) {
         tasks.clear()
         tasks.addAll(newTasks)
@@ -28,7 +33,6 @@ class HomeRecyclerViewAdapter (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-//        return holder.bind()
         val task = tasks[position]
         holder.bind(task,clickListener)
     }
@@ -40,21 +44,33 @@ class HomeRecyclerViewAdapter (
 
 class MyViewHolder(val view: View):RecyclerView.ViewHolder(view){
     // UI 요소에 대한 참조를 정의합니다.
-
     private val titleTextView: TextView = view.findViewById(R.id.tv_todo)
-    private var colorText: String =""
-    private var todoChecked: Boolean = false
+    private val checkImageView: ImageView = view.findViewById(R.id.tv_check)
 
-    fun bind(task: TodoResult, clickListener:(TodoResult)->Unit) {
+    private val originalColor: Drawable = checkImageView.drawable
+
+    fun bind(task: TodoResult, clickListener: (TodoResult) -> Unit) {
         titleTextView.text = task.title
-        colorText = task.color
-        todoChecked = task.checked
+        val colorText = task.color
+        var todoChecked = task.checked
+        updateTextColor(todoChecked, colorText)
 
         view.setOnClickListener {
+            todoChecked = !todoChecked
+            updateTextColor(todoChecked, colorText)
             clickListener(task)
         }
     }
 
-
-
+    private fun updateTextColor(todoChecked: Boolean, colorText: String) {
+        if (todoChecked) {
+            titleTextView.setTextColor(Color.parseColor("#343434")) // 검은색
+            //서버에서 받은 값으로 색 바꾸기
+            checkImageView.setColorFilter(Color.parseColor("#FFBAC7"))
+        } else {
+            titleTextView.setTextColor(Color.parseColor("#BABABA")) // 회색
+            checkImageView.setColorFilter(ContextCompat.getColor(view.context, android.R.color.transparent))
+            checkImageView.setImageDrawable(originalColor)
+        }
+    }
 }

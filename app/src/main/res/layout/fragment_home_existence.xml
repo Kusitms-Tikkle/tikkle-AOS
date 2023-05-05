@@ -353,7 +353,7 @@
             app:layout_constraintTop_toBottomOf="@+id/progressBar">
 
             <TextView
-                android:id="@+id/string3"
+                android:id="@+id/challenge_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_bold"
@@ -368,7 +368,7 @@
                 app:layout_constraintVertical_bias="0.3" />
 
             <TextView
-                android:id="@+id/string4"
+                android:id="@+id/challenge_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_regular"
@@ -377,23 +377,22 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.192"
+                app:layout_constraintHorizontal_bias="0.15"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/string3"
-                app:layout_constraintVertical_bias="0.3" />
+                app:layout_constraintTop_toBottomOf="@+id/challenge_name"
+                app:layout_constraintVertical_bias="0.29" />
 
             <ImageView
-                android:id="@+id/go"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:id="@+id/challenge_image"
+                android:layout_width="42dp"
+                android:layout_height="37dp"
                 android:src="@drawable/btn_next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toEndOf="@+id/string3"
+                app:layout_constraintStart_toEndOf="@+id/challenge_name"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:tint="@color/black" />
+                app:layout_constraintVertical_bias="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
