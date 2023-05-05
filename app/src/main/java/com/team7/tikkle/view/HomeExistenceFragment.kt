@@ -29,7 +29,7 @@ import java.util.*
 
 class HomeExistenceFragment : Fragment() {
     private lateinit var retService: APIS
-    lateinit var binding: FragmentHomeExistenceBinding
+    private lateinit var binding: FragmentHomeExistenceBinding
     lateinit var homeActivity: HomeActivity
     val cal = Calendar.getInstance()
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)

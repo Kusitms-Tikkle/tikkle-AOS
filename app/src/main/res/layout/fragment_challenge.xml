@@ -43,20 +43,19 @@
 
             <ImageView
                 android:id="@+id/imageView12"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_banner" />
+                app:srcCompat="@drawable/bg_challenge_banner" />
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="챌린지 둘러보기"
                 android:textColor="@color/orange_100"
