@@ -8,38 +8,73 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
+import com.team7.tikkle.data.ResponseHomeExistence
 import com.team7.tikkle.databinding.FragmentHomeBinding
+import com.team7.tikkle.retrofit.APIS
+import com.team7.tikkle.retrofit.RetrofitClient
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
+    private lateinit var retService: APIS
 
     val cal = Calendar.getInstance()
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)
     val day_of_week = cal.get(Calendar.DAY_OF_WEEK)
 
-
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
-//
 //    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //HomeExistenceFragment로 이동
-        val secondFragment = HomeExistenceFragment()
-        fragmentManager?.beginTransaction()?.apply {
-            replace(R.id.home_fragment, secondFragment)
-            addToBackStack(null)
-            commit()
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+        val userNickname = GlobalApplication.prefs.getString("userNickname", "")
+        binding.mynickname.text = userNickname
+
+        var existence : Boolean = false
+        //retrofit
+        retService = RetrofitClient
+            .getRetrofitInstance()
+            .create(APIS::class.java)
+
+        //home challenge 존재 여부 조회
+        lifecycleScope.launch {
+            try {
+                val response1 = retService.homeExistence(userAccessToken)
+                if (response1.isSuccessful) {
+                    // Response body를 ResponseHomeExistence 타입으로 변환
+                    val myexistence: ResponseHomeExistence? = response1.body()
+                    Log.d("my existence", "my existence : $myexistence")
+                    existence = myexistence?.result ?: false
+                    if (existence) {
+                        val secondFragment = HomeExistenceFragment()
+                        fragmentManager?.beginTransaction()?.apply {
+                            replace(R.id.home_fragment, secondFragment)
+                            addToBackStack(null)
+                            commit()
+                        }
+                    }
+                } else {
+                        // Error handling
+                        Log.d(ContentValues.TAG, "Error: ${response1.code()} ${response1.message()}")
+                    }
+            } catch (e: Exception) {
+                // Exception handling
+                Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
+            }
         }
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
         //calendar
         val today: String? = doDayOfWeek()
         // Inflate the layout for this fragment

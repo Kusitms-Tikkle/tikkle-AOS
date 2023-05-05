@@ -1,10 +1,11 @@
-package com.team7.tikkle
+package com.team7.tikkle.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.data.TodoResult
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient

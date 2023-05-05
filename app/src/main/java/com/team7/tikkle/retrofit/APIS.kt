@@ -52,13 +52,21 @@ interface APIS {
         @Header("X-ACCESS-TOKEN") token: String,
     ): Response<ResponseLogout>
 
+    //계정 삭제
     @PATCH("/accounts/delete")
     suspend fun delete(
         @Header("X-ACCESS-TOKEN") token: String,
     ): Response<ResponseAccountDelete>
 
-    //홈 화면 Todo 조회
+    //마이페이지 정보 수정
+    data class RequestAccountBody(val nickname: String, val mbti: String)
+    @PATCH("/accounts/information")
+    suspend fun edit(
+        @Header("X-ACCESS-TOKEN") token: String,
+        @Body body: RequestAccountBody
+    ): Response<ResponseAccountEdit>
 
+   //홈 화면 Todo 조회
     @GET("/todo/{date}")
     suspend fun todo(
         @Header("X-ACCESS-TOKEN") accessToken: String,
@@ -71,7 +79,31 @@ interface APIS {
         @Header("X-ACCESS-TOKEN") accessToken: String,
     ): Response<ResponseProgress>
 
+    //Todo 체크 여부 변경
+    @POST("/todo/check/{id}")
+    fun postTodo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") type: Long
+    ): Call<ResponseCheck>
 
+    //홈 챌린지 하나라도 신청했는지 여부 조회
+    @GET("/participate/challenge/check/least")
+    suspend fun homeExistence(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+    ): Response<ResponseHomeExistence>
+
+    //홈 주별 스티커 조회
+    @GET("/accounts/sticker/{week_start_date}")
+    fun weeklySticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("week_start_date") type: String
+    ): Call<ResponseWeeklySticker>
+
+    //홈 내가 참여중인 챌린지 조회
+    @GET("/participate/challenge/list")
+    fun myChallengeList(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): Call<ResponseMyChallengeList>
 
     // Challenge : 챌린지 별 챌린지 신청 여부 조회
     @GET("/participate/challenge/check/{id}")

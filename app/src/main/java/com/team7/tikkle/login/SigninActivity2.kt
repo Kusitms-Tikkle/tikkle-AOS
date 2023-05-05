@@ -9,6 +9,7 @@ import android.view.View
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
+import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
 import com.team7.tikkle.data.ExtraInfoResponse
 import com.team7.tikkle.databinding.ActivitySignin2Binding
 import com.team7.tikkle.retrofit.APIS
@@ -33,6 +34,9 @@ class SigninActivity2 : AppCompatActivity() {
         val mynickname = this.intent.getStringExtra("nickname").toString()
         val myid = this.intent.getIntExtra("id", 0)
         var myisChecked = false
+
+        //닉네임 setString
+        GlobalApplication.prefs.setString("userNickname", mynickname)
 
         //개인정보처리방침
        binding.privacy.setOnClickListener {
@@ -114,8 +118,9 @@ class SigninActivity2 : AppCompatActivity() {
 //                    println("Access token: $accessToken")
 
 
-                    val intent = Intent(this@SigninActivity2, HomeActivity::class.java)
-                    intent.putExtra("accessToken", myAccessToken)
+                    //HomeActivity로 이동
+                    val intent = Intent(this@SigninActivity2, ConsumptionIntroActivity::class.java)
+//                    intent.putExtra("accessToken", myAccessToken)
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                     finish()
                 } else {

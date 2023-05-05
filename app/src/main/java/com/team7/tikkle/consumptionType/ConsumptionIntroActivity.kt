@@ -31,6 +31,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         Log.d("MypageFragment", "토큰: $userAccessToken")
 
+
         binding.username.text = userNickname
 
         // 소비 유형 검사 시작
@@ -42,6 +43,19 @@ class ConsumptionIntroActivity : AppCompatActivity() {
 
         // 소비 유형 검사 나중에 하기
         binding.btnLater.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+        binding.btnNext.setOnClickListener(){
+            val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+        //homeActivity로 이동
+        binding.btnLater.setOnClickListener(){
             val intent = Intent(this, HomeActivity::class.java)
             finish()
             startActivity(intent)

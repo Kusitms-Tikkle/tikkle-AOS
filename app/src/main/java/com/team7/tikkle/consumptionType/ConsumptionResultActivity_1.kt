@@ -1,18 +1,22 @@
 package com.team7.tikkle.consumptionType
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.team7.tikkle.*
+import com.team7.tikkle.data.MyConsumptionResult
 import com.team7.tikkle.data.ResponseMbti
 import com.team7.tikkle.databinding.ActivityConsumptionResult1Binding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
+import com.team7.tikkle.viewModel.ConsumptionResultViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,28 +33,19 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
         binding = ActivityConsumptionResult1Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // x 버튼 누르면 홈으로 이동
+        binding.imageButton.setOnClickListener(){
+            val intent = Intent(this, HomeActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+        binding.intro.setLineSpacing(10f, 0.4f)
+
         //retrofit
         retService = RetrofitClient
             .getRetrofitInstance()
             .create(APIS::class.java)
-
-        // ViewModel 초기화
-        viewModel = ViewModelProvider(this).get(ConsumptionResultViewModel::class.java)
-
-        // RecyclerView 어댑터 초기화
-        consumptionResultRecyclerViewAdapter = ConsumptionResultRecyclerViewAdapter { task ->
-            // 아이템 클릭 리스너 구현 (필요한 경우)
-        }
-
-        // RecyclerView 구성
-        val recyclerView: RecyclerView = binding.recyclerview
-        recyclerView.adapter = consumptionResultRecyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        // ViewModel과 RecyclerView 어댑터 연결
-        viewModel.tasks.observe(this, Observer { tasks ->
-            consumptionResultRecyclerViewAdapter.updateTasks(tasks)
-        })
 
 //        val myAccessToken = this.intent.getStringExtra("accessToken").toString()
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
@@ -71,9 +66,9 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseMbti>, response: Response<ResponseMbti>) {
                 if (response.isSuccessful) {
                     val result = response.body()
-                    Log.d("MainActivity", "Result: $result")
+                    Log.d("Consumption Result", "Consumption: $checkmyconsumption ,Result: $result")
                 } else {
-                    Log.e("MainActivity", "Error: ${response.errorBody()}")
+                    Log.e("Consumption Result", "Error: ${response.errorBody()}")
                 }
             }
 
@@ -82,12 +77,51 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
             }
         })
 
+        //닉네임 및 소비 타입 표시
 
 
+        // ViewModel 초기화
+        viewModel = ViewModelProvider(this).get(ConsumptionResultViewModel::class.java)
+        viewModel.checkMyConsumption.value = checkmyconsumption
+
+        // RecyclerView 어댑터 초기화
+        consumptionResultRecyclerViewAdapter = ConsumptionResultRecyclerViewAdapter { task ->
+            // 아이템 클릭 리스너 구현 (필요한 경우)
+        }
+
+        // RecyclerView 구성
+        val recyclerView: RecyclerView = binding.recyclerview
+        recyclerView.adapter = consumptionResultRecyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        viewModel.result.observe(this, Observer<MyConsumptionResult> { result ->
+            // LiveData가 업데이트될 때마다 결과값을 가져옵니다.
+            val nickname = result.nickname
+            val label = result.label
+            val imageUrl = result.imageUrl
+            val intro = result.intro
+
+            // UI 업데이트
+            binding.nickname.text = nickname
+            binding.type.text = label
+            //ImageUrl Glide (아직 서버에 값 x)
+//            val imageView = findViewById<ImageView>(R.id.typeImg)
+//            Glide.with(this)
+//                .load(imageUrl) // URL
+//                .into(imageView)
+            binding.intro.text = intro
+        })
+
+        // ViewModel과 RecyclerView 어댑터 연결
+        viewModel.tasks.observe(this, Observer { tasks ->
+            consumptionResultRecyclerViewAdapter.updateTasks(tasks)
+        })
 
     }
-
 }
+
+
+//consumption type check
 fun checkMyconsumption(a: Int, b: Int, c: Int, d: Int, t : String) : String {
 
     //소비 타입
