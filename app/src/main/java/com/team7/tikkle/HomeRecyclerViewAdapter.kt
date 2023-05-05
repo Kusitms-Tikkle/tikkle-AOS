@@ -13,7 +13,7 @@ import androidx.lifecycle.observe
 class HomeRecyclerViewAdapter (
     private val tasks: MutableList<TodoResult> = mutableListOf(),
     private val clickListener:(TodoResult)->Unit,
-    ) : RecyclerView.Adapter<MyViewHolder>() {
+) : RecyclerView.Adapter<MyViewHolder>() {
 
     fun updateTasks(newTasks: List<TodoResult>) {
         tasks.clear()
