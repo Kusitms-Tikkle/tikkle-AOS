@@ -1,5 +1,6 @@
 package com.team7.tikkle.consumptionType
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.text.style.BackgroundColorSpan
 import android.util.Log
 import androidx.annotation.ColorInt
 import com.team7.tikkle.GlobalApplication
+import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.databinding.ActivityConsumptionIntroBinding
 import com.team7.tikkle.databinding.ActivityEditProfileBinding
 import com.team7.tikkle.retrofit.APIS
@@ -30,6 +32,20 @@ class ConsumptionIntroActivity : AppCompatActivity() {
         Log.d("MypageFragment", "토큰: $userAccessToken")
 
         binding.username.text = userNickname
+
+        // 소비 유형 검사 시작
+        binding.btnNext.setOnClickListener {
+            val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+        // 소비 유형 검사 나중에 하기
+        binding.btnLater.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
 
     }
 }
