@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.Tikkle"
+        android:screenOrientation="portrait"
         tools:targetApi="31">
 
 

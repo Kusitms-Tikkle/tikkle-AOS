@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             if (error != null) {
                 Log.e("토큰 정보 보기 실패", "error")
             } else if (tokenInfo != null) {
-                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else if (token != null) {
-                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
 
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
 //                binding.tvAccessToken.text = "access token : \n${token.accessToken}\n"
