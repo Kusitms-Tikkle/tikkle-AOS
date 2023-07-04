@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
@@ -35,8 +36,8 @@ class MainActivity : AppCompatActivity() {
             .create(APIS::class.java)
 
         /** Hash값 **/
-//        val keyHash = Utility.getKeyHash(this)
-//        Log.d("Hash", keyHash)
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
 
         /** 로그인 정보 확인 **/
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->

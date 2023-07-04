@@ -18,7 +18,7 @@ data class Result(
 )
 
 data class MissionList(
-    val check: Boolean,
+    var check: Boolean,
     val day: String,
     val id: Int,
     val required: Boolean,

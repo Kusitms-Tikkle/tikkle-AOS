@@ -119,6 +119,13 @@ interface APIS {
         @Path("id") id: Int
     ): Call<ChallengeDetail>
 
+    // ChallengeEdit : 챌린지 세부 정보 조회(챌린지 참여 O)
+    @GET("/challenge/detail/participate/{id}")
+    fun challengeEdit(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ChallengeDetail>
+
     // ChallengeDetail : 챌린지 참여 개수 조회
     @GET("/participate/challenge/check")
     fun challengeCount(
@@ -132,18 +139,32 @@ interface APIS {
         @Path("id") id: Int
     ): Call<ResponseChallengeJoin>
 
-    // ChallengeEdit : 챌린지 세부 정보 조회(챌린지 참여 O)
-    @GET("/challenge/detail/participate/{id}")
-    fun challengeEdit(
-        @Header("X-ACCESS-TOKEN") accessToken: String,
-        @Path("id") id: Int
-    ): Call<ChallengeDetail>
-
     // ChallengeEdit : 챌린지 삭제
     @DELETE("/participate/challenge/{id}")
     fun challengeDelete(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path("id") id: Int
     ): Call<ResponseChallengeDelete>
+
+    // addMission : 미션 추가
+    @POST("/participate/mission/{id}")
+    fun addMission(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
+    // deleteMission : 미션 삭제
+    @DELETE("/participate/mission/{id}")
+    fun deleteMission(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
+    // checkMbti : 소비유형검사 참여 여부 확인
+    @GET("/accounts/mbti")
+    fun checkMbti(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): Call<ResponseMbtiCheck>
+
 
 }

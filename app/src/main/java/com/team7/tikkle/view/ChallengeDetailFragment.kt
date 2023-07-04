@@ -1,24 +1,28 @@
 package com.team7.tikkle.view
 
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
+import android.widget.ImageButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.team7.tikkle.ChallengeDetailAdapter
+import com.bumptech.glide.Glide
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
-import com.team7.tikkle.consumptionType.ChallengeDetailViewModel
+import com.team7.tikkle.adapter.ChallengeDetailRecyclerViewAdapter
+import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
 import com.team7.tikkle.data.*
 import com.team7.tikkle.databinding.FragmentChallengeDetailBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
+import com.team7.tikkle.viewModel.ChallengeDetailViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,11 +30,10 @@ import retrofit2.Response
 
 class ChallengeDetailFragment : Fragment() {
 
-    private lateinit var retService: APIS
-    lateinit var binding: FragmentChallengeDetailBinding
-    lateinit var challengeDetailAdapter: ChallengeDetailAdapter
-    lateinit var viewModel: ChallengeDetailViewModel
-    private var challengeNumber = 0
+    private lateinit var retService : APIS
+    private lateinit var viewModel : ChallengeDetailViewModel
+    private lateinit var recyclerViewAdapter : ChallengeDetailRecyclerViewAdapter
+    lateinit var binding : FragmentChallengeDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,120 +47,174 @@ class ChallengeDetailFragment : Fragment() {
         binding = FragmentChallengeDetailBinding.inflate(inflater, container, false)
         retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
 
-        // challenge 페이지 값 받아오기
-        val bundle = arguments
-        if (bundle != null) {
-            val challengeNum = bundle.getInt("challengeNum")
-            val check = bundle.getBoolean("check")
+        // SharedPreferences
+        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+        //val userAccessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3amRjb2d1czIwMkBuYXZlci5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjgyNzc2Mzc5LCJleHAiOjE2OTE0MTYzNzl9.ihbgtVd7bUK0lQNwodY9Hev_-g9ntYcfkYOvQwXq9DBlGZpEZ7RYALk2HbyMoh2S-9gmu-OWpjwZaSkGGonqoA"
+        val challengeNumber = GlobalApplication.prefs.getString("challengeNum", "")
 
-            challengeNumber = challengeNum
-            //val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ChallengeDetailViewModel::class.java)
-            Log.d(challengeNum.toString(), "ChallengeNum detail : ${challengeNum.toString()}")
-            Log.d(check.toString(), "check detail: ${check.toString()}")
+        // viewModel
+        viewModel = ViewModelProvider(this).get(ChallengeDetailViewModel::class.java)
+
+        // RecyclerViewAdapter 초기화
+        recyclerViewAdapter = ChallengeDetailRecyclerViewAdapter { task ->
+
         }
 
-        // 뷰 모델
-        viewModel = ViewModelProvider(this).get(ChallengeDetailViewModel::class.java)
-        viewModel.setData(challengeNumber)
+        // RecyclerView
+        val recyclerView : RecyclerView = binding.recyclerView
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        viewModel.mission.observe(viewLifecycleOwner) { mission ->
+            recyclerViewAdapter.updateList(mission)
+        }
 
-        // 리사이클러뷰
-        challengeDetailAdapter = ChallengeDetailAdapter()
-        val recyclerView: RecyclerView = binding.recyclerView
-        recyclerView.adapter = challengeDetailAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // 챌린지 세부 정보 조회 API
+        challengeDetail(challengeNumber, userAccessToken)
 
-        viewModel.todo.observe(viewLifecycleOwner, Observer { todos ->
-            challengeDetailAdapter.updateTodo(todos as MutableList<MissionList>)
-        })
+        // 챌린지 참여 개수 조회 API
+        challengeCount(userAccessToken)
 
-        // 챌린지 세부 정보 조회
-        challengeDetail(challengeNumber)
+        // 챌린지 참여 신청 API
+        binding.btnJoin.setOnClickListener {
+            checkMbti(challengeNumber, userAccessToken)
 
-        // 참여 중인 챌린지 개수 확인
-        challengeCount()
-
-        // 챌린지 참여 신청
-        binding.btnDo.setOnClickListener {
-            val challengeComplete = ChallengeCompleteFragment()
-            challengeJoin(challengeNumber)
-            fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.View_constraint_layout, challengeComplete)
-                addToBackStack(null)
-                commit()
-            }
+            // 소비 유형 검사 참여 여부 확인
+            // 참여 전 -> 다이얼로그
+            // 참여 후 -> join
         }
 
         return binding.root
     }
 
-    // 데이터 조회
-    val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-    //val userAccessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3amRjb2d1czIwMkBuYXZlci5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjgyNzc2Mzc5LCJleHAiOjE2OTE0MTYzNzl9.ihbgtVd7bUK0lQNwodY9Hev_-g9ntYcfkYOvQwXq9DBlGZpEZ7RYALk2HbyMoh2S-9gmu-OWpjwZaSkGGonqoA"
-
-
-    // 챌린지 세부 정보 조회
-    private fun challengeDetail(challengeNum: Int){
-        retService.challengeDetail(userAccessToken, challengeNum).enqueue(object : Callback<ChallengeDetail> {
-                override fun onResponse(call: Call<ChallengeDetail>, response: Response<ChallengeDetail>) {
-                    if (response.isSuccessful) {
-                        val result = response.body()?.result
-                        Log.d(result.toString(), "ChallengeDetail Response: ${result.toString()}")
-                        binding.challengeName.text = result?.title.toString()
-                        binding.challengeInfo.text = result?.intro.toString()
-                        when (challengeNumber) {
-                            1 -> { binding.challengeImg.setImageResource(R.drawable.ic_challenge_1) }
-                            2 -> { binding.challengeImg.setImageResource(R.drawable.ic_challenge_2) }
-                            3 -> { binding.challengeImg.setImageResource(R.drawable.ic_challenge_3) }
-                            4 -> { binding.challengeImg.setImageResource(R.drawable.ic_challenge_4) }
-                            }
-                        //Glide.with(this).load(url).into(binding.challengeImg)
-                    } else {
-                    }
-                }
-                override fun onFailure(call: Call<ChallengeDetail>, t: Throwable) {
-                    Log.d(t.toString(), "error: ${t.toString()}")
-                }
-            })
-    }
-
-    // 참여 중인 챌린지 개수 확인
-    private fun challengeCount() {
-        retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
-        retService.challengeCount(userAccessToken).enqueue(object : Callback<ResponseChallengeCount> {
-            override fun onResponse(call: Call<ResponseChallengeCount>, response: Response<ResponseChallengeCount>) {
+    // 챌린지 세부 정보 조회 API
+    private fun challengeDetail(challengeNum: String, userAccessToken : String){
+        val num = challengeNum.toInt()
+        retService.challengeDetail(userAccessToken, num).enqueue(object :
+            Callback<ChallengeDetail> {
+            override fun onResponse(call: Call<ChallengeDetail>, response: Response<ChallengeDetail>) {
                 if (response.isSuccessful) {
-                    val checkResponse = response.body()?.result
-                    if (checkResponse == true) { // 참여 중인 챌린지 2개 일 경우
-                        binding.btnDo.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_gray_300))
-                        binding.btnDoText.text = "챌린지는 2개까지만 신청 가능해요!"
-                        binding.btnDo.isEnabled = false // 클릭하지 못하도록 설정
-                    } else {
-                        binding.btnDo.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_orange))
-                        binding.btnDoText.text = "챌린지 신청하기"
-                        binding.btnDo.isEnabled = true
-                    }
+                    val result = response.body()?.result
+                    val info = result?.intro.toString()
+                    Log.d("challengeDetail API : ", result.toString())
+                    binding.challengeName.text = result?.title.toString()
+                    binding.challengeInfo.text = info.replace("@", "\n")
+
+                    val url = result?.imageUrl.toString()
+                    context?.let { Glide.with(it).load(url).error(R.drawable.ic_challenge_1).into(binding.challengeImg)}
+
                 } else {
+                    Log.d("challengeDetail API : ", "fail")
                 }
             }
-            override fun onFailure(call: Call<ResponseChallengeCount>, t: Throwable) {
-                Log.d(t.toString(), "challengeCount error")
+            override fun onFailure(call: Call<ChallengeDetail>, t: Throwable) {
+                Log.d(t.toString(), "error: ${t.toString()}")
             }
         })
     }
 
-    // 챌린지 참여 신청
-    private fun challengeJoin(challengeNum: Int){
-        retService.challengeJoin(userAccessToken, challengeNum).enqueue(object : Callback<ResponseChallengeJoin> {
+    // 챌린지 참여 신청 API
+    private fun challengeJoin(challengeNum : String, userAccessToken : String){
+        val num = challengeNum.toInt()
+        retService.challengeJoin(userAccessToken, num).enqueue(object : Callback<ResponseChallengeJoin> {
             override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
-                    Log.d(result.toString(), "챌린지 신청 성공 여부: ${result.toString()}")
+                    Log.d("challengeJoin API : ", result.toString())
                 } else {
+                    Log.d("challengeJoin API : ", "fail")
                 }
             }
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
         })
+    }
+
+    // 챌린지 참여 개수 조회 API
+    private fun challengeCount(userAccessToken : String){
+        retService.challengeCount(userAccessToken).enqueue(object : Callback<ResponseChallengeCount> {
+            override fun onResponse(call: Call<ResponseChallengeCount>, response: Response<ResponseChallengeCount>) {
+                if (response.isSuccessful) {
+                    val message = response.body()?.message
+                    val result = response.body()?.result
+                    Log.d("challengeCount API : ", message.toString())
+
+                    if(result == true) {
+                        binding.btnJoin.setImageResource(R.drawable.bg_button_gray_300)
+                        binding.textJoin.text = "챌린지는 2개까지만 신청 가능해요!"
+                        binding.btnJoin.isClickable = false
+                        binding.btnJoin.isEnabled = false
+                    } else {
+                        binding.btnJoin.setImageResource(R.drawable.bg_button_orange)
+                        binding.textJoin.text = "챌린지 신청하기"
+                    }
+                } else {
+                    Log.d("challengeCount API : ", "fail")
+                }
+            }
+            override fun onFailure(call: Call<ResponseChallengeCount>, t: Throwable) {
+                Log.d(t.toString(), "error: ${t.toString()}")
+            }
+        })
+    }
+
+    // 챌린지 참여 API 호출 + 화면 이동
+    private fun join(challengeNum: String, userAccessToken: String) {
+        challengeJoin(challengeNum, userAccessToken)
+        fragmentManager?.beginTransaction()?.apply {
+            replace(R.id.View_constraint_layout, ChallengeCompleteFragment())
+            addToBackStack(null)
+            commit()
+        }
+    }
+
+    private fun checkMbti(challengeNum : String, userAccessToken: String) {
+        retService.checkMbti(userAccessToken).enqueue(object : Callback<ResponseMbtiCheck> {
+            override fun onResponse(call: Call<ResponseMbtiCheck>, response: Response<ResponseMbtiCheck>) {
+                if (response.isSuccessful) {
+                    val result = response.body()?.message
+                    val check : Boolean? = response.body()?.result
+                    //val check : Boolean = false
+                    Log.d("checkMbti API : ", result.toString())
+
+                    if (check == true) { // 소비 유형 검사 참여 O
+                        join(challengeNum, userAccessToken)
+                    } else if (check == false) { // 소비 유형 검사 참여 X
+                        showDialog(challengeNum, userAccessToken)
+                    }
+
+                } else {
+                    Log.d("checkMbti API : ", "fail")
+                }
+            }
+            override fun onFailure(call: Call<ResponseMbtiCheck>, t: Throwable) {
+                Log.d(t.toString(), "error: ${t.toString()}")
+            }
+        })
+    }
+
+    private fun showDialog(challengeNumber : String, userAccessToken : String) {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_join_challenge)
+
+        val join = dialog.findViewById<ConstraintLayout>(R.id.btn_join)
+        val mbti = dialog.findViewById<ConstraintLayout>(R.id.btn_mbti)
+        val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
+
+        exit.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        join.setOnClickListener {// 챌린지 참여
+            join(challengeNumber, userAccessToken)
+            dialog.dismiss()
+        }
+
+        mbti.setOnClickListener {// 소비 유형 검사 화면으로 이동
+            val intent = Intent(requireActivity(), ConsumptionTypeActivity_1::class.java)
+            startActivity(intent)
+        }
+
+        dialog.show()
     }
 }
