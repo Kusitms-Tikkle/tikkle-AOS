@@ -83,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="160dp"
             android:backgroundTint="@color/white"
-            android:background="@android:color/transparent"
+
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

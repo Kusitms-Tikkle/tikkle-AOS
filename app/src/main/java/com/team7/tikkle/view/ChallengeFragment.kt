@@ -37,29 +37,26 @@ class ChallengeFragment : Fragment() {
         binding = FragmentChallengeBinding.inflate(inflater, container, false)
         retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
 
-        // 데이터 조회
+        // SharedPreferences
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-        //val userAccessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3amRjb2d1czIwMkBuYXZlci5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjgyNzc2Mzc5LCJleHAiOjE2OTE0MTYzNzl9.ihbgtVd7bUK0lQNwodY9Hev_-g9ntYcfkYOvQwXq9DBlGZpEZ7RYALk2HbyMoh2S-9gmu-OWpjwZaSkGGonqoA"
+        // val userAccessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3amRjb2d1czIwMkBuYXZlci5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjgyNzc2Mzc5LCJleHAiOjE2OTE0MTYzNzl9.ihbgtVd7bUK0lQNwodY9Hev_-g9ntYcfkYOvQwXq9DBlGZpEZ7RYALk2HbyMoh2S-9gmu-OWpjwZaSkGGonqoA"
 
         val challengeDetail = ChallengeDetailFragment()
         val challengeEdit = ChallengeEditFragment()
 
+        // 1번 챌린지
         binding.challenge1.setOnClickListener {
-            challengeNum = 1
-            doChallengeCheck(userAccessToken, challengeNum) { result ->
-                val bundle = Bundle()
-                bundle.putInt("challengeNum", challengeNum)
-                bundle.putBoolean("check", result)
+            // 챌린지 참여 여부 확인 API
+            doChallengeCheck(userAccessToken, 1) { result ->
+                GlobalApplication.prefs.setString("challengeNum", "1") // 챌린지 번호
 
-                if (result) { // 챌린지에 참여중일 경우 챌린지 수정 페이지로 이동
-                    challengeEdit.arguments = bundle
+                if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
-                } else { // 챌린지에 참여중이 아닐 경우 챌린지 디테일 페이지로 이동
-                    challengeDetail.arguments = bundle
+                } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeDetail)
                         addToBackStack(null)
@@ -69,22 +66,19 @@ class ChallengeFragment : Fragment() {
             }
         }
 
+        // 2번 챌린지
         binding.challenge2.setOnClickListener {
-            challengeNum = 2
-            doChallengeCheck(userAccessToken, challengeNum) { result ->
-                val bundle = Bundle()
-                bundle.putInt("challengeNum", challengeNum)
-                bundle.putBoolean("check", result)
+            // 챌린지 참여 여부 확인 API
+            doChallengeCheck(userAccessToken, 2) { result ->
+                GlobalApplication.prefs.setString("challengeNum", "2") // 챌린지 번호
 
-                if (result) { // 챌린지에 참여중일 경우 챌린지 수정 페이지로 이동
-                    challengeEdit.arguments = bundle
+                if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
-                } else { // 챌린지에 참여중이 아닐 경우 챌린지 디테일 페이지로 이동
-                    challengeDetail.arguments = bundle
+                } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeDetail)
                         addToBackStack(null)
@@ -94,22 +88,19 @@ class ChallengeFragment : Fragment() {
             }
         }
 
+        // 3번 챌린지
         binding.challenge3.setOnClickListener {
-            challengeNum = 3
-            doChallengeCheck(userAccessToken, challengeNum) { result ->
-                val bundle = Bundle()
-                bundle.putInt("challengeNum", challengeNum)
-                bundle.putBoolean("check", result)
+            // 챌린지 참여 여부 확인 API
+            doChallengeCheck(userAccessToken, 3) { result ->
+                GlobalApplication.prefs.setString("challengeNum", "3") // 챌린지 번호
 
-                if (result) { // 챌린지에 참여중일 경우 챌린지 수정 페이지로 이동
-                    challengeEdit.arguments = bundle
+                if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
-                } else { // 챌린지에 참여중이 아닐 경우 챌린지 디테일 페이지로 이동
-                    challengeDetail.arguments = bundle
+                } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeDetail)
                         addToBackStack(null)
@@ -119,22 +110,19 @@ class ChallengeFragment : Fragment() {
             }
         }
 
+        // 4번 챌린지
         binding.challenge4.setOnClickListener {
-            challengeNum = 4
-            doChallengeCheck(userAccessToken, challengeNum) { result ->
-                val bundle = Bundle()
-                bundle.putInt("challengeNum", challengeNum)
-                bundle.putBoolean("check", result)
+            // 챌린지 참여 여부 확인 API
+            doChallengeCheck(userAccessToken, 4) { result ->
+                GlobalApplication.prefs.setString("challengeNum", "4") // 챌린지 번호
 
-                if (result) { // 챌린지에 참여중일 경우 챌린지 수정 페이지로 이동
-                    challengeEdit.arguments = bundle
+                if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
-                } else { // 챌린지에 참여중이 아닐 경우 챌린지 디테일 페이지로 이동
-                    challengeDetail.arguments = bundle
+                } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
                         replace(R.id.View_constraint_layout, challengeDetail)
                         addToBackStack(null)
@@ -143,21 +131,20 @@ class ChallengeFragment : Fragment() {
                 }
             }
         }
-
 
         return binding.root
         }
 
-    // 해당 챌린지에 참여중인지 확인
+    // 챌린지 참여 여부 확인 API
     private fun doChallengeCheck(token: String, challengeNum: Int, onResult: (Boolean) -> Unit) {
         lifecycleScope.launch {
             try {
                 retService.challengeCheck(token, challengeNum).enqueue(object : Callback<ChallengeCheck> {
                     override fun onResponse(call: Call<ChallengeCheck>, response: Response<ChallengeCheck>) {
-                        if (response.isSuccessful) {
+                        if (response.isSuccessful) { // 챌린지 참여
                             val checkResponse = response.body()?.result
                             onResult(checkResponse == true)
-                        } else {
+                        } else { // 챌린지 미 참여
                             onResult(false)
                         }
                     } override fun onFailure(call: Call<ChallengeCheck>, t: Throwable) {
