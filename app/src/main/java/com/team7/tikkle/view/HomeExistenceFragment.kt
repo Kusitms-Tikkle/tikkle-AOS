@@ -174,7 +174,7 @@ class HomeExistenceFragment : Fragment() {
 
         homeRecyclerViewAdapter = HomeRecyclerViewAdapter { task ->
             //click event 처리
-            Toast.makeText(requireContext(), "Clicked item ${task.id}", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), "Clicked item ${task.id}", Toast.LENGTH_SHORT).show()
             if(task.checked){
                 //post true
                 postTodo(userAccessToken, task.id.toLong())

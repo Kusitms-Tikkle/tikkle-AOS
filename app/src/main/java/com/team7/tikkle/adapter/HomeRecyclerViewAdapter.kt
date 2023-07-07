@@ -67,7 +67,7 @@ class MyViewHolder(val view: View):RecyclerView.ViewHolder(view){
         if (todoChecked) {
             titleTextView.setTextColor(Color.parseColor("#343434")) // 검은색
             //서버에서 받은 값으로 색 바꾸기
-            checkImageView.setColorFilter(Color.parseColor("#FFBAC7"))
+            checkImageView.setColorFilter(Color.parseColor(colorText))
         } else {
             titleTextView.setTextColor(Color.parseColor("#BABABA")) // 회색
             checkImageView.setColorFilter(ContextCompat.getColor(view.context, android.R.color.transparent))
