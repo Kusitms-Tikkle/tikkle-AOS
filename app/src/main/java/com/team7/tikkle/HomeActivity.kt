@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.consumptionType.ConsumptionResultActivity_1
 import com.team7.tikkle.data.ResponseHomeExistence
 import com.team7.tikkle.data.ResponseMyPage
@@ -31,12 +34,20 @@ class HomeActivity : AppCompatActivity() {
     private val userDao by lazy { UserDatabase.getDatabase(this).userDao() }
     private val userViewModel by viewModels<UserViewModel> { UserViewModel.Factory(userDao) }
 
+    val analytics = Firebase.analytics
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Log an event
+        analytics.setCurrentScreen(this, "HomeActivity", null /* class override */)
+        val bundle = Bundle()
+        bundle.putString("message", "[Test] Home Activity Started")
+        analytics.logEvent("my_event", bundle)
 
         //retrofit
         retService = RetrofitClient
@@ -134,6 +145,7 @@ class HomeActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, ChallengeFragment())
                         .commitAllowingStateLoss()
+                    logScreenView(ChallengeFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
 
@@ -141,6 +153,7 @@ class HomeActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, HomeFragment())
                         .commitAllowingStateLoss()
+                    logScreenView(HomeFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
 
@@ -148,10 +161,19 @@ class HomeActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, MypageFragment())
                         .commitAllowingStateLoss()
+                    logScreenView(MypageFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
             }
             false
         }
+    }
+
+    private fun logScreenView(screenName: String) {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenName)
+        analytics.setCurrentScreen(this, screenName, null) // 추가된 코드
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 }
