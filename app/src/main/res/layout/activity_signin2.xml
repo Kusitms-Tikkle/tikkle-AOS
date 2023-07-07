@@ -126,11 +126,11 @@ tools:context=".login.SigninActivity2">
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
         android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
         android:gravity="left|center_vertical"
         android:padding="10dp"
-        android:text="개인정보 수집 동의 (필수)"
+        android:text="개인정보 수집 및 이용약관 동의 (필수)"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -156,27 +156,52 @@ tools:context=".login.SigninActivity2">
         android:id="@+id/privacy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="5dp"
         android:backgroundTint="@color/white"
         android:text="티끌 개인정보 처리 방침"
         android:textColor="@color/gray_300"
         android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnOptional"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEssential"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/btnEssential" />
 
     <ImageView
         android:id="@+id/btnprivacy"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnOptional"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.003"
         app:layout_constraintStart_toEndOf="@+id/privacy"
         app:layout_constraintTop_toBottomOf="@+id/btnEssential"
-        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/btn_next" />
+
+    <TextView
+        android:id="@+id/user_agreements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="1dp"
+        android:backgroundTint="@color/white"
+        android:text="티끌 이용약관"
+        android:textColor="@color/gray_300"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnOptional"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/privacy"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/btn_user_agreements"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnOptional"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toEndOf="@+id/privacy"
         app:srcCompat="@drawable/btn_next" />
 
     <TextView
@@ -184,7 +209,7 @@ tools:context=".login.SigninActivity2">
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="50dp"
         android:layout_marginRight="25dp"
         android:gravity="left|center_vertical"
         android:padding="10dp"

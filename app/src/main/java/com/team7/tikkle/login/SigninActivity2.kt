@@ -2,6 +2,7 @@ package com.team7.tikkle.login
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,12 +39,16 @@ class SigninActivity2 : AppCompatActivity() {
         //닉네임 setString
         GlobalApplication.prefs.setString("userNickname", mynickname)
 
-        //개인정보처리방침
+        //개인정보처리방침 조회
        binding.privacy.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
+           var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.naver.com/"))
+           startActivity(intent)
         }
-        binding.btnprivacy.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
+
+        // 이용약관 조회
+        binding.userAgreements.setOnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/"))
+            startActivity(intent)
         }
 
 
