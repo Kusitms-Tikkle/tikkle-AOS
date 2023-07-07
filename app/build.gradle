@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id("com.google.gms.google-services")
 }
 
 Properties properties = new  Properties()
@@ -13,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.team7.tikkle"
-        minSdk 31
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -83,8 +84,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation 'com.google.android.material:material:1.0.0'
     //GA
-    implementation platform('com.google.firebase:firebase-bom:30.0.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"

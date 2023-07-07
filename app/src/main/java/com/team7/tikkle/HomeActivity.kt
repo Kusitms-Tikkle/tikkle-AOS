@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.consumptionType.ConsumptionResultActivity_1
 import com.team7.tikkle.data.ResponseHomeExistence
 import com.team7.tikkle.data.ResponseMyPage
@@ -31,12 +33,19 @@ class HomeActivity : AppCompatActivity() {
     private val userDao by lazy { UserDatabase.getDatabase(this).userDao() }
     private val userViewModel by viewModels<UserViewModel> { UserViewModel.Factory(userDao) }
 
+    val analytics = Firebase.analytics
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Log an event
+        val bundle = Bundle()
+        bundle.putString("message", "[Test] Main Activity Started")
+        analytics.logEvent("my_event", bundle)
 
         //retrofit
         retService = RetrofitClient
