@@ -41,13 +41,13 @@ class SigninActivity2 : AppCompatActivity() {
 
         //개인정보처리방침 조회
        binding.privacy.setOnClickListener {
-           var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.naver.com/"))
+           var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/"))
            startActivity(intent)
         }
 
         // 이용약관 조회
         binding.userAgreements.setOnClickListener {
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/"))
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/"))
             startActivity(intent)
         }
 
