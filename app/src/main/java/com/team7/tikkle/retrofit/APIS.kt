@@ -53,17 +53,17 @@ interface APIS {
     ): Response<ResponseLogout>
 
     //계정 삭제
-    @PATCH("/accounts/delete")
+    @DELETE("/accounts/delete")
     suspend fun delete(
         @Header("X-ACCESS-TOKEN") token: String,
     ): Response<ResponseAccountDelete>
 
     //마이페이지 정보 수정
-    data class RequestAccountBody(val nickname: String, val mbti: String)
-    @PATCH("/accounts/information")
+//    data class RequestAccountBody(val nickname: String, val mbti: String)
+    @PATCH("/accounts/information/{nickname}")
     suspend fun edit(
         @Header("X-ACCESS-TOKEN") token: String,
-        @Body body: RequestAccountBody
+        @Path(value = "nickname") nickname: String
     ): Response<ResponseAccountEdit>
 
    //홈 화면 Todo 조회
