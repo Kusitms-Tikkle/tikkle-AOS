@@ -7,20 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-<<<<<<< Updated upstream
-            <value value="C:\Users\kim00\.android\avd\Tikkle.avd" />
-          </Key>
-        </deviceKey>
-      </Target>
-    </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2023-07-07T16:49:20.886661900Z" />
-=======
             <value value="$USER_HOME$/.android/avd/Galaxy_S20_Plus_API_33.avd" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2023-07-09T15:12:16.553917Z" />
->>>>>>> Stashed changes
+    <timeTargetWasSelectedWithDropDown value="2023-07-09T16:43:15.950689Z" />
   </component>
 </project>
