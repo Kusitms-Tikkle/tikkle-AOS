@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
 import com.team7.tikkle.adapter.ChallengeEditRecyclerViewAdapter
@@ -34,6 +37,7 @@ class ChallengeEditFragment : Fragment() {
     private lateinit var viewModel : ChallengeEditViewModel
     private lateinit var recyclerViewAdapter : ChallengeEditRecyclerViewAdapter
     lateinit var binding : FragmentChallengeEditBinding
+    private val firebaseAnalytics = Firebase.analytics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -199,10 +203,26 @@ class ChallengeEditFragment : Fragment() {
         val exit = dialog.findViewById<ConstraintLayout>(R.id.btn_exit)
 
         exit.setOnClickListener {
+//            delete_challengedelete_cancel(challengeNumber)
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "cancel")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_cancel ($challengeNumber)")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
+            }
+            firebaseAnalytics.logEvent("delete", bundle)
+
             dialog.dismiss()
         }
 
         delete.setOnClickListener {
+            //delete_challengedelete_challenge(challengeNumber)
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "delete_challenge")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_challenge ($challengeNumber)")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
+            }
+            firebaseAnalytics.logEvent("delete", bundle)
+
             delete(challengeNumber, userAccessToken)
             dialog.dismiss()
         }

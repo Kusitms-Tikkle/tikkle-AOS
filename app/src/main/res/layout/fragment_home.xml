@@ -283,25 +283,25 @@
             android:text="아직 참여중인 미션이 없어요"
             android:textColor="@color/gray_400"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/challenge_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/string1"
-            app:layout_constraintVertical_bias="0.035" />
+            app:layout_constraintVertical_bias="0.5" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/challenge_container"
             android:layout_width="match_parent"
+            android:layout_height="93dp"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
-            android:layout_height="93dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="51dp"
             android:background="@drawable/edittext_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string2">
+            app:layout_constraintTop_toBottomOf="@+id/string1">
 
             <TextView
                 android:id="@+id/string3"
@@ -344,7 +344,7 @@
                 app:layout_constraintStart_toEndOf="@+id/string3"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
-                app:tint="@color/black"/>
+                app:tint="@color/black" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,10 +23,10 @@ class ConsumptionResultViewModel () : ViewModel() {
         get() = _result
 
     init {
-        fetchTasks()
+        consumptionResult()
     }
 
-    private fun fetchTasks() {
+    public fun consumptionResult() {
 
         //retrofit
         retService = RetrofitClient
@@ -45,13 +45,12 @@ class ConsumptionResultViewModel () : ViewModel() {
                     _tasks.value = response.body()?.result?.challengeList
                     Log.d("ConsumptionResultViewModel API Success", "fetchTasks: ${response.body()?.result?.challengeList}")
                 } else {
-                    Log.d("ConsumptionResultViewModel API Fail", "fetchTasks: ${response.errorBody()}")
+                    Log.d("ConsumptionResultViewModel API Fail", "fetchTasks: ${response.errorBody()?.string()}")
                 }
             } catch (e: Exception) {
                 Log.d("ConsumptionResultViewModel API Fail", "fetchTasks: ${e.message}")
             }
         }
     }
-
 
 }

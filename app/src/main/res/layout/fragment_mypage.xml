@@ -77,18 +77,18 @@
             app:layout_constraintVertical_bias="0.154"
             app:srcCompat="@drawable/ic_myprofile" />
 
+
         <ImageView
             android:id="@+id/btnEditMyprofile"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.224"
+            app:layout_constraintHorizontal_bias="0.228"
             app:layout_constraintStart_toStartOf="@+id/imageMyprofile"
             app:layout_constraintTop_toTopOf="@+id/imageMyprofile"
-            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintVertical_bias="0.196"
             app:srcCompat="@drawable/btn_editprofile" />
-
 
         <TextView
             android:id="@+id/mynickname"
