@@ -1,6 +1,7 @@
 package com.team7.tikkle.view
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,6 +48,18 @@ class MypageEditFragment : Fragment() {
 
         binding.accountDeletion.setOnClickListener{
             delete(userAccessToken)
+        }
+
+        binding.termsOfUse.setOnClickListener{
+            // 이용약관 조회
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/"))
+            startActivity(intent)
+        }
+
+        binding.privacyPolicy.setOnClickListener{
+            //개인정보처리방침 조회
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/"))
+            startActivity(intent)
         }
 
         return binding.root
