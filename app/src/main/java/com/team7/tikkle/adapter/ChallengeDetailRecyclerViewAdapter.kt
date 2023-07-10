@@ -16,7 +16,7 @@ class ChallengeDetailRecyclerViewAdapter (
     private val clickListener : (MissionList) -> Unit
 ) : RecyclerView.Adapter<DetailViewHolder>(){
 
-    fun updateList(newList : List<MissionList>){
+    fun updateList(newList : List<MissionList>){ // commit
         mission.clear()
         mission.addAll(newList)
         notifyDataSetChanged()

@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.util.Utility
@@ -26,6 +28,8 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var retService: APIS
     private var authToken : String ?= null
+    val analytics = Firebase.analytics
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -137,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
 //                                    intent로 accessToken값 넘기기 & sharedPreference에 저장
                                     GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
-//                                    //signIn인 경우 Home 화면으로 넘어감 <진찌>
+//                                    //signIn인 경우 Home 화면으로 넘어감
                                     val intent = Intent(this@MainActivity, HomeActivity::class.java)
                                     intent.putExtra("accessToken", myAccessToken)
                                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
