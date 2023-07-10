@@ -37,6 +37,8 @@ class ChallengeDetailFragment : Fragment() {
     private lateinit var viewModel : ChallengeDetailViewModel
     private lateinit var recyclerViewAdapter : ChallengeDetailRecyclerViewAdapter
     lateinit var binding : FragmentChallengeDetailBinding
+
+    var arrMutable = mutableListOf<Int>()
     private val firebaseAnalytics = Firebase.analytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,11 +58,28 @@ class ChallengeDetailFragment : Fragment() {
         //val userAccessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3amRjb2d1czIwMkBuYXZlci5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjgyNzc2Mzc5LCJleHAiOjE2OTE0MTYzNzl9.ihbgtVd7bUK0lQNwodY9Hev_-g9ntYcfkYOvQwXq9DBlGZpEZ7RYALk2HbyMoh2S-9gmu-OWpjwZaSkGGonqoA"
         val challengeNumber = GlobalApplication.prefs.getString("challengeNum", "")
 
+
         // viewModel
         viewModel = ViewModelProvider(this).get(ChallengeDetailViewModel::class.java)
 
         // RecyclerViewAdapter 초기화
         recyclerViewAdapter = ChallengeDetailRecyclerViewAdapter { task ->
+
+            // Click
+            val id = task.id.toInt()
+            Log.d("ChallengeEditRecyclerView", id.toString())
+
+            if (task.check) {
+                arrMutable.remove(id)
+                recyclerViewAdapter.notifyDataSetChanged()
+            } else { // 미션 추가 선택할 경우
+                arrMutable.add(id)
+                recyclerViewAdapter.notifyDataSetChanged()
+            }
+
+            // 아이템 상태 변경 및 갱신
+            task.check = !task.check
+            recyclerViewAdapter.updateItem(task)
 
         }
 
@@ -80,11 +99,8 @@ class ChallengeDetailFragment : Fragment() {
 
         // 챌린지 참여 신청 API
         binding.btnJoin.setOnClickListener {
-            checkMbti(challengeNumber, userAccessToken)
-
             // 소비 유형 검사 참여 여부 확인
-            // 참여 전 -> 다이얼로그
-            // 참여 후 -> join
+            checkMbti(challengeNumber, userAccessToken)
         }
 
         return binding.root
@@ -124,6 +140,13 @@ class ChallengeDetailFragment : Fragment() {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("challengeJoin API : ", result.toString())
+
+                    // 미션 참여 API 호출
+                    for (item in arrMutable) {
+                        addMission(userAccessToken, item)
+                        Log.d("미션 추가 API 호출", item.toString())
+                    }
+
                 } else {
                     Log.d("challengeJoin API : ", "fail")
                 }
@@ -164,7 +187,10 @@ class ChallengeDetailFragment : Fragment() {
 
     // 챌린지 참여 API 호출 + 화면 이동
     private fun join(challengeNum: String, userAccessToken: String) {
+        // 챌린지 참여 API 호출
         challengeJoin(challengeNum, userAccessToken)
+        Log.d("챌린지 추가 API", " 호출")
+
         fragmentManager?.beginTransaction()?.apply {
             replace(R.id.View_constraint_layout, ChallengeCompleteFragment())
             addToBackStack(null)
@@ -172,6 +198,7 @@ class ChallengeDetailFragment : Fragment() {
         }
     }
 
+    // 소비 유형 검사 참여 여부 확인 API
     private fun checkMbti(challengeNum : String, userAccessToken: String) {
         retService.checkMbti(userAccessToken).enqueue(object : Callback<ResponseMbtiCheck> {
             override fun onResponse(call: Call<ResponseMbtiCheck>, response: Response<ResponseMbtiCheck>) {
@@ -197,6 +224,7 @@ class ChallengeDetailFragment : Fragment() {
         })
     }
 
+    // Dialog 출력 함수
     private fun showDialog(challengeNumber : String, userAccessToken : String) {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_join_challenge)
@@ -245,4 +273,23 @@ class ChallengeDetailFragment : Fragment() {
 
         dialog.show()
     }
-}
+
+    // 미션 추가 API
+    private fun addMission(userAccessToken : String, id: Int){
+        retService.addMission(userAccessToken, id).enqueue(object :
+            Callback<ResponseChallengeJoin> {
+            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+                if (response.isSuccessful) {
+                    val result = response.body()?.message
+                    Log.d("addMission API : ", result.toString())
+                } else {
+                    Log.d("addMission API : ", "fail")
+                }
+            }
+            override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
+                Log.d(t.toString(), "error: ${t.toString()}")
+            }
+        })
+    }
+
+}  // commit
