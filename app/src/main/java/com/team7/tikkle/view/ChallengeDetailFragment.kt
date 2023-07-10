@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
 import com.team7.tikkle.adapter.ChallengeDetailRecyclerViewAdapter
@@ -34,7 +37,9 @@ class ChallengeDetailFragment : Fragment() {
     private lateinit var viewModel : ChallengeDetailViewModel
     private lateinit var recyclerViewAdapter : ChallengeDetailRecyclerViewAdapter
     lateinit var binding : FragmentChallengeDetailBinding
+
     var arrMutable = mutableListOf<Int>()
+    private val firebaseAnalytics = Firebase.analytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -229,15 +234,39 @@ class ChallengeDetailFragment : Fragment() {
         val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
 
         exit.setOnClickListener {
+//            modal_notest_cancel
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "modal_notest_cancel")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_notest_cancel")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
+            }
+            firebaseAnalytics.logEvent("notest", bundle)
+
             dialog.dismiss()
         }
 
         join.setOnClickListener {// 챌린지 참여
+            //modal_notest_challenge
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "modal_notest_challenge")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_notest_challenge")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
+            }
+            firebaseAnalytics.logEvent("notest", bundle)
+
             join(challengeNumber, userAccessToken)
             dialog.dismiss()
         }
 
         mbti.setOnClickListener {// 소비 유형 검사 화면으로 이동
+            //modal_notest_test
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "modal_notest_test")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_notest_test")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
+            }
+            firebaseAnalytics.logEvent("notest", bundle)
+
             val intent = Intent(requireActivity(), ConsumptionTypeActivity_1::class.java)
             startActivity(intent)
         }
