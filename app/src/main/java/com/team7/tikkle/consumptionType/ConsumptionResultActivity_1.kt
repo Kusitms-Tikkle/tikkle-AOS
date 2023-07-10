@@ -126,6 +126,7 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
             val imageView = findViewById<ImageView>(R.id.typeImg)
             Glide.with(this)
                 .load(imageUrl) // URL
+                .error(R.drawable.img_tybe_10) // 에러 시
                 .into(imageView)
 //            binding.intro.text = intro
         })

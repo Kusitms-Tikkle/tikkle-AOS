@@ -59,7 +59,7 @@ class MypageFragment : Fragment() {
                     // Response body를 ResponseMyPage 타입으로 변환
                     val myPageData: ResponseMyPage? = response.body()
                     Log.d("MypageFragment", "Result: $myPageData")
-                    var userName = myPageData?.result?.nickname?.toString()
+                    var userName = myPageData?.result?.nickname?.toString() + "님"
                     var userLabel = myPageData?.result?.label?.toString()
                     val userImage = myPageData?.result?.imageUrl?.toString()
 

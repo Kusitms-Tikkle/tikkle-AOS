@@ -78,7 +78,8 @@ class MypageEditFragment : Fragment() {
 
                     Toast.makeText(activity, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
                     GlobalApplication.prefs.setString("userNickname", "")
-                    val intent = Intent(activity, HomeActivity::class.java)
+                    GlobalApplication.prefs.setString("userAccessToken", "")
+                    val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
 
 
