@@ -148,20 +148,20 @@ class HomeFragment : Fragment() {
             binding.textsun.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 2) {
             strWeek = "월"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.mon.setImageResource(R.drawable.ic_calendar_today)
             binding.textmon.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 3) {
             strWeek = "화"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.tue.setImageResource(R.drawable.ic_calendar_today)
             binding.texttue.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 4) {
             strWeek = "수"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.wed.setImageResource(R.drawable.ic_calendar_today)
             binding.textwed.setTextColor(Color.parseColor("#F56508"))
 
         } else if (nWeek == 5) {
             strWeek = "목"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.thu.setImageResource(R.drawable.ic_calendar_today)
             binding.textthu.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 6
         ) {
