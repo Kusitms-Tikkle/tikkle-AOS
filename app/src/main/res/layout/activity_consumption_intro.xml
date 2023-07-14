@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="신청 완료"
                 android:textColor="@color/gray_500"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 android:fontFamily="@font/pretendard_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -48,6 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+            android:scaleType="center"
             android:background="@drawable/bg_challenge_complete">
 
             <TextView
@@ -92,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="6dp"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/pretendard_semibold"
                 android:text="이용자"
                 android:textColor="@color/orange_100"
                 android:textSize="14dp"
@@ -105,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="님의 티끌이는"
+                android:text=" 님의 티끌이는"
                 android:textColor="@color/gray_500"
                 android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/user_name"
@@ -147,16 +148,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/btn_next"
                 app:layout_constraintStart_toStartOf="@+id/btn_next"
                 app:layout_constraintTop_toTopOf="@+id/btn_next" />
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="379dp"
-                android:layout_height="145dp"
-                android:layout_marginBottom="30dp"
-                android:src="@drawable/bg_consumption_intro"
-                app:layout_constraintBottom_toTopOf="@+id/btn_next"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/btn_later"
