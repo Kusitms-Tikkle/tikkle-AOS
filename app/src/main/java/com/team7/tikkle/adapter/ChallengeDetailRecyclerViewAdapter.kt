@@ -73,8 +73,20 @@ class DetailViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
 
         if (task.day == "ALL"){
             day.text = "매일"
+        } else if (task.day == "MON"){
+            day.text = "월요일"
+        } else if (task.day == "TUE"){
+            day.text = "화요일"
+        } else if (task.day == "WED"){
+            day.text = "수요일"
+        } else if (task.day == "THUR"){
+            day.text = "목요일"
+        } else if (task.day == "FRI"){
+            day.text = "금요일"
+        } else if (task.day == "SAT"){
+            day.text = "토요일"
         } else {
-            day.text = "주 1회"
+            day.text = "일요일"
         }
 
         // 클릭 이벤트

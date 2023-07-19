@@ -27,9 +27,9 @@
                 android:backgroundTint="@color/white"
                 android:gravity="center"
                 android:text="마이페이지"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/pretendard_semibold"
                 android:textColor="@color/black"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,11 +46,11 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="80dp"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:text="안녕하세요"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
@@ -60,12 +60,12 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:layout_marginStart="80dp"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:text="쿠쿠콧구멍"
             android:textStyle="bold"
             android:textColor="@color/orange_100"
-            android:textSize="22sp"
+            android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
@@ -78,12 +78,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:text="님"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.02"
@@ -92,7 +92,7 @@
             app:layout_constraintVertical_bias="0.01" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/terms_of_use"
+            android:id="@+id/change_nickname"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginStart="80dp"
@@ -101,6 +101,29 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mynickname">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/btn_nickname" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/terms_of_use"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/change_nickname">
 
             <ImageView
                 android:layout_width="80dp"

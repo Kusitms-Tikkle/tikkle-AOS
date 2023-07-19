@@ -14,9 +14,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.team7.tikkle.EditProfileActivity
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
+import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
 import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
 import com.team7.tikkle.databinding.FragmentMypageEditBinding
 import com.team7.tikkle.login.MainActivity
@@ -46,7 +48,10 @@ class MypageEditFragment : Fragment() {
             .create(APIS::class.java)
 
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+        val userNickname = GlobalApplication.prefs.getString("userNickname", "티끌")
         Log.d("MypageEditFragment", "userAccessToken : $userAccessToken")
+
+        binding.mynickname.text = userNickname.toString()
 
         binding.logout.setOnClickListener {
             logout(userAccessToken)
@@ -67,6 +72,13 @@ class MypageEditFragment : Fragment() {
             //개인정보처리방침 조회
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/"))
             startActivity(intent)
+        }
+
+        binding.changeNickname.setOnClickListener{
+            //닉네임 변경
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            startActivity(intent)
+
         }
 
         return binding.root
