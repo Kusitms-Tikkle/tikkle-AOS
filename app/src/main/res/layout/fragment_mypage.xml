@@ -27,9 +27,9 @@
             android:backgroundTint="@color/white"
             android:gravity="center"
             android:text="마이페이지"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/pretendard_semibold"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myprofile"
         android:layout_width="match_parent"
-        android:layout_height="390dp"
+        android:layout_height="364dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -66,87 +66,106 @@
         android:background="@drawable/bg_item_line">
 
         <ImageView
+            android:id="@+id/myconsumption_bg"
+            android:layout_width="127dp"
+            android:layout_height="127dp"
+            android:layout_marginBottom="27dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+            app:layout_constraintEnd_toEndOf="@+id/imageView8"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
+            app:srcCompat="@drawable/ic_mypage_null" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="332dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="120dp"
+            android:scaleType = "centerCrop"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myconsumption2"
+            app:srcCompat="@drawable/bg_mypage_consumption" />
+
+        <ImageView
             android:id="@+id/imageMyprofile"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="70dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mynickname"
-            app:layout_constraintVertical_bias="0.154"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_myprofile" />
 
-
-        <ImageView
-            android:id="@+id/btnEditMyprofile"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.228"
-            app:layout_constraintStart_toStartOf="@+id/imageMyprofile"
-            app:layout_constraintTop_toTopOf="@+id/imageMyprofile"
-            app:layout_constraintVertical_bias="0.196"
-            app:srcCompat="@drawable/btn_editprofile" />
 
         <TextView
             android:id="@+id/mynickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text=""
+            android:fontFamily="@font/pretendard_medium"
+            android:text="Nickname"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.283" />
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/myconsumption2"
+            app:layout_constraintStart_toEndOf="@+id/imageMyprofile"
+            app:layout_constraintTop_toTopOf="@+id/imageMyprofile" />
 
         <TextView
             android:id="@+id/myconsumption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:fontFamily="@font/pretendard_bold"
             android:gravity="center"
-            android:text=""
-            android:fontFamily="@font/pretendard_regular"
-            android:textColor="@color/orange_100"
-            android:textSize="19sp"
-            app:layout_constraintBottom_toBottomOf="@+id/quotationmark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/quotationmark"
-            app:layout_constraintTop_toTopOf="@+id/quotationmark"
-            app:layout_constraintVertical_bias="0.5" />
+            android:text="consumption"
+            android:textColor="@color/gray_500"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+            app:layout_constraintEnd_toEndOf="@+id/imageView8"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
+            app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
-        <ImageView
-            android:id="@+id/quotationmark"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mynickname"
-            app:layout_constraintVertical_bias="0.713"
-            app:srcCompat="@drawable/ic_quotationmark" />
+        <TextView
+            android:id="@+id/myconsumption2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="consumption"
+            android:textColor="@color/orange_100"
+            android:textSize="14dp"
+            app:layout_constraintStart_toEndOf="@+id/imageMyprofile"
+            app:layout_constraintTop_toBottomOf="@+id/mynickname" />
 
         <ImageView
             android:id="@+id/mypage_account"
-            android:layout_width="64dp"
-            android:layout_height="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="61dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="22dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageMyprofile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.953"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.044"
+            app:layout_constraintTop_toTopOf="@+id/imageMyprofile"
             app:srcCompat="@drawable/btn_mypage_account" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/btn_Challenge"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button_orange"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="이 유형에 적절한 챌린지 추천 받기"
+            android:fontFamily="@font/pretendard_medium"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myprofile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -159,8 +178,6 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/myprofile"-->
 <!--        app:srcCompat="@drawable/btn_waiting" />-->
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
 

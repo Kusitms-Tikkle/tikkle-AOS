@@ -143,9 +143,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
-                android:fontFamily="@font/pretendard_bold"
-                android:text="이 유형에 적절한 챌린지"
-                android:textColor="@color/orange_100"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="추천 챌린지 눌러서 구경하기"
+                android:textColor="@color/gray_500"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/typeImg" />

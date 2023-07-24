@@ -43,15 +43,16 @@ class EditProfileActivity : AppCompatActivity() {
             inputNicknameCheck()
         }
 
-        binding.btnConsumptionType.setOnClickListener(){
+//        binding.btnConsumptionType.setOnClickListener(){
 //            Toast.makeText(this@EditProfileActivity, "추후 업데이트될 기능입니다.", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
-            startActivity(intent)
-        }
+//            val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
+//            startActivity(intent)
+//        }
 
         binding.btnDone.setOnClickListener{
             startActivity(Intent(this, HomeActivity::class.java))
         }
+
         lifecycleScope.launch {
             try {
                 val response1 = retService.getMyPage(userAccessToken)

@@ -25,7 +25,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="챌린지"
                 android:textColor="@color/gray_500"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
                 android:id="@+id/imageView12"
                 android:layout_width="match_parent"
                 android:layout_height="203dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="27dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="챌린지 둘러보기"
                 android:textColor="@color/orange_100"
@@ -69,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/bg_item_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12">
@@ -88,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="90dp"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="무(無)심기 챌린지"
                     android:textColor="@color/black_100"
@@ -105,9 +106,19 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text="일주일에 한 번 무지출 데이 챌린지"
                     android:textColor="@color/gray_500"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+                <ImageView
+                    android:id="@+id/imageView16"
+                    android:layout_width="9dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="33dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/btn_challenge_next" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -117,7 +128,18 @@
                 android:layout_height="90dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/bg_item_line"
                 app:layout_constraintTop_toBottomOf="@+id/challenge_1">
+
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="9dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="33dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/btn_challenge_next" />
 
                 <ImageView
                     android:id="@+id/imageView13_2"
@@ -134,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="90dp"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="일주일 밀플랜 챌린지"
                     android:textColor="@color/black_100"
@@ -151,7 +173,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text="야무진 식사를 위한 일주일 음식 계획 챌린지"
                     android:textColor="@color/gray_500"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView13_2" />
 
@@ -163,7 +185,18 @@
                 android:layout_height="90dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/bg_item_line"
                 app:layout_constraintTop_toBottomOf="@+id/challenge_2">
+
+                <ImageView
+                    android:id="@+id/imageView18"
+                    android:layout_width="9dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="33dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/btn_challenge_next" />
 
                 <ImageView
                     android:id="@+id/imageView13_3"
@@ -180,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="90dp"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="차곡차곡 다람쥐 챌린지"
                     android:textColor="@color/black_100"
@@ -197,7 +230,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text="도토리처럼 하나하나 모으는 지출 계획 챌린지"
                     android:textColor="@color/gray_500"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView13_3" />
 
@@ -209,7 +242,18 @@
                 android:layout_height="90dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/bg_item_line"
                 app:layout_constraintTop_toBottomOf="@+id/challenge_3">
+
+                <ImageView
+                    android:id="@+id/imageView19"
+                    android:layout_width="9dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="33dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/btn_challenge_next" />
 
                 <ImageView
                     android:id="@+id/imageView13_4"
@@ -226,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="90dp"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="포미(For Me) 챌린지"
                     android:textColor="@color/black_100"
@@ -243,7 +287,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text="매일매일 나만을 위한 소비하기 챌린지"
                     android:textColor="@color/gray_500"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView13_4" />
 
