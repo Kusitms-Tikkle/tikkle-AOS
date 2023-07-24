@@ -52,10 +52,10 @@
 
                     <ImageView
                         android:id="@+id/challengeImg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="298dp"
+                        android:layout_height="197dp"
                         android:layout_marginTop="20dp"
-                        android:src="@drawable/ic_challenge_1"
+                        android:src="@drawable/iv_back_image2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -150,10 +150,10 @@
                         android:layout_width="65dp"
                         android:layout_height="16dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="37dp"
                         android:src="@drawable/ic_challenge_ing"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView6"
                         app:layout_constraintStart_toEndOf="@+id/textView6"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
                     <ImageView
                         android:id="@+id/imageView3"

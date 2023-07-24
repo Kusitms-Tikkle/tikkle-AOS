@@ -2,6 +2,7 @@ package com.team7.tikkle
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +52,7 @@ class MyViewHolder(val view: View):RecyclerView.ViewHolder(view){
     private val originalColor: Drawable = checkImageView.drawable
 
     fun bind(task: TodoResult, clickListener: (TodoResult) -> Unit) {
-        titleTextView.text = task.title
+        titleTextView.text = task.title.replace("@", "\n")
         val colorText = task.color
         var todoChecked = task.checked
         updateTextColor(todoChecked, colorText)
@@ -65,11 +66,13 @@ class MyViewHolder(val view: View):RecyclerView.ViewHolder(view){
 
     private fun updateTextColor(todoChecked: Boolean, colorText: String) {
         if (todoChecked) {
-            titleTextView.setTextColor(Color.parseColor("#343434")) // 검은색
+//            titleTextView.setTextColor(Color.parseColor("#343434")) // 검은색
+            titleTextView.paintFlags = titleTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG //취소선
             //서버에서 받은 값으로 색 바꾸기
             checkImageView.setColorFilter(Color.parseColor(colorText))
         } else {
-            titleTextView.setTextColor(Color.parseColor("#BABABA")) // 회색
+            titleTextView.setTextColor(Color.parseColor("#343434"))
+            titleTextView.paintFlags = titleTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() //취소선 제거
             checkImageView.setColorFilter(ContextCompat.getColor(view.context, android.R.color.transparent))
             checkImageView.setImageDrawable(originalColor)
         }

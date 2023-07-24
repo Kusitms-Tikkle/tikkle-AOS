@@ -93,6 +93,9 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
         // RecyclerView 어댑터 초기화
         consumptionResultRecyclerViewAdapter = ConsumptionResultRecyclerViewAdapter { task ->
             // 아이템 클릭 리스너
+            var challengeId = task.id.toInt()
+            GlobalApplication.prefs.setString("challengeDetail", "challengeDetail") // 챌린지
+            GlobalApplication.prefs.setString("challengeNum", challengeId.toString()) // 챌린지 번호
             // Log an event
             val bundle = Bundle().apply {
                 putString(FirebaseAnalytics.Param.ITEM_ID, "challenge_card")
@@ -101,7 +104,6 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
             }
             firebaseAnalytics.logEvent("recommend", bundle)
 
-//            var challengeId = task.id.toInt()
             //추후 challengeId에 따른 challengeDetailFragment로 이동
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)

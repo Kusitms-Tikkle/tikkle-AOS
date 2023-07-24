@@ -5,6 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <queries>
+        <intent>
+            <action android:name="com.onestore.ipc.iap.IapService.ACTION" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="onestore" />
+        </intent>
+    </queries>
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -18,21 +28,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tikkle"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="iap:api_version"
+            android:value="7" />
+
         <activity
             android:name=".login.SigninFinishActivity"
             android:exported="false" />
+
         <activity
             android:name=".consumptionType.ConsumptionResultActivity_1"
-            android:exported="true"></activity>
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".consumptionType.ConsumptionIntroActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".login.SigninActivity2"
             android:exported="false" />
+
         <activity
             android:name=".login.SigninActivity1"
-            android:exported="true"></activity>
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".login.SigninActivity"
             android:exported="false">
@@ -40,9 +63,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".HomeActivity"
             android:exported="true">
@@ -50,24 +75,31 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".consumptionType.ConsumptionTypeActivity_7"
             android:exported="false" />
+
         <activity
             android:name=".consumptionType.ConsumptionTypeActivity_6"
             android:exported="false" />
+
         <activity
             android:name=".consumptionType.ConsumptionTypeActivity_5"
             android:exported="false" />
+
         <activity
             android:name=".consumptionType.ConsumptionTypeActivity_4"
             android:exported="false" />
+
         <activity
             android:name=".consumptionType.ConsumptionTypeActivity_3"
             android:exported="false" />
+
         <activity
             android:name=".consumptionType.ConsumptionTypeActivity_2"
             android:exported="false" />
+
         <activity
             android:name=".consumptionType.ConsumptionTypeActivity_1"
             android:exported="true">
@@ -75,6 +107,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".login.MainActivity"
             android:exported="true">
@@ -82,6 +115,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -95,6 +129,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

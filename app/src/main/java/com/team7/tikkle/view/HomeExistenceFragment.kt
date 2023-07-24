@@ -1,6 +1,7 @@
 package com.team7.tikkle.view
 
 import android.content.ContentValues
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -53,6 +54,13 @@ class HomeExistenceFragment : Fragment() {
         //nickname
         val userNickname = GlobalApplication.prefs.getString("userNickname", "")
         binding.mynickname.text = userNickname
+
+        binding.challengeContainer.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, ChallengeDetailFragment())
+                .addToBackStack(null)
+                .commit()
+        }
 
         //retrofit
         retService = RetrofitClient
@@ -128,11 +136,14 @@ class HomeExistenceFragment : Fragment() {
                     val count = challenges?.size
                     val challenge1 = challenges?.get(0)
                     val challenge1_id = challenge1?.id?.toInt()!!
+                    GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
+                    challengeListSetting(challenge1_id)
 
                     if(count==2){
                         //참여중인 챌린지가 2개
                         val challenge2 = challenges.get(1)
                         val challenge2_id = challenge2.id.toInt()
+                        GlobalApplication.prefs.setString("challengeNum", challenge2_id.toString()) // 챌린지 번호
                         binding.challengeName.text = challenge1.title
                         binding.next.setOnClickListener() {
                             binding.challengeName.text = challenge2.title
@@ -143,6 +154,7 @@ class HomeExistenceFragment : Fragment() {
                         binding.before.setOnClickListener() {
                             binding.challengeName.text = challenge1.title
                             challengeListSetting(challenge1_id)
+                            GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                             binding.before.setColorFilter(Color.parseColor("#D9D9D9"))
                             binding.next.setColorFilter(Color.parseColor("#222227"))
                         }
@@ -152,12 +164,14 @@ class HomeExistenceFragment : Fragment() {
                         //참여중인 챌린지가 1개
                         binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
                         binding.challengeName.text = challenge1.title
+                        GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                         challengeListSetting(challenge1_id)
                     }
                     Log.d("HomeExistenceFragment My challenge", "$count, $challenges, challenge1 : $challenge1")
 
                 } else {
                     // error handling
+                    binding.challengeImage.setColorFilter(Color.parseColor("#F6F6F6"))
                     Log.e("HomeExistenceFragment My challenge", "Error : ${response.errorBody()}")
                 }
             }
@@ -356,7 +370,7 @@ class HomeExistenceFragment : Fragment() {
             }
             3 -> {
                 binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon3)
-                binding.challengeIntro.text = "도토리처럼 하나하나 모으는 지출 계획 챌린지"
+                binding.challengeIntro.text = "도토리처럼 하나하나 모으는\n지출 계획 챌린지"
             }
             4 -> {
                 binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon4)
