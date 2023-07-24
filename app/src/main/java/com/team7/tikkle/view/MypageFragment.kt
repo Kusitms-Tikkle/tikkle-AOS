@@ -97,6 +97,8 @@ class MypageFragment : Fragment() {
                         flag = 1
                     }
 
+                    context?.let { Glide.with(it).load(userImage).error(R.drawable.ic_mypage_ex).into(binding.myconsumptionBg)}
+
                     /*
                     if (userImage == null) { // 소비 유형 별 이미지
                         // 회색 티끌이 이미지
