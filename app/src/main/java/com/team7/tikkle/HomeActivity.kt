@@ -19,10 +19,7 @@ import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import com.team7.tikkle.roomdb.UserDatabase
 import com.team7.tikkle.roomdb.UserViewModel
-import com.team7.tikkle.view.ChallengeFragment
-import com.team7.tikkle.view.HomeExistenceFragment
-import com.team7.tikkle.view.HomeFragment
-import com.team7.tikkle.view.MypageFragment
+import com.team7.tikkle.view.*
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -135,9 +132,18 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initBottomNavigation(){
 
-        supportFragmentManager.beginTransaction()
+        var challengeDetail = GlobalApplication.prefs.getString("challengeDetail", "")
+        Log.d("HomeActivity11", "challengeDetail: $challengeDetail")
+        if( challengeDetail == "challengeDetail") {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, ChallengeDetailFragment())
+                .commitAllowingStateLoss()
+            GlobalApplication.prefs.setString("challengeDetail", "")
+        }else {
+            supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, ChallengeFragment())
             .commitAllowingStateLoss()
+        }
 
         binding.mainBnv.setOnItemSelectedListener{ item ->
             when (item.itemId) {

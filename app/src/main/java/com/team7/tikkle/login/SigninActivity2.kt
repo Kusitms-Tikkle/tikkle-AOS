@@ -30,6 +30,8 @@ class SigninActivity2 : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.warning.setVisibility(View.INVISIBLE)
+        binding.btnprivacy.setColorFilter(Color.parseColor("#F6F6F6"))
+        binding.btnUserAgreements.setColorFilter(Color.parseColor("#F6F6F6"))
 
         //서버 연결을 위한 intent값 받아오기
         val mynickname = this.intent.getStringExtra("nickname").toString()
@@ -44,13 +46,24 @@ class SigninActivity2 : AppCompatActivity() {
            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/"))
            startActivity(intent)
         }
+        binding.btnprivacy.setOnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/"))
+            startActivity(intent)
+        }
 
         // 이용약관 조회
         binding.userAgreements.setOnClickListener {
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/"))
             startActivity(intent)
         }
+        binding.btnUserAgreements.setOnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/"))
+            startActivity(intent)
+        }
 
+        var every = false
+        var box1 = false
+        var box2 = false
 
         //checkBox 전체선택
         binding.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -58,8 +71,9 @@ class SigninActivity2 : AppCompatActivity() {
                 binding.checkBox1.isChecked = true
                 binding.checkBox2.isChecked = true
 
-            } else {
-
+            }else{
+                binding.checkBox1.isChecked = false
+                binding.checkBox2.isChecked = false
             }
         }
 
@@ -78,7 +92,8 @@ class SigninActivity2 : AppCompatActivity() {
                 binding.warning.setVisibility(View.VISIBLE)
                 binding.btnDone.setBackgroundResource(R.drawable.bg_button_gray)
                 binding.btnDone.setTextColor(Color.parseColor("#000000"))
-                binding.checkBox.isChecked = false
+//                box1 = true
+//                binding.checkBox.isChecked = false
             }
         }
         //checkBox1,2 체크 여부에 따라 버튼 활성화
@@ -89,7 +104,9 @@ class SigninActivity2 : AppCompatActivity() {
 
             } else {
                 myisChecked = false
-                binding.checkBox.isChecked = false
+                binding.checkBox2.isChecked = false
+//                box2 = true
+//                binding.checkBox.isChecked = false
             }
         }
     }
