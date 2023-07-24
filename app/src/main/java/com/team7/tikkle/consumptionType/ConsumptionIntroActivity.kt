@@ -20,6 +20,7 @@ import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
 import com.team7.tikkle.databinding.ActivityConsumptionIntroBinding
 import com.team7.tikkle.databinding.ActivityEditProfileBinding
+import com.team7.tikkle.login.SigninFinishActivity
 import com.team7.tikkle.retrofit.APIS
 
 class ConsumptionIntroActivity : AppCompatActivity() {
@@ -84,7 +85,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
         val mbti = dialog.findViewById<ConstraintLayout>(R.id.btn_mbti)
         val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
 
-        exit.setOnClickListener {
+        exit.setOnClickListener { //엑스
             // Log an event
             val bundle = Bundle().apply {
                 putString(FirebaseAnalytics.Param.ITEM_ID, "cancel")
@@ -95,7 +96,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
-        join.setOnClickListener { // 나가기
+        join.setOnClickListener { // 나중에 하기
             // Log an event
             val bundle = Bundle().apply {
                 putString(FirebaseAnalytics.Param.ITEM_ID, "skip")
@@ -104,7 +105,8 @@ class ConsumptionIntroActivity : AppCompatActivity() {
             }
             firebaseAnalytics.logEvent("newtest", bundle)
 
-            val intent = Intent(this, HomeActivity::class.java)
+            // val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, SigninFinishActivity::class.java) // 회원가입 완료
             finish()
             startActivity(intent)
             dialog.dismiss()
