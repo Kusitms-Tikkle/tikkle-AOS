@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintEnd_toEndOf="@+id/imageView8"
             app:layout_constraintStart_toStartOf="@+id/imageView8"
-            app:srcCompat="@drawable/ic_mypage_ex" />
+            app:srcCompat="@drawable/ic_mypage_null" />
 
         <ImageView
             android:id="@+id/imageView8"

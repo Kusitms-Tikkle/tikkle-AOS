@@ -97,7 +97,8 @@ class MypageFragment : Fragment() {
                         flag = 1
                     }
 
-                    context?.let { Glide.with(it).load(userImage).error(R.drawable.ic_mypage_ex).into(binding.myconsumptionBg)}
+                    // context?.let { Glide.with(it).load("https://s3-for-image-upload.s3.ap-northeast-2.amazonaws.com/myPage_%EC%BA%90%EB%A6%AD%ED%84%B0%ED%83%80%EC%9E%85/%EB%A3%B0%EB%A3%A8%EB%9E%84%EB%9D%BC.png").error(R.drawable.ic_mypage_null).into(binding.myconsumptionBg)}
+                    context?.let { Glide.with(it).load(userImage).error(R.drawable.ic_mypage_null).into(binding.myconsumptionBg)}
 
                     /*
                     if (userImage == null) { // 소비 유형 별 이미지
