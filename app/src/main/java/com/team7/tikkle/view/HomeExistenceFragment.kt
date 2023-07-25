@@ -139,6 +139,13 @@ class HomeExistenceFragment : Fragment() {
                     GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                     challengeListSetting(challenge1_id)
 
+                    binding.challengeContainer.setOnClickListener {
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.main_frm, ChallengeEditFragment())
+                            .addToBackStack(null)
+                            .commit()
+                    }
+
                     if(count==2){
                         //참여중인 챌린지가 2개
                         val challenge2 = challenges.get(1)

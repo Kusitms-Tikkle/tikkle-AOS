@@ -192,7 +192,7 @@ class ChallengeDetailFragment : Fragment() {
         Log.d("챌린지 추가 API", " 호출")
 
         fragmentManager?.beginTransaction()?.apply {
-            replace(R.id.View_constraint_layout, ChallengeCompleteFragment())
+            replace(R.id.main_frm, ChallengeCompleteFragment())
             addToBackStack(null)
             commit()
         }

@@ -41,7 +41,7 @@ class ChallengeCompleteFragment : Fragment() {
 
             val home = HomeFragment()
             fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.View_constraint_layout, home)
+                replace(R.id.main_frm, home)
                 addToBackStack(null)
                 commit()
             }
