@@ -52,13 +52,13 @@ class ChallengeFragment : Fragment() {
 
                 if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeEdit)
+                        replace(R.id.main_frm, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
                 } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeDetail)
+                        replace(R.id.main_frm, challengeDetail)
                         addToBackStack(null)
                         commit()
                     }
@@ -74,13 +74,13 @@ class ChallengeFragment : Fragment() {
 
                 if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeEdit)
+                        replace(R.id.main_frm, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
                 } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeDetail)
+                        replace(R.id.main_frm, challengeDetail)
                         addToBackStack(null)
                         commit()
                     }
@@ -96,13 +96,13 @@ class ChallengeFragment : Fragment() {
 
                 if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeEdit)
+                        replace(R.id.main_frm, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
                 } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeDetail)
+                        replace(R.id.main_frm, challengeDetail)
                         addToBackStack(null)
                         commit()
                     }
@@ -118,13 +118,13 @@ class ChallengeFragment : Fragment() {
 
                 if (result) { // 챌린지 참여 O > 챌린지 수정
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeEdit)
+                        replace(R.id.main_frm, challengeEdit)
                         addToBackStack(null)
                         commit()
                     }
                 } else { // 챌린지 참여 X > 챌린지 디테일
                     fragmentManager?.beginTransaction()?.apply {
-                        replace(R.id.View_constraint_layout, challengeDetail)
+                        replace(R.id.main_frm, challengeDetail)
                         addToBackStack(null)
                         commit()
                     }

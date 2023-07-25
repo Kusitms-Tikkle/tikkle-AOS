@@ -96,7 +96,7 @@ class ChallengeEditFragment : Fragment() {
         // 수정 완료 하기
         binding.btnComplete.setOnClickListener {
             fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.View_constraint_layout, ChallengeFragment())
+                replace(R.id.main_frm, HomeFragment())
                 addToBackStack(null)
                 commit()
             }
@@ -190,7 +190,7 @@ class ChallengeEditFragment : Fragment() {
     private fun delete(challengeNum: String, userAccessToken: String) {
         challengeDelete(challengeNum, userAccessToken)
         fragmentManager?.beginTransaction()?.apply {
-            replace(R.id.View_constraint_layout, ChallengeFragment())
+            replace(R.id.main_frm, HomeFragment())
             addToBackStack(null)
             commit()
         }
