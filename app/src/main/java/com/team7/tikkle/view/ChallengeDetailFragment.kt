@@ -292,4 +292,4 @@ class ChallengeDetailFragment : Fragment() {
         })
     }
 
-}  // commit
+}
