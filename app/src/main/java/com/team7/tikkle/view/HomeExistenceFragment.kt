@@ -138,7 +138,6 @@ class HomeExistenceFragment : Fragment() {
                     val challenge1_id = challenge1?.id?.toInt()!!
                     GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                     challengeListSetting(challenge1_id)
-
                     binding.challengeContainer.setOnClickListener {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, ChallengeEditFragment())
