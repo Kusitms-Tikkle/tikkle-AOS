@@ -163,6 +163,14 @@ class HomeActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
+                R.id.cheerFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, CheerFragment())
+                        .commitAllowingStateLoss()
+                    logScreenView(CheerFragment::class.java.simpleName)
+                    return@setOnItemSelectedListener true
+                }
+
                 R.id.mypageFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, MypageFragment())

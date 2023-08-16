@@ -15,6 +15,13 @@
         android:icon="@drawable/ic_bottom_home_no_select"
         app:showAsAction="always"
         android:title="홈" />
+
+    <item
+        android:id="@+id/cheerFragment"
+        android:icon="@drawable/ic_bottom_cheer_no_select"
+        app:showAsAction="always"
+        android:title="응원" />
+
     <item
         android:id="@+id/mypageFragment"
         android:icon="@drawable/ic_bottom_mypage_no_select"
