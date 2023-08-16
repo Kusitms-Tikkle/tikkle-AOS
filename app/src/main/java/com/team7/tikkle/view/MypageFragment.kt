@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.team7.tikkle.EditProfileActivity
-import com.team7.tikkle.databinding.FragmentMypageBinding
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
 import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
@@ -20,6 +19,7 @@ import com.team7.tikkle.consumptionType.ConsumptionResultActivity_1
 import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
 import com.team7.tikkle.data.ResponseMbti
 import com.team7.tikkle.data.ResponseMyPage
+import com.team7.tikkle.databinding.FragmentMypageBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
