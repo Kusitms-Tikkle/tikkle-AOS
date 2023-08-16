@@ -144,7 +144,7 @@ class HomeNoneExistenceFragment : Fragment() {
         val nWeek: Int = cal.get(Calendar.DAY_OF_WEEK)
         if (nWeek == 1) {
             strWeek = "일"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
+            binding.sun.setImageResource(R.drawable.ic_calendar_today)
             binding.textsun.setTextColor(Color.parseColor("#F56508"))
         } else if (nWeek == 2) {
             strWeek = "월"

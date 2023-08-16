@@ -150,13 +150,14 @@ class HomeExistenceFragment : Fragment() {
                         //참여중인 챌린지가 2개
                         val challenge2 = challenges.get(1)
                         val challenge2_id = challenge2.id.toInt()
-                        GlobalApplication.prefs.setString("challengeNum", challenge2_id.toString()) // 챌린지 번호
+                        GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                         binding.challengeName.text = challenge1.title
                         binding.next.setOnClickListener() {
                             binding.challengeName.text = challenge2.title
                             challengeListSetting(challenge2_id)
                             binding.before.setColorFilter(Color.parseColor("#222227"))
                             binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
+                            GlobalApplication.prefs.setString("challengeNum", challenge2_id.toString()) // 챌린지 번호
                         }
                         binding.before.setOnClickListener() {
                             binding.challengeName.text = challenge1.title
@@ -173,6 +174,13 @@ class HomeExistenceFragment : Fragment() {
                         binding.challengeName.text = challenge1.title
                         GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                         challengeListSetting(challenge1_id)
+
+                        binding.challengeContainer.setOnClickListener {
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.main_frm, ChallengeEditFragment())
+                                .addToBackStack(null)
+                                .commit()
+                        }
                     }
                     Log.d("HomeExistenceFragment My challenge", "$count, $challenges, challenge1 : $challenge1")
 
