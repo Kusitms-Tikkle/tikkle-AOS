@@ -147,10 +147,15 @@ class MemoFragment : Fragment() {
             // binding.img.setImageResource(R.drawable.btn_memo_img)
         }
 
+        // 저장 하기
         binding.btnSave.setOnClickListener {
             val memoNum = GlobalApplication.prefs.getString("memo", "")
             val memo = binding.memo.text.toString()
-            postMemo(userAccessToken, memoNum, memo, selectedImageUri)
+
+            // 메모가 작성 되었을 경우
+            if (memo.count() !== null) {
+                postMemo(userAccessToken, memoNum, memo, selectedImageUri)
+            }
         }
 
         return binding.root
