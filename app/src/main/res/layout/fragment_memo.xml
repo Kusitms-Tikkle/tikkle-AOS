@@ -172,20 +172,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text1">
 
-            <TextView
-                android:id="@+id/text_join2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="11dp"
-                android:layout_marginBottom="11dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="메모를 남기고 싶은 미션을 선택해요."
-                android:textColor="@color/gray_800"
-                android:textSize="13dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -194,23 +184,36 @@
             android:layout_width="370dp"
             android:layout_height="220dp"
             android:layout_marginTop="10dp"
+            android:padding="11dp"
             android:background="@drawable/bg_memo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text5">
 
-            <TextView
-                android:id="@+id/text6"
+            <EditText
+                android:id="@+id/memo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="선택한 미션에 대해 자유롭게 메모를 작성해주세요."
+                android:hint="선택한 미션에 대해 자유롭게 메모를 작성해주세요."
                 android:textColor="@color/gray_800"
+                android:maxLength="280"
                 android:textSize="11dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="280자 내외"
+                android:textSize="11dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -228,7 +231,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/img"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="20dp"
@@ -239,16 +242,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text7" />
 
+        <ImageView
+            android:id="@+id/del_img"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="-13dp"
+            android:layout_marginBottom="-18dp"
+            android:src="@drawable/btn_del_img"
+            app:layout_constraintBottom_toTopOf="@+id/img"
+            app:layout_constraintEnd_toEndOf="@+id/img" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton3">
+            app:layout_constraintTop_toBottomOf="@+id/img">
 
             <ImageButton
-                android:id="@+id/btn_join"
+                android:id="@+id/btn_save"
                 android:layout_width="360dp"
                 android:layout_height="42dp"
                 android:background="@android:color/transparent"
@@ -267,11 +280,12 @@
                 android:text="저장하기"
                 android:textColor="@color/white"
                 android:textSize="13dp"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_join"
-                app:layout_constraintEnd_toEndOf="@+id/btn_join"
-                app:layout_constraintStart_toStartOf="@+id/btn_join"
-                app:layout_constraintTop_toTopOf="@+id/btn_join" />
+                app:layout_constraintBottom_toBottomOf="@+id/btn_save"
+                app:layout_constraintEnd_toEndOf="@+id/btn_save"
+                app:layout_constraintStart_toStartOf="@+id/btn_save"
+                app:layout_constraintTop_toTopOf="@+id/btn_save" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
