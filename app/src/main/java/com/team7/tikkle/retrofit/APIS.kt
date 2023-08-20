@@ -168,6 +168,7 @@ interface APIS {
         @Header("X-ACCESS-TOKEN") accessToken: String
     ): Call<ResponseMbtiCheck>
 
+    // memo : 메모 작성
     @Multipart
     @POST("/memo")
     fun memo(
@@ -176,11 +177,11 @@ interface APIS {
         @Part image: MultipartBody.Part
     ): Call<ResponseChallengeJoin>
 
+    // todo : todo 조회
     @GET("/todo/{date}")
     fun getMission(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path(value = "date") date: String
     ): Call<ResponseTodo>
-
 
 }
