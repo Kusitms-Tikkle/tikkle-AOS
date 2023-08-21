@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="350dp">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_gray"
+    android:layout_marginBottom="15dp">
 
     <ImageView
         android:id="@+id/btn_check"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/btn_memo_check_orange" />
@@ -30,10 +32,10 @@
 
     <ImageButton
         android:id="@+id/btn_edit"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="7dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +49,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/pretendard_regular"
-        android:text="좌우 여백 20 좌우 여백 20 좌우 여백 20 좌우 여백 20 프리텐다드 레귤러 12 프리텐다드 레귤러 12 프리텐다드 레귤러 12 위 여백 50 위 여백 50 행간 18"
+        android:text="좌우 여백 20 좌우 여백 20 좌우 여백 20 좌우 여백 20 프리텐다드 레귤러 12 프리텐다드 레귤러 12 프리텐다드 레귤러 12 위 여백 50 위 여백 50 행간 18"
         android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/todo" />
@@ -65,10 +67,12 @@
         app:srcCompat="@drawable/bg_memo" />
 
     <ImageView
-        android:id="@+id/imageView15"
+        android:id="@+id/bg"
         android:layout_width="218dp"
         android:layout_height="22dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img"
         app:srcCompat="@drawable/bg_memo_emoji" />
@@ -78,7 +82,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,9 +98,9 @@
         android:text="00"
         android:textColor="@color/gray_500"
         android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView15"
+        app:layout_constraintBottom_toBottomOf="@+id/bg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView15" />
+        app:layout_constraintTop_toTopOf="@+id/bg" />
 
     <TextView
         android:id="@+id/like2"
@@ -107,9 +111,9 @@
         android:text="00"
         android:textColor="@color/gray_500"
         android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView15"
+        app:layout_constraintBottom_toBottomOf="@+id/bg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView15" />
+        app:layout_constraintTop_toTopOf="@+id/bg" />
 
     <TextView
         android:id="@+id/like3"
@@ -120,8 +124,8 @@
         android:text="00"
         android:textColor="@color/gray_500"
         android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView15"
+        app:layout_constraintBottom_toBottomOf="@+id/bg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView15" />
+        app:layout_constraintTop_toTopOf="@+id/bg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.team7.tikkle.GlobalApplication
+import com.team7.tikkle.R
 import com.team7.tikkle.adapter.MemoAdapter
 import com.team7.tikkle.data.ResponseChallengeJoin
 import com.team7.tikkle.databinding.FragmentMemoBinding
@@ -51,7 +52,7 @@ class MemoFragment : Fragment() {
 
     var date : String = "2000-00-00"
     var missionList =  ArrayList<TodoResult>()
-    lateinit var selectedImageUri : Uri
+    var selectedImageUri : Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,12 +150,17 @@ class MemoFragment : Fragment() {
 
         // 저장 하기
         binding.btnSave.setOnClickListener {
-            val memoNum = GlobalApplication.prefs.getString("memo", "")
+            val memoNum = GlobalApplication.prefs.getString("memoId", "")
             val memo = binding.memo.text.toString()
 
             // 메모가 작성 되었을 경우
             if (memo.count() !== null) {
                 postMemo(userAccessToken, memoNum, memo, selectedImageUri)
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, HomeExistenceFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
         }
 
@@ -306,17 +312,23 @@ class MemoFragment : Fragment() {
     }
 
     // 메모 전송 API
-    private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri){
+    private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?){
         val num : Int = memoNum.toInt()
         val memoDto = memoDto(memo, num)
 
-        val imagePath = uri?.let { getImagePathFromUri(it, requireContext()) }
-        val imageFile = File(imagePath)
-        val imageRequestBody = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
-        val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
-
         val gson = Gson()
         val memoDtoRequestBody = gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
+
+        // 이미지 선택 여부에 따라 MultipartBody.Part 생성
+        val imagePart: MultipartBody.Part? = if (uri != null) {
+            val imagePath = getImagePathFromUri(uri, requireContext())
+            val imageFile = File(imagePath)
+            val imageRequestBody = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
+        } else {
+            // 이미지가 선택되지 않은 경우에 null 값으로 설정
+            null
+        }
 
         retService.memo(userAccessToken, memoDtoRequestBody, imagePart).enqueue(object :
             Callback<ResponseChallengeJoin> {
@@ -334,5 +346,7 @@ class MemoFragment : Fragment() {
             }
         })
     }
+
+
 
 }

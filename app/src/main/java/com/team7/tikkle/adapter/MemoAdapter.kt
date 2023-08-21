@@ -37,7 +37,7 @@ class MemoAdapter(
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val selectedItem = text[position]
-        GlobalApplication.prefs.setString("memo", selectedItem.id.toString())
+        GlobalApplication.prefs.setString("memoId", selectedItem.id.toString())
         Log.d("메모", selectedItem.id.toString())
     }
 

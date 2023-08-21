@@ -174,14 +174,28 @@ interface APIS {
     fun memo(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Part("memoDto") memoDto: okhttp3.RequestBody,
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part?
     ): Call<ResponseChallengeJoin>
 
-    // todo : todo 조회
+    // todo : memo todo 조회
     @GET("/todo/{date}")
     fun getMission(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path(value = "date") date: String
     ): Call<ResponseTodo>
+
+    // memo date : 날짜별 내 기록 조회
+    @GET("/memo/{date}")
+    fun getMemo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path(value = "date") date: String
+    ): Call<ResponseMemoList>
+
+    @POST("/memo/private/{id}")
+    fun private(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
 
 }
