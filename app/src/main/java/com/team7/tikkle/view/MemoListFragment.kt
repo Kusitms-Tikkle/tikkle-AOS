@@ -95,6 +95,7 @@ class MemoListFragment : Fragment() {
 
             GlobalApplication.prefs.setString("memoId", task.memo.memoId.toString())
             GlobalApplication.prefs.setString("memoTitle", task.title)
+            GlobalApplication.prefs.setString("memoContent", task.memo.content)
 
             if (task.memo.image !== null) {
                 GlobalApplication.prefs.setString("memoImg", task.memo.image)

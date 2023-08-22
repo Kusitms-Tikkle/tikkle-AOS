@@ -184,18 +184,34 @@ interface APIS {
         @Path(value = "date") date: String
     ): Call<ResponseTodo>
 
-    // memo date : 날짜별 내 기록 조회
+    // memo date : 날짜별 내 메모 조회
     @GET("/memo/{date}")
     fun getMemo(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path(value = "date") date: String
     ): Call<ResponseMemoList>
 
+    // 메모 비공개/공개 전환
     @POST("/memo/private/{id}")
     fun private(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path("id") id: Int
     ): Call<ResponseChallengeJoin>
 
+    // updateMemo : 메모 수정
+    @Multipart
+    @PATCH("/memo")
+    fun updateMemo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Part("memoDto") memoDto: okhttp3.RequestBody,
+        @Part image: MultipartBody.Part?
+    ): Call<ResponseChallengeJoin>
+
+    // 메모 삭제
+    @DELETE("/memo/{id}")
+    fun delMemo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
 
 }
