@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.team7.tikkle.EditProfileActivity
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
