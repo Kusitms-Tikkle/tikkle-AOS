@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.GlobalApplication
+import com.team7.tikkle.R
 import com.team7.tikkle.adapter.MemoListRecyclerViewAdapter
 import com.team7.tikkle.data.MemoResult
 import com.team7.tikkle.data.ResponseChallengeJoin
@@ -76,12 +77,36 @@ class MemoListFragment : Fragment() {
         return binding.root
     }
 
+    // 메모 공개/비공개 처리
     private fun callLockApiFunction(task: MemoResult, userAccessToken: String) {
         private(userAccessToken, task.memo.memoId)
     }
 
+    // 메모 수정/삭제
     private fun callEditApiFunction(task: MemoResult) {
-        // btn_edit 버튼을 클릭했을 때 -> 메모 작성 여부에 따라 메모 작성, 수정 페이지로 이동시키기
+        GlobalApplication.prefs.setString("memoDate", date)
+
+        if (task.memo == null) { // 메모 X > 메모 작성 페이지
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MemoCreateFragment())
+                .addToBackStack(null)
+                .commit()
+        } else { // 메모 O > 메모 수정 페이지
+
+            GlobalApplication.prefs.setString("memoId", task.memo.memoId.toString())
+            GlobalApplication.prefs.setString("memoTitle", task.title)
+
+            if (task.memo.image !== null) {
+                GlobalApplication.prefs.setString("memoImg", task.memo.image)
+            } else {
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MemoEditFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
     }
 
     private fun date() {

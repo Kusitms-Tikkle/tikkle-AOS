@@ -12,8 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.team7.tikkle.R
 import com.team7.tikkle.data.MemoResult
-import com.team7.tikkle.data.MissionList
-import okhttp3.RequestBody.Companion.asRequestBody
 
 class MemoListRecyclerViewAdapter (
     private val memo : MutableList<MemoResult> = mutableListOf(),
@@ -48,8 +46,8 @@ class MemoListRecyclerViewAdapter (
 
 class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
     private val btn_edit : ImageButton = view.findViewById<ImageButton>(R.id.btn_edit)
-    private val btn_check : ImageView = view.findViewById<ImageView>(R.id.btn_check)
     private val btn_lock : ImageButton = view.findViewById<ImageButton>(R.id.btn_lock)
+    //private val btn_check : ImageView = view.findViewById<ImageView>(R.id.btn_check)
 
     private val todo : TextView = view.findViewById<TextView>(R.id.todo)
     private val memo : TextView= view.findViewById<TextView>(R.id.memo)
@@ -61,7 +59,8 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
 
     fun bind(task : MemoResult, lockClickListener: (MemoResult) -> Unit, editClickListener: (MemoResult) -> Unit) {
 
-        todo.text = task.title.toString()
+        // title
+        todo.text = task.title
 
         // 메모 유무
         if (task.memo == null) { // 메모 X
@@ -98,6 +97,13 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                     .load(imageUrl)
                     .apply(requestOptions)
                     .into(img)
+            }
+
+            // private
+            if (task.memo.private) {
+                btn_lock.setImageResource(R.drawable.btn_memo_lock)
+            } else {
+                btn_lock.setImageResource(R.drawable.btn_memo_unlock)
             }
 
         }

@@ -16,9 +16,6 @@ import com.kakao.sdk.user.UserApiClient
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
-import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
-import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
-import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_7
 import com.team7.tikkle.data.LoginResponse
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
@@ -140,7 +137,10 @@ class MainActivity : AppCompatActivity() {
 
 
 //                                    intent로 accessToken값 넘기기 & sharedPreference에 저장
-                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
+                                    GlobalApplication.prefs.setString(
+                                        "userAccessToken",
+                                        myAccessToken.toString()
+                                    )
 //                                    //signIn인 경우 Home 화면으로 넘어감
                                     val intent = Intent(this@MainActivity, HomeActivity::class.java)
                                     intent.putExtra("accessToken", myAccessToken)

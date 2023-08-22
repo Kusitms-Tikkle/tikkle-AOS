@@ -1,7 +1,6 @@
 package com.team7.tikkle
 
 import android.content.ContentValues
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.team7.tikkle.consumptionType.ConsumptionResultActivity_1
-import com.team7.tikkle.data.ResponseHomeExistence
 import com.team7.tikkle.data.ResponseMyPage
-import com.team7.tikkle.data.ResponseProgress
 import com.team7.tikkle.databinding.ActivityHomeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
