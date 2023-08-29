@@ -40,6 +40,8 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.mainBnv.itemIconTintList = null
+
         // Log an event
         analytics.setCurrentScreen(this, "HomeActivity", null /* class override */)
         val bundle = Bundle()
