@@ -51,7 +51,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "newtest_start")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("newtest", bundle)
+            firebaseAnalytics.logEvent("test_start", bundle)
 
             val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
             finish()
@@ -66,7 +66,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "newtest_skip")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("newtest", bundle)
+            firebaseAnalytics.logEvent("test_skip", bundle)
 
             showDialog()
 
@@ -92,7 +92,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_newtest_cancel")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("newtest", bundle)
+            firebaseAnalytics.logEvent("test_skipmodal_cancel", bundle)
             dialog.dismiss()
         }
 
@@ -103,7 +103,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_newtest_skip")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("newtest", bundle)
+            firebaseAnalytics.logEvent("test_skipmodal_goHome", bundle)
 
             // val intent = Intent(this, HomeActivity::class.java)
             val intent = Intent(this, SigninFinishActivity::class.java) // 회원가입 완료
@@ -119,7 +119,7 @@ class ConsumptionIntroActivity : AppCompatActivity() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_newtest_start")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("newtest", bundle)
+            firebaseAnalytics.logEvent("test_skipmodal_startTest", bundle)
 
             val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
             startActivity(intent)

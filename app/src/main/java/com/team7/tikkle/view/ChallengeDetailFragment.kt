@@ -240,7 +240,7 @@ class ChallengeDetailFragment : Fragment() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_notest_cancel")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("notest", bundle)
+            firebaseAnalytics.logEvent("detail_notest_modal_cancel", bundle)
 
             dialog.dismiss()
         }
@@ -252,7 +252,7 @@ class ChallengeDetailFragment : Fragment() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_notest_challenge")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("notest", bundle)
+            firebaseAnalytics.logEvent("detail_notest_modal_subscribe", bundle)
 
             join(challengeNumber, userAccessToken)
             dialog.dismiss()
@@ -265,7 +265,7 @@ class ChallengeDetailFragment : Fragment() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "modal_notest_test")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("notest", bundle)
+            firebaseAnalytics.logEvent("detail_notest_modal_startTest", bundle)
 
             val intent = Intent(requireActivity(), ConsumptionTypeActivity_1::class.java)
             startActivity(intent)

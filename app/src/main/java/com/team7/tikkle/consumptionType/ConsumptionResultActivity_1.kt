@@ -102,7 +102,7 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "recommend_challenge_card")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("recommend", bundle)
+            firebaseAnalytics.logEvent("recommend_challengeCard", bundle)
 
             //추후 challengeId에 따른 challengeDetailFragment로 이동
             val intent = Intent(this, HomeActivity::class.java)
@@ -144,7 +144,7 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "recommend_retest")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("recommend", bundle)
+            firebaseAnalytics.logEvent("recommend_retest", bundle)
 
             val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
             startActivity(intent)

@@ -36,7 +36,7 @@ class ChallengeCompleteFragment : Fragment() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "challenge_subscribe_complete")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("challenge_subscribe", bundle)
+            firebaseAnalytics.logEvent("challenge_subscribeComplete", bundle)
 
 
             val home = HomeFragment()
