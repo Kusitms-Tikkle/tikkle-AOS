@@ -91,6 +91,13 @@ class ChallengeEditFragment : Fragment() {
         // 챌린지 그만 하기
         binding.delete.setOnClickListener {
             showDialog(challengeNumber,userAccessToken)
+            //delete_challengedelete_challenge(challengeNumber)
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "delete_challenge")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_challenge ($challengeNumber)")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
+            }
+            firebaseAnalytics.logEvent("detail_deleteChallenge", bundle)
         }
 
         // 수정 완료 하기
@@ -209,7 +216,7 @@ class ChallengeEditFragment : Fragment() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_cancel ($challengeNumber)")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("delete", bundle)
+            firebaseAnalytics.logEvent("delete_challengedelete_cancel ($challengeNumber)", bundle)
 
             dialog.dismiss()
         }
@@ -221,7 +228,7 @@ class ChallengeEditFragment : Fragment() {
                 putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_challenge ($challengeNumber)")
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("delete", bundle)
+            firebaseAnalytics.logEvent("delete_challengedelete_challenge ($challengeNumber)", bundle)
 
             delete(challengeNumber, userAccessToken)
             dialog.dismiss()

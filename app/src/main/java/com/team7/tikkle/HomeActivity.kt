@@ -36,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //bottom navigation icon tint 제거
         binding.mainBnv.itemIconTintList = null
 
         // Log an event
@@ -49,20 +50,12 @@ class HomeActivity : AppCompatActivity() {
             .getRetrofitInstance()
             .create(APIS::class.java)
 
-        //ConsumptionResultActivity_1 확인용
-//        val intent = Intent(this, ConsumptionResultActivity_1::class.java)
-//        startActivity(intent)
-
-
-//        val userAccessToken = this.intent.getStringExtra("accessToken").toString()
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         Log.d("Home : accessToken 값", userAccessToken)
 
         var userName = ""
         var existence = false
 
-        // 데이터 조회
-//        GlobalApplication.prefs.getString("userNickname", "티끌")
         //닉네임 불러와서 저장
         lifecycleScope.launch {
             try {
@@ -84,41 +77,6 @@ class HomeActivity : AppCompatActivity() {
                 Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
             }
         }
-//        //home challenge 존재 여부 조회
-//        lifecycleScope.launch {
-//            try {
-//                val response1 = retService.homeExistence(userAccessToken)
-//                if (response1.isSuccessful) {
-//                    // Response body를 ResponseMyPage 타입으로 변환
-//                    val myexistence: ResponseHomeExistence? = response1.body()
-//                    Log.d("my existence", "Progress : $myexistence")
-//                    if (!existence) {
-//                        supportFragmentManager.beginTransaction()
-//                            .replace(R.id.main_frm, HomeExistenceFragment())
-//                            .commitAllowingStateLoss()
-//                    }
-//
-//
-//                } else {
-//                    // Error handling
-//                    Log.d(ContentValues.TAG, "Error: ${response1.code()} ${response1.message()}")
-//                }
-//            } catch (e: Exception) {
-//                // Exception handling
-//                Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
-//            }
-//        }
-
-        // 데이터 저장
-        //room db에 accessToken과 nickname 넣기
-        // User 정보를 가져오고 UI 업데이트
-//        lifecycleScope.launch {
-//            val user = userViewModel.getUser(myAccessToken)
-//            userViewModel.getNickname(myNickname)
-//            user?.let {
-//                updateUI(it.nickname, it.userAccessToken)
-//            }
-//        }
 
         initBottomNavigation()
 

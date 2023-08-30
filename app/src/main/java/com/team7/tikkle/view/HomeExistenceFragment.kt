@@ -137,19 +137,43 @@ class HomeExistenceFragment : Fragment() {
                     val myChallengeList = response.body()
                     val challenges = myChallengeList?.result
                     val count = challenges?.size
-                    val challenge1 = challenges?.get(0)
-                    val challenge1_id = challenge1?.id?.toInt()!!
-                    GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
-                    challengeListSetting(challenge1_id)
+
                     binding.challengeContainer.setOnClickListener {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, ChallengeEditFragment())
                             .addToBackStack(null)
                             .commit()
                     }
+                    if(count==0){
+                        val secondFragment = HomeNoneExistenceFragment()
+                        fragmentManager?.beginTransaction()?.apply {
+                            replace(R.id.home_fragment, secondFragment)
+                            addToBackStack(null)
+                            commit()
+                        }
+                    }
+                    if(count==1){
 
+                        //참여중인 챌린지가 1개
+                        binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
+                        val challenge1 = challenges.get(0)
+                        binding.challengeName.text = challenge1.title
+                        val challenge1_id = challenge1.id.toInt()
+                        GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
+                        challengeListSetting(challenge1_id)
+
+                        binding.challengeContainer.setOnClickListener {
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.main_frm, ChallengeEditFragment())
+                                .addToBackStack(null)
+                                .commit()
+                        }
+                        Log.d("HomeExistenceFragment My challenge", "$count, $challenges, challenge1 : $challenge1")
+                    }
                     if(count==2){
                         //참여중인 챌린지가 2개
+                        val challenge1 = challenges.get(0)
+                        val challenge1_id = challenge1.id.toInt()
                         val challenge2 = challenges.get(1)
                         val challenge2_id = challenge2.id.toInt()
                         GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
@@ -168,23 +192,7 @@ class HomeExistenceFragment : Fragment() {
                             binding.before.setColorFilter(Color.parseColor("#D9D9D9"))
                             binding.next.setColorFilter(Color.parseColor("#222227"))
                         }
-
-
-                    }else {
-                        //참여중인 챌린지가 1개
-                        binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
-                        binding.challengeName.text = challenge1.title
-                        GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
-                        challengeListSetting(challenge1_id)
-
-                        binding.challengeContainer.setOnClickListener {
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.main_frm, ChallengeEditFragment())
-                                .addToBackStack(null)
-                                .commit()
-                        }
                     }
-                    Log.d("HomeExistenceFragment My challenge", "$count, $challenges, challenge1 : $challenge1")
 
                 } else {
                     // error handling
