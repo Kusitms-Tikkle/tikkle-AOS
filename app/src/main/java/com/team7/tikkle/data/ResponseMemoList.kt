@@ -11,7 +11,8 @@ data class MemoResult(
     val color: String,
     val memo: Memo,
     val title: String,
-    val todoId: Int
+    val todoId: Int,
+    val checked: Boolean
 )
 
 data class Memo(

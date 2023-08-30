@@ -2,6 +2,7 @@ package com.team7.tikkle.view
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,7 +17,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -94,15 +97,14 @@ class MemoCreateFragment : Fragment() {
         retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
 
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-        val memoId = GlobalApplication.prefs.getString("memoId", "")
-
+        val memoId = GlobalApplication.prefs.getString("todoId", "")
+        val memoTitle = GlobalApplication.prefs.getString("memoTitle", "")
+        val memoDate = GlobalApplication.prefs.getString("memoDate", "") // "2000-00-00"
         // 갤러리 권한 요청
         requestPermissions()
 
         lifecycleScope.launch {
             try {
-                val memoTitle = GlobalApplication.prefs.getString("memoTitle", "")
-                val memoDate = GlobalApplication.prefs.getString("memoDate", "") // "2000-00-00"
                 val month = memoDate.substring(5, 7)
                 val day = memoDate.substring(8, 10)
 
@@ -120,6 +122,9 @@ class MemoCreateFragment : Fragment() {
                     "Sunday" -> dayOfWeekText = "일요일"
                     else -> dayOfWeekText = dayOfWeekText
                 }
+
+                Log.d("Memo Create memoId", memoId)
+                Log.d("Memo Create memoTitle", memoTitle)
 
                 binding.delImg.visibility = View.INVISIBLE
                 binding.date.text = "$month" + "월 " +"$day" + "일 " + "$dayOfWeekText"
@@ -162,12 +167,18 @@ class MemoCreateFragment : Fragment() {
             if (memo.count() !== null) {
                 postMemo(userAccessToken, memoId, memo, selectedImageUri)
 
-                // homeFragment 이동
-//                parentFragmentManager.beginTransaction()
-//                    .replace(R.id.main_frm, HomeExistenceFragment())
-//                    .addToBackStack(null)
-//                    .commit()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoListFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
+        }
+
+        binding.btnExit.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MemoListFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
         return binding.root

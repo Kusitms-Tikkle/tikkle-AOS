@@ -28,8 +28,12 @@ class MemoListViewModel : ViewModel() {
         fetchMemoList()
     }
 
+    fun updateMemoList(newList: List<MemoResult>) {
+        _memo.postValue(newList)
+    }
+
     // Memo List 조회
-    private fun fetchMemoList() {
+    fun fetchMemoList() {
         // retrofit
         retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
         viewModelScope.launch {

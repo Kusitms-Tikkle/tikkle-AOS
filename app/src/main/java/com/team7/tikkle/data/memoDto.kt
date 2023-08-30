@@ -4,3 +4,4 @@ data class memoDto(
     val content: String,
     val id: Int
 )
+

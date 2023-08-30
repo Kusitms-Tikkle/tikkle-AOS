@@ -2,6 +2,7 @@ package com.team7.tikkle.view
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,7 +17,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -96,14 +99,14 @@ class MemoEditFragment : Fragment() {
 
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         val memoId = GlobalApplication.prefs.getString("memoId", "")
+        val memoTitle = GlobalApplication.prefs.getString("memoTitle", "")
+        val memoDate = GlobalApplication.prefs.getString("memoDate", "") // "2000-00-00"
 
         // 갤러리 권한 요청
         requestPermissions()
 
         lifecycleScope.launch {
             try {
-                val memoTitle = GlobalApplication.prefs.getString("memoTitle", "")
-                val memoDate = GlobalApplication.prefs.getString("memoDate", "") // "2000-00-00"
                 val memoContent = GlobalApplication.prefs.getString("memoContent", "")
                 val month = memoDate.substring(5, 7)
                 val day = memoDate.substring(8, 10)
@@ -174,17 +177,23 @@ class MemoEditFragment : Fragment() {
             if (memo.count() !== null) {
                 updateMemo(userAccessToken, memoId, memo, selectedImageUri)
 
-                // homeFragment 이동
-//                parentFragmentManager.beginTransaction()
-//                    .replace(R.id.main_frm, HomeExistenceFragment())
-//                    .addToBackStack(null)
-//                    .commit()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoListFragment())
+                    .addToBackStack(null)
+                    .commit()
+
             }
         }
 
         // 삭제 하기
         binding.del.setOnClickListener {
-            delMemo(userAccessToken, memoId)
+            // delMemo(userAccessToken, memoId)
+            showDialog(userAccessToken,memoId)
+        }
+
+        //나가기
+        binding.btnExit.setOnClickListener {
+            showDialog2()
         }
 
         return binding.root
@@ -275,6 +284,56 @@ class MemoEditFragment : Fragment() {
         })
     }
 
+    private fun showDialog(token: String, id: String) {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_memo_delete)
 
+        val delete = dialog.findViewById<ConstraintLayout>(R.id.btn_delete)
+        val undo = dialog.findViewById<ConstraintLayout>(R.id.btn_undo)
+        val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
 
+        exit.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        delete.setOnClickListener {// 메모 삭제
+            delMemo(token, id)
+            dialog.dismiss()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MemoListFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        undo.setOnClickListener {// 취소
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showDialog2() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_memo_back)
+
+        val delete = dialog.findViewById<ConstraintLayout>(R.id.btn_delete)
+        val undo = dialog.findViewById<ConstraintLayout>(R.id.btn_undo)
+        val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
+
+        exit.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        delete.setOnClickListener {// 나가기
+            dialog.dismiss()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MemoListFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        undo.setOnClickListener {// 취소
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
 }

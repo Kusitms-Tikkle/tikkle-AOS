@@ -19,7 +19,7 @@ class MemoListRecyclerViewAdapter (
     private val editClickListener: (MemoResult) -> Unit
 ) : RecyclerView.Adapter<MemoListViewHolder>(){
 
-    fun updateList(newList : List<MemoResult>){ // commit
+    fun updateList(newList: List<MemoResult>) {
         memo.clear()
         memo.addAll(newList)
         notifyDataSetChanged()
@@ -36,18 +36,16 @@ class MemoListRecyclerViewAdapter (
         holder.bind(memoItem, lockClickListener, editClickListener)
     }
 
-
     override fun getItemCount(): Int {
         return memo.size
     }
-
 
 }
 
 class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
     private val btn_edit : ImageButton = view.findViewById<ImageButton>(R.id.btn_edit)
     private val btn_lock : ImageButton = view.findViewById<ImageButton>(R.id.btn_lock)
-    //private val btn_check : ImageView = view.findViewById<ImageView>(R.id.btn_check)
+    private val btn_check : ImageView = view.findViewById<ImageView>(R.id.btn_check)
 
     private val todo : TextView = view.findViewById<TextView>(R.id.todo)
     private val memo : TextView= view.findViewById<TextView>(R.id.memo)
@@ -100,10 +98,17 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             }
 
             // private
-            if (task.memo.private) {
-                btn_lock.setImageResource(R.drawable.btn_memo_lock)
-            } else {
+            if (task.memo.private) { // 비공개일 경우
                 btn_lock.setImageResource(R.drawable.btn_memo_unlock)
+            } else { // 공개일 경우
+                btn_lock.setImageResource(R.drawable.btn_memo_lock)
+            }
+
+            // checked
+            if (task.checked) {
+                btn_check.setImageResource(R.drawable.btn_memo_check_black)
+            } else {
+                btn_check.setImageResource(R.drawable.btn_memo_check_orange)
             }
 
         }

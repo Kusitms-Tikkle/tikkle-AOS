@@ -117,6 +117,7 @@ class MemoFragment : Fragment() {
             showDatePickerDialog()
             // 미션 다시 불러오기
             getMission(userAccessToken, date)
+            updateRecyclerView(userAccessToken, date)
         }
 
         // Spinner
@@ -288,7 +289,13 @@ class MemoFragment : Fragment() {
 
     }
 
-
+    private fun updateRecyclerView(userAccessToken: String, date: String) {
+        lifecycleScope.launch {
+            try {
+                getMission(userAccessToken, date)
+            } catch (e: Exception) { }
+        }
+    }
 
     // 미션 조회 API
     private fun getMission(userAccessToken : String, date: String){
@@ -316,7 +323,7 @@ class MemoFragment : Fragment() {
         })
     }
 
-    // 메모 전송 API
+    // 메모 전송
     private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?){
         val num : Int = memoNum.toInt()
         val memoDto = memoDto(memo, num)
@@ -324,14 +331,13 @@ class MemoFragment : Fragment() {
         val gson = Gson()
         val memoDtoRequestBody = gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
 
-        // 이미지 선택 여부에 따라 MultipartBody.Part 생성
         val imagePart: MultipartBody.Part? = if (uri != null) {
             val imagePath = getImagePathFromUri(uri, requireContext())
             val imageFile = File(imagePath)
             val imageRequestBody = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
             MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
         } else {
-            // 이미지가 선택되지 않은 경우에 null 값으로 설정
+            // 이미지가 없을 경우 null 값으로 설정
             null
         }
 
@@ -351,5 +357,4 @@ class MemoFragment : Fragment() {
             }
         })
     }
-
 }

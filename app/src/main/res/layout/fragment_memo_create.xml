@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/pretendard_semibold"
             android:text="메모 남기기"
             android:textColor="@color/black"
