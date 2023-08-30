@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.*
 import com.team7.tikkle.data.*
 import com.team7.tikkle.databinding.FragmentHomeExistenceBinding
@@ -34,6 +36,7 @@ class HomeExistenceFragment : Fragment() {
     lateinit var homeActivity: HomeActivity
     val cal = Calendar.getInstance()
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)
+    val analytics = Firebase.analytics
 
     //이달의 마지막 달
     val lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
@@ -245,6 +248,10 @@ class HomeExistenceFragment : Fragment() {
                     val progressBar = binding.progressBar
                     progressBar.progress = progress!!.toInt()
                     binding.percent.text = progress.toString()
+                    // Log an event
+                    val bundle = Bundle()
+                    bundle.putString("missionProgress", "progress : $progress%")
+                    analytics.logEvent("missionProgress", bundle)
 
                 } else {
                     // Error handling
