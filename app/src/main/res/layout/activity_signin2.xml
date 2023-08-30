@@ -122,18 +122,17 @@ tools:context=".login.SigninActivity2">
         app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/btnEssential"
+        android:id="@+id/btnOld"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="19dp"
         android:layout_marginRight="25dp"
         android:gravity="left|center_vertical"
         android:padding="10dp"
-        android:text="개인정보 수집 및 이용약관 동의 (필수)"
+        android:text="만 14세 이상입니다. (필수)"
         android:textColor="@color/black"
         android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAll"
@@ -141,6 +140,36 @@ tools:context=".login.SigninActivity2">
 
     <CheckBox
         android:id="@+id/check_box1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/mycheckbox"
+        android:button="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/btnOld"
+        app:layout_constraintEnd_toEndOf="@+id/btnOld"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="@+id/btnOld"
+        app:layout_constraintTop_toTopOf="@+id/btnOld"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/btnEssential"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="25dp"
+        android:gravity="left|center_vertical"
+        android:padding="10dp"
+        android:text="개인정보 수집 및 이용약관 동의 (필수)"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOld"
+        app:layout_constraintVertical_bias="0" />
+
+    <CheckBox
+        android:id="@+id/check_box2"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:background="@drawable/mycheckbox"
@@ -174,7 +203,8 @@ tools:context=".login.SigninActivity2">
         app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="@+id/btnEssential"
         app:layout_constraintTop_toTopOf="@+id/privacy"
-        app:srcCompat="@drawable/btn_next" />
+        app:srcCompat="@drawable/btn_next"
+        app:tint="#D9D9D9" />
 
     <TextView
         android:id="@+id/user_agreements"
@@ -200,18 +230,19 @@ tools:context=".login.SigninActivity2">
         app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="@+id/btnEssential"
         app:layout_constraintTop_toTopOf="@+id/user_agreements"
-        app:srcCompat="@drawable/btn_next" />
+        app:srcCompat="@drawable/btn_next"
+        app:tint="#D9D9D9" />
 
     <TextView
         android:id="@+id/btnOptional"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="53dp"
         android:layout_marginRight="25dp"
         android:gravity="left|center_vertical"
         android:padding="10dp"
-        android:text="마켓팅 및 알림 수신 동의 (선택)"
+        android:text="마케팅 및 알림 수신 동의 (선택)"
         android:textColor="@color/black"
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -221,7 +252,7 @@ tools:context=".login.SigninActivity2">
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/check_box2"
+        android:id="@+id/check_box3"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:background="@drawable/mycheckbox"
