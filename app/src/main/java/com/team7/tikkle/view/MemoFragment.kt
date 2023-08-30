@@ -51,6 +51,9 @@ class MemoFragment : Fragment() {
     private val PERMISSION_REQUEST_CODE = 123
 
     var date : String = "2000-00-00"
+    var mainday : Int = 0
+    var mainMonth : Int = 0
+    var mainYear : Int = 0
     var missionList =  ArrayList<TodoResult>()
     var selectedImageUri : Uri? = null
 
@@ -116,6 +119,23 @@ class MemoFragment : Fragment() {
         binding.btnCal.setOnClickListener {
             showDatePickerDialog()
             // 미션 다시 불러오기
+            getMission(userAccessToken, date)
+            updateRecyclerView(userAccessToken, date)
+        }
+
+        // 다음 날
+        binding.btnNext.setOnClickListener {
+            mainday += 1
+            date = "$mainYear-$mainMonth-$mainday"
+            getMission(userAccessToken, date)
+            updateRecyclerView(userAccessToken, date)
+
+        }
+
+        // 이전 날
+        binding.btnBack.setOnClickListener {
+            mainday += 1
+            date = "$mainYear-$mainMonth-$mainday"
             getMission(userAccessToken, date)
             updateRecyclerView(userAccessToken, date)
         }
@@ -246,9 +266,11 @@ class MemoFragment : Fragment() {
                 if (month.length == 1) {
                     month = "0$month"
                 }
-                date = "$selectedYear-$month-$selectedDay"
-                // getMission(userAccessToken, date)
 
+                mainday = day
+                mainMonth = month.toInt()
+                mainYear = selectedYear
+                date = "$selectedYear-$month-$selectedDay"
 
             },
             year,
@@ -260,6 +282,14 @@ class MemoFragment : Fragment() {
         datePickerDialog.datePicker.minDate = firstDayOfMonth
         datePickerDialog.datePicker.maxDate = lastDayOfMonthInMillis
         datePickerDialog.show()
+    }
+
+    private fun nextDate() {
+
+    }
+
+    private fun backDate() {
+
     }
 
     private fun date() {
@@ -285,6 +315,10 @@ class MemoFragment : Fragment() {
         if (month.length == 1) {
             month = "0$month"
         }
+
+        mainday = day
+        mainMonth = month.toInt()
+        mainYear = year
         date = "$year-$month-$day"
 
     }
