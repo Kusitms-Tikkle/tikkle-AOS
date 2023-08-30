@@ -228,6 +228,8 @@ class MemoEditFragment : Fragment() {
 
     // 메모 전송 API
     private fun updateMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?){
+
+        Log.d("Update memo", "1")
         val num : Int = memoNum.toInt()
         val memoDto = memoDto(memo, num)
 
@@ -251,13 +253,16 @@ class MemoEditFragment : Fragment() {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("PostMemo API : ", result.toString())
+                    Log.d("Update memo", "2")
 
                 } else {
                     Log.d("PostMemo API : ", "fail")
+                    Log.d("Update memo", "3")
                 }
             }
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
+                Log.d("Update memo", "4")
             }
         })
     }

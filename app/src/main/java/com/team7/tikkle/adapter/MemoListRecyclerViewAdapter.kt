@@ -1,6 +1,6 @@
 package com.team7.tikkle.adapter
 
-import android.util.Log
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.team7.tikkle.R
 import com.team7.tikkle.data.MemoResult
+
 
 class MemoListRecyclerViewAdapter (
     private val memo : MutableList<MemoResult> = mutableListOf(),
@@ -106,9 +107,10 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
 
             // checked
             if (task.checked) {
-                btn_check.setImageResource(R.drawable.btn_memo_check_black)
-            } else {
                 btn_check.setImageResource(R.drawable.btn_memo_check_orange)
+                todo.paintFlags = todo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                btn_check.setImageResource(R.drawable.btn_memo_check_black)
             }
 
         }

@@ -15,7 +15,7 @@
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/btn_memo_check_orange" />
+        app:srcCompat="@drawable/btn_memo_check_black" />
 
     <TextView
         android:id="@+id/todo"
