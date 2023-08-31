@@ -132,11 +132,20 @@ class ChallengeFragment : Fragment() {
             }
         }
 
+        binding.banner.setOnClickListener {
+            val consumptionTypeFragment = ConsumptionTypeFragment()
+            fragmentManager?.beginTransaction()?.apply {
+                replace(R.id.main_frm, consumptionTypeFragment)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
         return binding.root
         }
 
     // 챌린지 참여 여부 확인 API
-    private fun doChallengeCheck(token: String, challengeNum: Int, onResult: (Boolean) -> Unit) {
+    fun doChallengeCheck(token: String, challengeNum: Int, onResult: (Boolean) -> Unit) {
         lifecycleScope.launch {
             try {
                 retService.challengeCheck(token, challengeNum).enqueue(object : Callback<ChallengeCheck> {
