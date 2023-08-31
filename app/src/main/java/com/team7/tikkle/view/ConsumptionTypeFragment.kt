@@ -1,0 +1,28 @@
+package com.team7.tikkle.view
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.team7.tikkle.R
+import com.team7.tikkle.databinding.FragmentConsumptionTypeBinding
+import com.team7.tikkle.databinding.FragmentMemoBinding
+
+class ConsumptionTypeFragment : Fragment() {
+
+    lateinit var binding : FragmentConsumptionTypeBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentConsumptionTypeBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+}
