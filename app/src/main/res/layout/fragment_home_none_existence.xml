@@ -65,8 +65,8 @@
             android:id="@+id/beach_container"
             android:layout_width="match_parent"
             android:layout_height="93dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginRight="19dp"
             android:background="@drawable/calendar_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -267,93 +267,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
-            android:text="총 미션 진행률"
+            android:text="오늘 미션 진행률"
             android:textColor="@color/black"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.13"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="19dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/beach_container"
-            app:layout_constraintVertical_bias="0.03" />
+            app:layout_constraintTop_toBottomOf="@+id/beach_container" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_marginStart="19dp"
+            android:layout_marginEnd="19dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="12dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/string1"
+            app:layout_constraintTop_toBottomOf="@+id/string1" />
 
         <TextView
             android:id="@+id/string2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="아직 참여중인 미션이 없어요"
-            android:textColor="@color/gray_400"
-            android:textSize="13dp"
-            app:layout_constraintBottom_toTopOf="@+id/challenge_container"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string1"
-            app:layout_constraintVertical_bias="0.5" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/challenge_container"
             android:layout_width="match_parent"
-            android:layout_height="93dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginEnd="19dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:textSize="11dp"
+            android:text="아직 참여 중인 미션이 없어요."
+            android:gravity="center"
+            android:progressDrawable="@drawable/progress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/string1"
+            app:layout_constraintTop_toBottomOf="@+id/string1" />
+
+
+        <ImageView
+            android:id="@+id/challenge_container"
+            android:layout_width="300dp"
+            android:layout_height="85dp"
             android:layout_marginTop="51dp"
-            android:background="@drawable/edittext_border"
+            android:src="@drawable/btn_start_challenge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/string1">
+            app:layout_constraintTop_toBottomOf="@+id/string1"/>
 
-            <TextView
-                android:id="@+id/string3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_bold"
-                android:text="챌린지 참여하기"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.15"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.3" />
-
-            <TextView
-                android:id="@+id/string4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="나에게 맞는 챌린지를 찾아봐요!"
-                android:textColor="@color/gray_500"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.192"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/string3"
-                app:layout_constraintVertical_bias="0.3" />
-
-            <ImageView
-                android:id="@+id/go"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:src="@drawable/btn_next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toEndOf="@+id/string3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:tint="@color/black" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/icon"
             android:layout_width="200dp"
             android:layout_height="170dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/ic_nomission"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

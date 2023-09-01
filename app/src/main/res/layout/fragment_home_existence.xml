@@ -6,7 +6,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="70dp">
+        android:paddingBottom="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,31 +18,24 @@
                 android:id="@+id/string9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="19dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:text="%"
                 android:textColor="@color/orange_100"
                 android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.877"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/beach_container"
-                app:layout_constraintVertical_bias="0.04" />
+                app:layout_constraintBottom_toBottomOf="@+id/percent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/percent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_bold"
-                android:text=""
+                android:text="0"
                 android:textColor="@color/orange_100"
                 android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/string9"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/beach_container"
-                app:layout_constraintVertical_bias="0.04" />
+                app:layout_constraintTop_toTopOf="@+id/string1" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -110,8 +103,8 @@
                 android:id="@+id/beach_container"
                 android:layout_width="match_parent"
                 android:layout_height="93dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginRight="19dp"
                 android:background="@drawable/calendar_border"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -312,102 +305,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="총 미션 진행률"
+                android:text="오늘 미션 진행률"
                 android:textColor="@color/black"
                 android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.13"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="19dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/beach_container"
-                app:layout_constraintVertical_bias="0.04" />
+                app:layout_constraintTop_toBottomOf="@+id/beach_container" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginStart="19dp"
+                android:layout_marginEnd="19dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="12dp"
                 android:max="100"
                 android:progress="0"
                 android:progressDrawable="@drawable/progress"
-                app:layout_constraintBottom_toTopOf="@+id/challenge_container"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/string1"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintStart_toStartOf="@+id/string1"
+                app:layout_constraintTop_toBottomOf="@+id/string1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="진행률은 자정마다 업데이트 돼요."
-                android:textColor="#767676"
-                android:fontFamily="@font/pretendard_regular"
-                android:textSize="9dp"
-                app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-                app:layout_constraintEnd_toEndOf="@+id/progressBar"
-                app:layout_constraintStart_toStartOf="@+id/progressBar"
-                app:layout_constraintTop_toTopOf="@+id/progressBar" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
                 android:id="@+id/challenge_container"
-                android:layout_width="match_parent"
-                android:layout_height="93dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
+                android:layout_width="300dp"
+                android:layout_height="85dp"
                 android:layout_marginTop="51dp"
-                android:background="@drawable/edittext_border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/string1">
-
-                <TextView
-                    android:id="@+id/challenge_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:text="챌린지 참여하기"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.15"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.3" />
-
-                <TextView
-                    android:id="@+id/challenge_intro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:text="나에게 맞는 챌린지를 찾아봐요!"
-                    android:textColor="@color/gray_500"
-                    android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.15"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/challenge_name"
-                    app:layout_constraintVertical_bias="0.29" />
-
-                <ImageView
-                    android:id="@+id/challenge_image"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/iv_challenge_sample"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.9"
-                    app:layout_constraintStart_toEndOf="@+id/challenge_name"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@+id/string1"/>
 
 
             <ImageView
@@ -452,7 +381,6 @@
                 android:layout_width="409dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:paddingBottom="90dp"
                 app:layout_constraintStart_toStartOf="@+id/string5"
                 app:layout_constraintTop_toBottomOf="@+id/string5" />
 

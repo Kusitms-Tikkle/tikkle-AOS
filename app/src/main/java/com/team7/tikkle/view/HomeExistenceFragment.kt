@@ -37,10 +37,12 @@ class HomeExistenceFragment : Fragment() {
     val cal = Calendar.getInstance()
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)
     val analytics = Firebase.analytics
+    var total: Int = 1
+    var mytodo: Int =  GlobalApplication.prefs.getString("checkedCount", "0").toInt()
+    var progress: Int = 0
 
     //이달의 마지막 달
     val lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
-
     private lateinit var viewModel: HomeViewModel
     private lateinit var homeRecyclerViewAdapter: HomeRecyclerViewAdapter
 
@@ -49,6 +51,7 @@ class HomeExistenceFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("checkedCount", "checkedCount : $mytodo 초기")
         val view = inflater.inflate(R.layout.fragment_home_existence, container, false)
         binding = FragmentHomeExistenceBinding.inflate(inflater, container, false)
 
@@ -69,6 +72,42 @@ class HomeExistenceFragment : Fragment() {
         retService = RetrofitClient
             .getRetrofitInstance()
             .create(APIS::class.java)
+
+        // ViewModel 초기화
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        //click event 처리
+        homeRecyclerViewAdapter = HomeRecyclerViewAdapter { task ->
+            if(task.checked){
+                //post false (이미 체크된거 체크)
+                mytodo -= 1
+                GlobalApplication.prefs.setString("checkedCount", mytodo.toString())
+                postTodo(userAccessToken, task.id.toLong())
+                task.checked = false
+            } else{
+                //post true
+                mytodo += 1
+                GlobalApplication.prefs.setString("checkedCount", mytodo.toString())
+                postTodo(userAccessToken, task.id.toLong())
+                task.checked = true
+            }
+            updateProgressBar()
+        }
+
+        // RecyclerView 구성
+        val recyclerView: RecyclerView = binding.recyclerview
+        recyclerView.adapter = homeRecyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // ViewModel과 RecyclerView 어댑터 연결
+        viewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
+            homeRecyclerViewAdapter.updateTasks(tasks)
+            total = tasks.size
+            GlobalApplication.prefs.setString("total", total.toString())
+            updateProgressBar() //ProgressBar 업데이트
+        })
+
+
 
         //calendar
         val monday: String? = doDayOfWeek().toString()
@@ -153,11 +192,9 @@ class HomeExistenceFragment : Fragment() {
                         }
                     }
                     if(count==1){
-
                         //참여중인 챌린지가 1개
                         binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
                         val challenge1 = challenges.get(0)
-                        binding.challengeName.text = challenge1.title
                         val challenge1_id = challenge1.id.toInt()
                         GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                         challengeListSetting(challenge1_id)
@@ -177,16 +214,15 @@ class HomeExistenceFragment : Fragment() {
                         val challenge2 = challenges.get(1)
                         val challenge2_id = challenge2.id.toInt()
                         GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
-                        binding.challengeName.text = challenge1.title
+                        challengeListSetting(challenge1_id)
+
                         binding.next.setOnClickListener() {
-                            binding.challengeName.text = challenge2.title
                             challengeListSetting(challenge2_id)
                             binding.before.setColorFilter(Color.parseColor("#222227"))
                             binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
                             GlobalApplication.prefs.setString("challengeNum", challenge2_id.toString()) // 챌린지 번호
                         }
                         binding.before.setOnClickListener() {
-                            binding.challengeName.text = challenge1.title
                             challengeListSetting(challenge1_id)
                             GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
                             binding.before.setColorFilter(Color.parseColor("#D9D9D9"))
@@ -196,7 +232,6 @@ class HomeExistenceFragment : Fragment() {
 
                 } else {
                     // error handling
-                    binding.challengeImage.setColorFilter(Color.parseColor("#F6F6F6"))
                     Log.e("HomeExistenceFragment My challenge", "Error : ${response.errorBody()}")
                 }
             }
@@ -207,35 +242,6 @@ class HomeExistenceFragment : Fragment() {
             }
         })
 
-        // ViewModel 초기화
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
-
-        homeRecyclerViewAdapter = HomeRecyclerViewAdapter { task ->
-            //click event 처리
-//            Toast.makeText(requireContext(), "Clicked item ${task.id}", Toast.LENGTH_SHORT).show()
-            if(task.checked){
-                //post true
-                postTodo(userAccessToken, task.id.toLong())
-                task.checked = false
-
-            } else{
-                //post false
-                postTodo(userAccessToken, task.id.toLong())
-                task.checked = true
-            }
-
-        }
-
-        // RecyclerView 구성
-        val recyclerView: RecyclerView = binding.recyclerview
-        recyclerView.adapter = homeRecyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        // ViewModel과 RecyclerView 어댑터 연결
-        viewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
-            homeRecyclerViewAdapter.updateTasks(tasks)
-        })
 
         homeActivity = context as HomeActivity
 
@@ -253,9 +259,9 @@ class HomeExistenceFragment : Fragment() {
                     val myProgress: ResponseProgress? = response.body()
                     Log.d("Home progress", "Progress : $myProgress")
                     var progress = myProgress?.result?.toInt()
-                    val progressBar = binding.progressBar
-                    progressBar.progress = progress!!.toInt()
-                    binding.percent.text = progress.toString()
+//                    val progressBar = binding.progressBar
+//                    progressBar.progress = progress!!.toInt()
+//                    binding.percent.text = progress.toString()
                     // Log an event
                     val bundle = Bundle()
                     bundle.putString("missionProgress", "progress : $progress%")
@@ -390,22 +396,27 @@ class HomeExistenceFragment : Fragment() {
     fun challengeListSetting(challengeId: Int) {
         when(challengeId) {
             1 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon1)
-                binding.challengeIntro.text = "알뜰한 하루가 모이면 하루 무(無)심기도 거뜬!"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon1)
             }
             2 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon2)
-                binding.challengeIntro.text = "나를 위한 최고의 선물이 건강하고\n알뜰한 음식은 아닐까요?"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon2)
             }
             3 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon3)
-                binding.challengeIntro.text = "도토리처럼 하나하나 모으는\n지출 계획 챌린지"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon3)
             }
             4 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon4)
-                binding.challengeIntro.text = "나 자신을 위한 시간으로 꽉 채운 하루를\n가져보세요!"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon4)
             }
         }
+    }
+
+    private fun updateProgressBar() {
+        mytodo = GlobalApplication.prefs.getString("checkedCount", "0")!!.toInt()
+        progress = (mytodo.toFloat() / total.toFloat() * 100).toInt() // 100을 곱해 percentage로 변환
+        binding.progressBar.progress = progress
+        binding.percent.text = "$progress"
+        Log.d("progress", "progress: $progress todoNum: $mytodo total: $total")
+        GlobalApplication.prefs.setString("progress", progress.toString())
     }
 
 }
