@@ -26,6 +26,9 @@ class HomeRecyclerViewAdapter (
         tasks.clear()
         tasks.addAll(newTasks)
         notifyDataSetChanged()
+        var checkedCount = tasks.count { it.checked }
+        GlobalApplication.prefs.setString("checkedCount", checkedCount.toString())
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
