@@ -19,7 +19,7 @@ data class Memo(
     val content: String,
     val image: String,
     val memoId: Int,
-    val `private`: Boolean,
+    val private: Boolean,
     val sticker1: Int,
     val sticker2: Int,
     val sticker3: Int
