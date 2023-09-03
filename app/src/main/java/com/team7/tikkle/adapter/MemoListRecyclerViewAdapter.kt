@@ -77,9 +77,24 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             memo.text = task.memo.content
             btn_edit.setImageResource(R.drawable.btn_memo_edit)
 
-            like1.text = task.memo.sticker1.toString()
-            like2.text = task.memo.sticker2.toString()
-            like3.text = task.memo.sticker3.toString()
+            // 좋아요 개수
+            if(like1.text == null) { // 0개일 경우 null
+                like1.text = "0"
+            } else {
+                like1.text = task.memo.sticker1.toString()
+            }
+
+            if(like2.text == null) {
+                like3.text = "0"
+            } else {
+                like2.text = task.memo.sticker1.toString()
+            }
+
+            if(like3.text == null) {
+                like3.text = "0"
+            } else {
+                like3.text = task.memo.sticker1.toString()
+            }
 
             if (task.memo.image == null) { // 이미지 X
                 img.visibility = View.GONE
@@ -106,11 +121,11 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             }
 
             // checked
-            if (task.checked) {
+            if (!task.checked) {
+                btn_check.setImageResource(R.drawable.btn_memo_check_black)
+            } else {
                 btn_check.setImageResource(R.drawable.btn_memo_check_orange)
                 todo.paintFlags = todo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            } else {
-                btn_check.setImageResource(R.drawable.btn_memo_check_black)
             }
 
         }

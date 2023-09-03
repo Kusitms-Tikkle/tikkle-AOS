@@ -3,6 +3,7 @@ package com.team7.tikkle.view
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,6 +18,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -112,6 +115,7 @@ class MemoFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 getMission(userAccessToken, date)
+                binding.delImg.visibility = View.GONE
             } catch (e: Exception) { }
         }
 
@@ -120,15 +124,14 @@ class MemoFragment : Fragment() {
             showDatePickerDialog()
             // 미션 다시 불러오기
             getMission(userAccessToken, date)
-            updateRecyclerView(userAccessToken, date)
         }
 
         // 다음 날
         binding.btnNext.setOnClickListener {
             mainday += 1
             date = "$mainYear-$mainMonth-$mainday"
+
             getMission(userAccessToken, date)
-            updateRecyclerView(userAccessToken, date)
 
         }
 
@@ -137,7 +140,6 @@ class MemoFragment : Fragment() {
             mainday += 1
             date = "$mainYear-$mainMonth-$mainday"
             getMission(userAccessToken, date)
-            updateRecyclerView(userAccessToken, date)
         }
 
         // Spinner
@@ -165,12 +167,20 @@ class MemoFragment : Fragment() {
         // 이미지 추가
         binding.img.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            binding.delImg.visibility = View.VISIBLE
             startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
         }
 
         // 이미지 삭제
         binding.delImg.setOnClickListener {
             binding.img.setImageResource(R.drawable.btn_memo_img)
+            binding.delImg.visibility = View.GONE
+            selectedImageUri = null
+        }
+
+        // 나가기
+        binding.btnExit.setOnClickListener {
+            showDialog()
         }
 
         // 저장 하기
@@ -267,10 +277,15 @@ class MemoFragment : Fragment() {
                     month = "0$month"
                 }
 
-                mainday = day
+                var strday = day.toString()
+                if (strday.length == 1) {
+                    strday = "0$strday"
+                }
+
+                mainday = strday.toInt()
                 mainMonth = month.toInt()
                 mainYear = selectedYear
-                date = "$selectedYear-$month-$selectedDay"
+                date = "$selectedYear-$month-$strday"
 
             },
             year,
@@ -316,10 +331,15 @@ class MemoFragment : Fragment() {
             month = "0$month"
         }
 
-        mainday = day
+        var strday =day.toString()
+        if (strday.length == 1) {
+            strday = "0$day"
+        }
+
+        mainday = strday.toInt()
         mainMonth = month.toInt()
         mainYear = year
-        date = "$year-$month-$day"
+        date = "$year-$month-$strday"
 
     }
 
@@ -338,6 +358,7 @@ class MemoFragment : Fragment() {
                 if (response.isSuccessful) {
                     val result = response.body()?.result
                     Log.d("getMission API : ", result.toString())
+                    Log.d("date", date.toString())
                     missionList.clear() // 기존 데이터를 삭제
                     if (result != null) {
                         missionList.addAll(result)
@@ -390,5 +411,31 @@ class MemoFragment : Fragment() {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
         })
+    }
+
+    private fun showDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_memo_back_new)
+
+        val delete = dialog.findViewById<ConstraintLayout>(R.id.btn_delete)
+        val undo = dialog.findViewById<ConstraintLayout>(R.id.btn_undo)
+        val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
+
+        exit.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        delete.setOnClickListener {// 나가기
+            dialog.dismiss()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, HomeFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        undo.setOnClickListener {// 취소
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }

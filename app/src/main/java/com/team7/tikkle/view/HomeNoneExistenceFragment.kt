@@ -43,7 +43,7 @@ class HomeNoneExistenceFragment : Fragment() {
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         val userNickname = GlobalApplication.prefs.getString("userNickname", "")
         binding.mynickname.text = userNickname
-        binding.go.setColorFilter(Color.parseColor("#F6F6F6"))
+        //binding.go.setColorFilter(Color.parseColor("#F6F6F6"))
 
         var existence : Boolean = false
 

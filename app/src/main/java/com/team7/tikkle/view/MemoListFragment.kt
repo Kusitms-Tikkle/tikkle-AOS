@@ -100,7 +100,6 @@ class MemoListFragment : Fragment() {
     }
 
     // 리사이클러뷰 갱신 함수
-    // 리사이클러뷰 갱신 함수
     private fun updateRecyclerViewAfterLock(updatedTask: MemoResult) {
         val updatedIndex = viewModel.memo.value?.indexOfFirst { it.todoId == updatedTask.todoId }
         if (updatedIndex != null && updatedIndex != -1) {
@@ -164,7 +163,13 @@ class MemoListFragment : Fragment() {
         if (month.length == 1) {
             month = "0$month"
         }
-        date = "$year-$month-$day"
+
+        var strday =day.toString()
+        if (strday.length == 1) {
+            strday = "0$day"
+        }
+
+        date = "$year-$month-$strday"
         GlobalApplication.prefs.setString("date", date)
         //viewModel.fetchMemoData(date)
 

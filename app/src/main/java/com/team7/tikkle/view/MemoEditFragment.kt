@@ -176,6 +176,7 @@ class MemoEditFragment : Fragment() {
             // 메모가 작성 되었을 경우
             if (memo.count() !== null) {
                 updateMemo(userAccessToken, memoId, memo, selectedImageUri)
+                GlobalApplication.prefs.setString("memoImg", "")
 
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, MemoListFragment())
@@ -193,7 +194,16 @@ class MemoEditFragment : Fragment() {
 
         //나가기
         binding.btnExit.setOnClickListener {
-            showDialog2()
+            showDialog()
+            GlobalApplication.prefs.setString("memoImg", "")
+        }
+
+        // 이미지 삭제 하기
+        binding.delImg.setOnClickListener {
+            binding.img.setImageResource(R.drawable.btn_memo_img)
+            GlobalApplication.prefs.setString("memoImg", "")
+            binding.delImg.visibility = View.GONE
+            selectedImageUri = null
         }
 
         return binding.root
@@ -245,6 +255,13 @@ class MemoEditFragment : Fragment() {
         } else {
             // 이미지가 선택되지 않은 경우에 null 값으로 설정
             null
+        }
+
+        if (uri==null) {
+            Log.d("postMemo API 내 uri ", "null")
+        }
+        if (imagePart==null) {
+            Log.d("postMemo API 내 imagePart ", "null")
         }
 
         retService.updateMemo(userAccessToken, memoDtoRequestBody, imagePart).enqueue(object :
@@ -316,7 +333,7 @@ class MemoEditFragment : Fragment() {
         dialog.show()
     }
 
-    private fun showDialog2() {
+    private fun showDialog() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_memo_back)
 
