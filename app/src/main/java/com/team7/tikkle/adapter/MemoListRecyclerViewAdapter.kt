@@ -1,6 +1,7 @@
 package com.team7.tikkle.adapter
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
 import com.team7.tikkle.data.MemoResult
 
@@ -19,6 +21,8 @@ class MemoListRecyclerViewAdapter (
     private val lockClickListener: (MemoResult) -> Unit,
     private val editClickListener: (MemoResult) -> Unit
 ) : RecyclerView.Adapter<MemoListViewHolder>(){
+
+    var flag = 0
 
     fun updateList(newList: List<MemoResult>) {
         memo.clear()
@@ -78,22 +82,22 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             btn_edit.setImageResource(R.drawable.btn_memo_edit)
 
             // 좋아요 개수
-            if(like1.text == null) { // 0개일 경우 null
+            if(task.memo.sticker1 == null) { // 0개일 경우 null
                 like1.text = "0"
             } else {
                 like1.text = task.memo.sticker1.toString()
             }
 
-            if(like2.text == null) {
-                like3.text = "0"
+            if(task.memo.sticker2 == null) {
+                like2.text = "0"
             } else {
-                like2.text = task.memo.sticker1.toString()
+                like2.text = task.memo.sticker2.toString()
             }
 
-            if(like3.text == null) {
+            if(task.memo.sticker3 == null) {
                 like3.text = "0"
             } else {
-                like3.text = task.memo.sticker1.toString()
+                like3.text = task.memo.sticker3.toString()
             }
 
             if (task.memo.image == null) { // 이미지 X
@@ -113,11 +117,15 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                     .into(img)
             }
 
-            // private
-            if (task.memo.private) { // 비공개일 경우
-                btn_lock.setImageResource(R.drawable.btn_memo_unlock)
-            } else { // 공개일 경우
-                btn_lock.setImageResource(R.drawable.btn_memo_lock)
+            if (GlobalApplication.prefs.getString("privateFlag", "0") == "0") {
+                // private
+                if (task.memo.private) { // 비공개일 경우
+                    btn_lock.setImageResource(R.drawable.btn_memo_unlock)
+                    GlobalApplication.prefs.setString("privateFlag", "1")
+                } else { // 공개일 경우
+                    btn_lock.setImageResource(R.drawable.btn_memo_lock)
+                    GlobalApplication.prefs.setString("privateFlag", "2")
+                }
             }
 
             // checked
@@ -132,6 +140,14 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
 
         // 비공개 버튼 클릭 시
         btn_lock.setOnClickListener {
+            if (GlobalApplication.prefs.getString("privateFlag", "0") == "1") {
+                btn_lock.setImageResource(R.drawable.btn_memo_lock)
+                GlobalApplication.prefs.setString("privateFlag", "2")
+            } else if (GlobalApplication.prefs.getString("privateFlag", "0") == "2") {
+                btn_lock.setImageResource(R.drawable.btn_memo_unlock)
+                GlobalApplication.prefs.setString("privateFlag", "1")
+            }
+
             lockClickListener(task)
         }
 
