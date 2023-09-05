@@ -22,7 +22,10 @@ import com.team7.tikkle.viewModel.MemoListViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class MemoListFragment : Fragment() {
 
@@ -33,6 +36,9 @@ class MemoListFragment : Fragment() {
     private lateinit var recyclerViewAdapter : MemoListRecyclerViewAdapter
 
     var date : String = "2000-00-00"
+    var gloYear : String = "2000"
+    var gloMonth : String = "00"
+    var gloDay : String = "00"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +54,16 @@ class MemoListFragment : Fragment() {
         // SharedPreferences
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
 
+        // viewModel
+        viewModel = ViewModelProvider(this)[MemoListViewModel::class.java]
+
         // Today date
         date()
-
 
         // Calender
         binding.btnCal.setOnClickListener {
             showDatePickerDialog()
         }
-
-        // viewModel
-        viewModel = ViewModelProvider(this)[MemoListViewModel::class.java]
 
         // RecyclerViewAdapter 초기화
         recyclerViewAdapter = MemoListRecyclerViewAdapter(
@@ -71,7 +76,47 @@ class MemoListFragment : Fragment() {
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.memo.observe(viewLifecycleOwner) { memo ->
+            GlobalApplication.prefs.setString("privateFlag", "0")
             recyclerViewAdapter.updateList(memo)
+        }
+
+        // 다음 날짜
+        binding.btnNext.setOnClickListener {
+            var intDay = gloDay.toInt() + 1
+            if (intDay.toString().length == 1) {
+                gloDay = "0$intDay"
+            } else {
+                gloDay = intDay.toString()
+            }
+
+            date = "$gloYear-$gloMonth-$gloDay"
+            var week = getDayOfWeek(date)
+            viewModel.updateDate(date)
+
+            binding.date.text = "${gloMonth.toInt()}" + "월" + " $intDay" + "일 " + "$week"
+        }
+
+        // 이전 날짜
+        binding.btnBack.setOnClickListener {
+            var intDay = gloDay.toInt() - 1
+            if (intDay.toString().length == 1) {
+                gloDay = "0$intDay"
+            } else {
+                gloDay = intDay.toString()
+            }
+            date = "$gloYear-$gloMonth-$gloDay"
+            var week = getDayOfWeek(date)
+            viewModel.updateDate(date)
+
+            binding.date.text = "${gloMonth.toInt()}" + "월" + " $intDay" + "일 " + "$week"
+        }
+
+        // 나가기
+        binding.btnExit.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, HomeFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
         return binding.root
@@ -80,6 +125,7 @@ class MemoListFragment : Fragment() {
 
     // 메모 공개/비공개 처리
     private fun callLockApiFunction(task: MemoResult, userAccessToken: String) {
+
         retService.private(userAccessToken, task.memo.memoId).enqueue(object : Callback<ResponseChallengeJoin> {
             override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
                 if (response.isSuccessful) {
@@ -87,6 +133,7 @@ class MemoListFragment : Fragment() {
                     Log.d("private API : ", result.toString())
 
                     // 리사이클러뷰 갱신
+                    GlobalApplication.prefs.setString("privateFlag", "0")
                     updateRecyclerViewAfterLock(task)
                 } else {
                     Log.d("private API : ", "fail")
@@ -158,7 +205,7 @@ class MemoListFragment : Fragment() {
             else -> ""
         }
 
-        binding.date.text = "$month" + "월 " +"$day" + "일 " + "$week"
+        binding.date.text = "${month.toInt()}" + "월 " +"$day" + "일 " + "$week"
 
         if (month.length == 1) {
             month = "0$month"
@@ -171,7 +218,15 @@ class MemoListFragment : Fragment() {
 
         date = "$year-$month-$strday"
         GlobalApplication.prefs.setString("date", date)
-        //viewModel.fetchMemoData(date)
+        Log.d("date", date)
+
+        // 전역 변수
+        gloYear = year.toString()
+        gloMonth = month.toString()
+        gloDay = strday.toString()
+
+        GlobalApplication.prefs.setString("privateFlag", "0")
+        viewModel.updateDate(date)
 
     }
 
@@ -219,9 +274,16 @@ class MemoListFragment : Fragment() {
                 if (month.length == 1) {
                     month = "0$month"
                 }
-                date = "$selectedYear-$month-$selectedDay"
-                // getMission(userAccessToken, date)
 
+                var strday =selectedDay.toString()
+                if (strday.length == 1) {
+                    strday = "0$day"
+                }
+                date = "$selectedYear-$month-$strday"
+                Log.d("date", date)
+
+                GlobalApplication.prefs.setString("privateFlag", "0")
+                viewModel.updateDate(date)
 
             },
             year,
@@ -235,22 +297,25 @@ class MemoListFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    private fun private(userAccessToken : String, id: Int){
-        retService.private(userAccessToken, id).enqueue(object :
-            Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
-                if (response.isSuccessful) {
-                    val result = response.body()?.message
-                    Log.d("private API : ", result.toString())
-                } else {
-                    Log.d("private API : ", "fail")
-                }
-            }
-            override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.toString()}")
-            }
-        })
-    }
+    // 날짜 화살표 이동 요일 구하기
+    fun getDayOfWeek(dateString: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = sdf.parse(dateString)
+        val calendar = Calendar.getInstance()
+        calendar.time = date ?: Date()
 
+        val dayOfWeek = when (calendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.SUNDAY -> "일요일"
+            Calendar.MONDAY -> "월요일"
+            Calendar.TUESDAY -> "화요일"
+            Calendar.WEDNESDAY -> "수요일"
+            Calendar.THURSDAY -> "목요일"
+            Calendar.FRIDAY -> "금요일"
+            Calendar.SATURDAY -> "토요일"
+            else -> ""
+        }
+
+        return dayOfWeek
+    }
 
 }
