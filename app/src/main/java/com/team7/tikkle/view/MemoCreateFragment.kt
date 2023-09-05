@@ -38,6 +38,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Console
 import java.io.File
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -157,6 +158,9 @@ class MemoCreateFragment : Fragment() {
         // 이미지 삭제
         binding.delImg.setOnClickListener {
             binding.img.setImageResource(R.drawable.btn_memo_img)
+            GlobalApplication.prefs.setString("memoImg", "")
+            binding.delImg.visibility = View.GONE
+            selectedImageUri = null
         }
 
         // 저장 하기
@@ -166,6 +170,7 @@ class MemoCreateFragment : Fragment() {
             // 메모가 작성 되었을 경우
             if (memo.count() !== null) {
                 postMemo(userAccessToken, memoId, memo, selectedImageUri)
+                GlobalApplication.prefs.setString("memoImg", "")
 
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, MemoListFragment())
@@ -174,11 +179,10 @@ class MemoCreateFragment : Fragment() {
             }
         }
 
+        // 나가기
         binding.btnExit.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, MemoListFragment())
-                .addToBackStack(null)
-                .commit()
+            showDialog()
+            GlobalApplication.prefs.setString("memoImg", "")
         }
 
         return binding.root
@@ -245,6 +249,32 @@ class MemoCreateFragment : Fragment() {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
         })
+    }
+
+    private fun showDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_memo_back_new)
+
+        val delete = dialog.findViewById<ConstraintLayout>(R.id.btn_delete)
+        val undo = dialog.findViewById<ConstraintLayout>(R.id.btn_undo)
+        val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
+
+        exit.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        delete.setOnClickListener {// 나가기
+            dialog.dismiss()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MemoListFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        undo.setOnClickListener {// 취소
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
 }
