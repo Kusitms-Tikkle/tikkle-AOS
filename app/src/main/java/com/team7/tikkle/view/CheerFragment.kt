@@ -1,60 +1,69 @@
 package com.team7.tikkle.view
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
+import com.team7.tikkle.data.MyStickerResponse
+import com.team7.tikkle.data.ResponseHomeExistence
+import com.team7.tikkle.databinding.FragmentCheerBinding
+import com.team7.tikkle.databinding.FragmentConsumptionTypeBinding
+import com.team7.tikkle.retrofit.APIS
+import com.team7.tikkle.retrofit.RetrofitClient
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CheerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CheerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var binding: FragmentCheerBinding
+    private lateinit var retService: APIS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cheer, container, false)
-    }
+        binding = FragmentCheerBinding.inflate(inflater, container, false)
+        val nickname = GlobalApplication.prefs.getString("userNickname", "익명")
+        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+        binding.textView.text = "${nickname}님이 받은 스티커"
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CheerFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CheerFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        //retrofit
+        retService = RetrofitClient
+            .getRetrofitInstance()
+            .create(APIS::class.java)
+
+        var stickerA: String = ""
+        var stickerB: String = ""
+        var stickerC: String = ""
+
+        //스티커 개수
+        lifecycleScope.launch {
+            try {
+                val response = retService.mySticker(userAccessToken)
+                Log.d("MyStickerResponse", "mySticker : $response")
+                binding.myAwesomeSticker.text = response.result?.a.toString()
+                binding.myTrySticker.text = response.result?.b.toString()
+                binding.myEffortSticker.text = response.result?.b.toString()
+            } catch (e: HttpException) {
+                // HTTP error
+                Log.e(ContentValues.TAG, "HTTP Exception: ${e.message}", e)
+            } catch (e: Exception) {
+                // General error handling
+                Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
             }
+        }
+
+        return binding.root
+
+
     }
 }
