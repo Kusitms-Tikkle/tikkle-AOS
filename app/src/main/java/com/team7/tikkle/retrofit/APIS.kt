@@ -214,4 +214,9 @@ interface APIS {
         @Path("id") id: Int
     ): Call<ResponseChallengeJoin>
 
+    //내가 받은 스티커 개수
+    @GET("/sticker/received")
+    suspend fun mySticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): MyStickerResponse
 }
