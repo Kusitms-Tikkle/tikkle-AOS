@@ -106,8 +106,7 @@ class HomeExistenceFragment : Fragment() {
             GlobalApplication.prefs.setString("total", total.toString())
             updateProgressBar() //ProgressBar 업데이트
         })
-
-
+        
 
         //calendar
         val monday: String? = doDayOfWeek().toString()
@@ -168,76 +167,41 @@ class HomeExistenceFragment : Fragment() {
             }
         })
 
-        // 내가 참여중인 챌린지 조회
         val call2 = retService.myChallengeList(userAccessToken)
         call2.enqueue(object : Callback<ResponseMyChallengeList> {
             override fun onResponse(call: Call<ResponseMyChallengeList>, response: Response<ResponseMyChallengeList>) {
                 if (response.isSuccessful) {
-                    val myChallengeList = response.body()
-                    val challenges = myChallengeList?.result
-                    val count = challenges?.size
+                    val challenges = response.body()?.result ?: listOf()
+                    val count = challenges.size
 
-                    binding.challengeContainer.setOnClickListener {
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.main_frm, ChallengeEditFragment())
-                            .addToBackStack(null)
-                            .commit()
-                    }
-                    if(count==0){
-                        val secondFragment = HomeNoneExistenceFragment()
-                        fragmentManager?.beginTransaction()?.apply {
-                            replace(R.id.home_fragment, secondFragment)
-                            addToBackStack(null)
-                            commit()
+                    when (count) {
+                        0 -> {
+                            showNoneExistenceFragment()
+                        }
+                        1 -> {
+                            val challenge1Id = challenges[0].id.toInt()
+                            setChallenge(challenge1Id)
+                        }
+                        2 -> {
+                            val challenge1Id = challenges[0].id.toInt()
+                            val challenge2Id = challenges[1].id.toInt()
+
+                            setChallenge(challenge1Id)
+
+                            binding.next.setOnClickListener {
+                                setChallenge(challenge2Id, isNext = true)
+                            }
+                            binding.before.setOnClickListener {
+                                setChallenge(challenge1Id, isNext = false)
+                            }
                         }
                     }
-                    if(count==1){
-                        //참여중인 챌린지가 1개
-                        binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
-                        val challenge1 = challenges.get(0)
-                        val challenge1_id = challenge1.id.toInt()
-                        GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
-                        challengeListSetting(challenge1_id)
-
-                        binding.challengeContainer.setOnClickListener {
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.main_frm, ChallengeEditFragment())
-                                .addToBackStack(null)
-                                .commit()
-                        }
-                        Log.d("HomeExistenceFragment My challenge", "$count, $challenges, challenge1 : $challenge1")
-                    }
-                    if(count==2){
-                        //참여중인 챌린지가 2개
-                        val challenge1 = challenges.get(0)
-                        val challenge1_id = challenge1.id.toInt()
-                        val challenge2 = challenges.get(1)
-                        val challenge2_id = challenge2.id.toInt()
-                        GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
-                        challengeListSetting(challenge1_id)
-
-                        binding.next.setOnClickListener() {
-                            challengeListSetting(challenge2_id)
-                            binding.before.setColorFilter(Color.parseColor("#222227"))
-                            binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
-                            GlobalApplication.prefs.setString("challengeNum", challenge2_id.toString()) // 챌린지 번호
-                        }
-                        binding.before.setOnClickListener() {
-                            challengeListSetting(challenge1_id)
-                            GlobalApplication.prefs.setString("challengeNum", challenge1_id.toString()) // 챌린지 번호
-                            binding.before.setColorFilter(Color.parseColor("#D9D9D9"))
-                            binding.next.setColorFilter(Color.parseColor("#222227"))
-                        }
-                    }
-
                 } else {
-                    // error handling
                     Log.e("HomeExistenceFragment My challenge", "Error : ${response.errorBody()}")
                 }
             }
 
             override fun onFailure(call: Call<ResponseMyChallengeList>, t: Throwable) {
-                // error handling
                 Log.e("HomeExistenceFragment My challenge", "Error : $t")
             }
         })
@@ -417,6 +381,37 @@ class HomeExistenceFragment : Fragment() {
         binding.percent.text = "$progress"
         Log.d("progress", "progress: $progress todoNum: $mytodo total: $total")
         GlobalApplication.prefs.setString("progress", progress.toString())
+    }
+
+    private fun showNoneExistenceFragment() {
+        val secondFragment = HomeNoneExistenceFragment()
+        fragmentManager?.beginTransaction()?.apply {
+            replace(R.id.home_fragment, secondFragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
+
+    private fun setChallenge(challengeId: Int, isNext: Boolean? = null) {
+        GlobalApplication.prefs.setString("challengeNum", challengeId.toString())
+        challengeListSetting(challengeId)
+
+        isNext?.let {
+            if (it) {
+                binding.before.setColorFilter(Color.parseColor("#222227"))
+                binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
+            } else {
+                binding.before.setColorFilter(Color.parseColor("#D9D9D9"))
+                binding.next.setColorFilter(Color.parseColor("#222227"))
+            }
+        }
+
+        binding.challengeContainer.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, ChallengeEditFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
 }

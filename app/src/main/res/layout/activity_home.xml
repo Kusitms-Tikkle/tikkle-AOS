@@ -13,9 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toTopOf="@id/main_bnv"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="-16dp">
 
 
@@ -33,25 +31,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav_menu" />
 
+        <ImageView
+            android:id="@+id/mainFab"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="24dp"
+            android:src="@drawable/btn_floating_unclick"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/main_frm"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/mainFabClick"
+            android:layout_width="55dp"
+            android:layout_height="191dp"
+            android:layout_margin="24dp"
+            android:src="@drawable/btn_floating_click"
+            app:layout_constraintBottom_toBottomOf="@+id/main_frm"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnMemo"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/btn_memo"
+            app:layout_constraintTop_toTopOf="@+id/mainFabClick"
+            app:layout_constraintStart_toStartOf="@+id/mainFabClick"
+            app:layout_constraintEnd_toEndOf="@+id/mainFabClick" />
+
+        <ImageView
+            android:id="@+id/btnWrite"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/btn_write"
+            app:layout_constraintEnd_toEndOf="@+id/mainFabClick"
+            app:layout_constraintStart_toStartOf="@+id/mainFabClick"
+            app:layout_constraintTop_toBottomOf="@+id/btnMemo" />
 
 
-<!--        <ImageView-->
-<!--            android:id="@+id/mainFab"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="70dp"-->
-<!--            android:layout_margin="24dp"-->
-<!--            android:src="@drawable/_1"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/main_frm"-->
-<!--            app:layout_constraintEnd_toEndOf="parent" />-->
 
-<!--        <ImageView-->
-<!--            android:id="@+id/mainFabClick"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="190dp"-->
-<!--            android:layout_margin="24dp"-->
-<!--            android:src="@drawable/_2"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/main_frm"-->
-<!--            app:layout_constraintEnd_toEndOf="parent" />-->
+
+
+
 
 
         <!--        android:visibility="invisible"-->

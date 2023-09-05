@@ -1,9 +1,11 @@
 package com.team7.tikkle
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -28,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
     private val userViewModel by viewModels<UserViewModel> { UserViewModel.Factory(userDao) }
 
     val analytics = Firebase.analytics
+    var floatingClick = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +41,36 @@ class HomeActivity : AppCompatActivity() {
 
         //bottom navigation icon tint 제거
         binding.mainBnv.itemIconTintList = null
+
+        //floating action button
+        binding.mainFabClick.visibility = View.INVISIBLE
+        binding.btnMemo.visibility = View.INVISIBLE
+        binding.btnWrite.visibility = View.INVISIBLE
+        binding.mainFab.setOnClickListener {
+            binding.mainFab.visibility = View.INVISIBLE
+            binding.mainFabClick.visibility = View.VISIBLE
+            binding.btnMemo.visibility = View.VISIBLE
+            binding.btnWrite.visibility = View.VISIBLE
+            binding.btnWrite.setOnClickListener {
+                //화면 이동
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoFragment())
+                    .commitAllowingStateLoss()
+            }
+            binding.btnMemo.setOnClickListener {
+                //화면 이동
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoListFragment())
+                    .commitAllowingStateLoss()
+            }
+        }
+        binding.mainFabClick.setOnClickListener {
+            binding.mainFab.visibility = View.VISIBLE
+            binding.mainFabClick.visibility = View.INVISIBLE
+            binding.btnMemo.visibility = View.INVISIBLE
+            binding.btnWrite.visibility = View.INVISIBLE
+        }
+
 
         // Log an event
         analytics.setCurrentScreen(this, "HomeActivity", null /* class override */)
