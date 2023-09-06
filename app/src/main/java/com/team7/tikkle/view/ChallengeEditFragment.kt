@@ -138,25 +138,6 @@ class ChallengeEditFragment : Fragment() {
         })
     }
 
-    // 챌린지 그만 두기 API
-    private fun challengeDelete(challengeNum: String, userAccessToken : String){
-        val num = challengeNum.toInt()
-        retService.challengeDelete(userAccessToken, num).enqueue(object :
-            Callback<ResponseChallengeDelete> {
-            override fun onResponse(call: Call<ResponseChallengeDelete>, response: Response<ResponseChallengeDelete>) {
-                if (response.isSuccessful) {
-                    val result = response.body()?.message
-                    Log.d("challengeDelete API : ", result.toString())
-                } else {
-                    Log.d("challengeDelete API : ", "fail")
-                }
-            }
-            override fun onFailure(call: Call<ResponseChallengeDelete>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.toString()}")
-            }
-        })
-    }
-
     // 미션 추가 API
     private fun addMission(userAccessToken : String, id: Int){
         retService.addMission(userAccessToken, id).enqueue(object :
@@ -193,15 +174,6 @@ class ChallengeEditFragment : Fragment() {
         })
     }
 
-    // 챌린지 삭제 API 호출 + 화면 이동
-    private fun delete(challengeNum: String, userAccessToken: String) {
-        challengeDelete(challengeNum, userAccessToken)
-        fragmentManager?.beginTransaction()?.apply {
-            replace(R.id.main_frm, HomeFragment())
-            addToBackStack(null)
-            commit()
-        }
-    }
     private fun showDialog(challengeNumber : String, userAccessToken : String) {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_delete_challenge)
@@ -235,6 +207,36 @@ class ChallengeEditFragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    // 챌린지 삭제 API 호출 + 화면 이동
+    private fun delete(challengeNum: String, userAccessToken: String) {
+        Log.d("챌린지 삭제", "실행")
+        challengeDelete(challengeNum, userAccessToken)
+        fragmentManager?.beginTransaction()?.apply {
+            replace(R.id.main_frm, HomeFragment())
+            addToBackStack(null)
+            commit()
+        }
+    }
+
+    // 챌린지 그만 두기 API
+    private fun challengeDelete(challengeNum: String, userAccessToken : String){
+        val num = challengeNum.toLong()
+        retService.challengeDelete(userAccessToken, num).enqueue(object :
+            Callback<ResponseChallengeDelete> {
+            override fun onResponse(call: Call<ResponseChallengeDelete>, response: Response<ResponseChallengeDelete>) {
+                if (response.isSuccessful) {
+                    val result = response.body()?.message
+                    Log.d("challengeDelete API : ", result.toString())
+                } else {
+                    Log.d("challengeDelete API : ", response.toString())
+                }
+            }
+            override fun onFailure(call: Call<ResponseChallengeDelete>, t: Throwable) {
+                Log.d(t.toString(), "error: ${t.toString()}")
+            }
+        })
     }
 
 }
