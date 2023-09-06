@@ -21,6 +21,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         android:src="@drawable/btn_memo_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
