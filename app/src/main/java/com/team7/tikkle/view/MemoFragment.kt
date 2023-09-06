@@ -174,6 +174,13 @@ class MemoFragment : Fragment() {
                 }
             }
 
+            val calendar = Calendar.getInstance()
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            if (day == mainday){
+                return@setOnClickListener
+            }
+
             mainday += 1
 
             var strDay = ""
@@ -265,8 +272,11 @@ class MemoFragment : Fragment() {
         binding.img.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             binding.delImg.visibility = View.VISIBLE
-            // binding.img.setBackgroundResource(R.drawable.bg_gray)
             startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
+
+//            모서리 둥글게
+//            binding.img.setBackgroundResource(R.drawable.bg_gray)
+//            binding.img.clipToOutline = true
         }
 
         // 이미지 삭제

@@ -145,7 +145,7 @@ interface APIS {
     @DELETE("/participate/challenge/{id}")
     fun challengeDelete(
         @Header("X-ACCESS-TOKEN") accessToken: String,
-        @Path("id") id: Int
+        @Path("id") id: Long
     ): Call<ResponseChallengeDelete>
 
     // addMission : 미션 추가

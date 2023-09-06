@@ -11,43 +11,32 @@
         tools:context=".view.Mypage">
 
     <!--     메뉴바 -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/bg_item_line">
-
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-            android:text="마이페이지"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/black"
-            android:textSize="17dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <!-- 메뉴바 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/bg_item_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/btnDrawer"-->
-<!--            android:layout_width="15dp"-->
-<!--            android:layout_height="11dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.801"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/titleText"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintVertical_bias="0.511"-->
-<!--            app:srcCompat="@drawable/btn_vector" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="마이페이지"
+                android:textColor="@color/gray_500"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 <!--    사용자 프로필-->
 
@@ -56,20 +45,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myprofile"
         android:layout_width="match_parent"
-        android:layout_height="364dp"
+        android:layout_height="366dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
         app:layout_constraintVertical_bias="0.0"
         android:background="@drawable/bg_item_line">
 
         <ImageView
             android:id="@+id/myconsumption_bg"
-            android:layout_width="127dp"
+            android:layout_width="260dp"
             android:layout_height="127dp"
-            android:layout_marginBottom="27dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintEnd_toEndOf="@+id/imageView8"
             app:layout_constraintStart_toStartOf="@+id/imageView8"
@@ -77,8 +66,8 @@
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="332dp"
-            android:layout_height="70dp"
+            android:layout_width="322dp"
+            android:layout_height="60dp"
             android:layout_marginTop="120dp"
             android:scaleType = "centerCrop"
             android:background="@android:color/transparent"
@@ -117,6 +106,7 @@
             android:id="@+id/myconsumption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/pretendard_bold"
             android:gravity="center"
@@ -151,21 +141,6 @@
             app:srcCompat="@drawable/btn_mypage_account" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/btn_Challenge"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_button_orange"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:text="이 유형에 적절한 챌린지 추천 받기"
-            android:fontFamily="@font/pretendard_medium"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myprofile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

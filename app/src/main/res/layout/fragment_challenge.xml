@@ -71,9 +71,11 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/challenge_1"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_item_line"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_challenge_box"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView12">
@@ -93,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="90dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="29dp"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="무(無)심기 챌린지"
                         android:textColor="@color/black_100"
@@ -129,10 +131,12 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/challenge_2"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_challenge_box"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/bg_item_line"
                     app:layout_constraintTop_toBottomOf="@+id/challenge_1">
 
                     <ImageView
@@ -160,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="90dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="29dp"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="일주일 밀플랜 챌린지"
                         android:textColor="@color/black_100"
@@ -186,10 +190,12 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/challenge_3"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_challenge_box"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/bg_item_line"
                     app:layout_constraintTop_toBottomOf="@+id/challenge_2">
 
                     <ImageView
@@ -217,7 +223,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="90dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="29dp"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="차곡차곡 다람쥐 챌린지"
                         android:textColor="@color/black_100"
@@ -243,10 +249,12 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/challenge_4"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_challenge_box"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/bg_item_line"
                     app:layout_constraintTop_toBottomOf="@+id/challenge_3">
 
                     <ImageView
@@ -274,7 +282,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="90dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="29dp"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="포미(For Me) 챌린지"
                         android:textColor="@color/black_100"
