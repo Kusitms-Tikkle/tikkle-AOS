@@ -256,13 +256,13 @@ class MemoListFragment : Fragment() {
                 val day = calendar.get(Calendar.DAY_OF_WEEK)
 
                 val week2 = when (day) {
-                    Calendar.SUNDAY -> "목요일"
-                    Calendar.MONDAY -> "금요일"
-                    Calendar.TUESDAY -> "토요일"
-                    Calendar.WEDNESDAY -> "일요일"
-                    Calendar.THURSDAY -> "월요일"
-                    Calendar.FRIDAY -> "화요일"
-                    Calendar.SATURDAY -> "수요일"
+                    Calendar.SUNDAY -> "금요일"
+                    Calendar.MONDAY -> "토요일"
+                    Calendar.TUESDAY -> "일요일"
+                    Calendar.WEDNESDAY -> "월요일"
+                    Calendar.THURSDAY -> "화요일"
+                    Calendar.FRIDAY -> "수요일"
+                    Calendar.SATURDAY -> "목요일"
                     else -> ""
                 }
 
