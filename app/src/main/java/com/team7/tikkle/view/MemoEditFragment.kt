@@ -203,7 +203,7 @@ class MemoEditFragment : Fragment() {
             GlobalApplication.prefs.setString("memoImg", "")
             binding.delImg.visibility = View.GONE
             selectedImageUri = null
-            delMemo(userAccessToken,memoId)
+            delMemoImg(userAccessToken,memoId)
         }
 
         return binding.root

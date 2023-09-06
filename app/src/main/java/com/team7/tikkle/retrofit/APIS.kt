@@ -225,4 +225,11 @@ interface APIS {
     suspend fun getCheer(
         @Header("X-ACCESS-TOKEN") accessToken: String
     ): Response<CheerResponse>
+
+    // 메모 이미지 삭제
+    @DELETE("/memo/{id}/image")
+    fun delMemoImg(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
 }
