@@ -174,6 +174,13 @@ class MemoFragment : Fragment() {
                 }
             }
 
+            val calendar = Calendar.getInstance()
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            if (day == mainday){
+                return@setOnClickListener
+            }
+
             mainday += 1
 
             var strDay = ""

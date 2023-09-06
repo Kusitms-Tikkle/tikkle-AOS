@@ -55,7 +55,7 @@ class MypageFragment : Fragment() {
         }
 
         // 챌린지 버튼
-        binding.btnChallenge.setOnClickListener {
+        binding.imageView8.setOnClickListener {
             if (flag == 0) { // 소비 유형 검사 전 > 소비 유형 검사
                 val intent = Intent(activity, ConsumptionIntroActivity::class.java)
                 startActivity(intent)
@@ -81,10 +81,8 @@ class MypageFragment : Fragment() {
                     if (userLabel == null) { // 소비 유형 검사 참여 전
                         binding.myconsumption2.text = "유형이 없어요"
                         binding.myconsumption2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_500))
-                        binding.myconsumption.text = "아직 나만의 티끌이가 없어요"
+                        binding.myconsumption.text = "소비 유형 검사하고 나만의 티끌이 찾기"
                         binding.myconsumption.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_500))
-
-                        binding.btnChallenge.text = "소비 유형 검사하고 나만의 티끌이 찾기"
 
                         flag = 0
 
@@ -92,7 +90,7 @@ class MypageFragment : Fragment() {
                         binding.myconsumption.text = userLabel
                         binding.myconsumption2.text = userLabel
 
-                        binding.btnChallenge.text = "이 유형에 적절한 챌린지 추천 받기"
+                        // binding.btnChallenge.text = "이 유형에 적절한 챌린지 추천 받기"
 
                         flag = 1
                     }
