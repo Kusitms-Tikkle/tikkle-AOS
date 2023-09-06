@@ -67,9 +67,9 @@
 
         <ImageView
             android:id="@+id/myconsumption_bg"
-            android:layout_width="127dp"
+            android:layout_width="260dp"
             android:layout_height="127dp"
-            android:layout_marginBottom="27dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintEnd_toEndOf="@+id/imageView8"
             app:layout_constraintStart_toStartOf="@+id/imageView8"
@@ -77,8 +77,8 @@
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="332dp"
-            android:layout_height="70dp"
+            android:layout_width="322dp"
+            android:layout_height="60dp"
             android:layout_marginTop="120dp"
             android:scaleType = "centerCrop"
             android:background="@android:color/transparent"
@@ -117,6 +117,7 @@
             android:id="@+id/myconsumption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/pretendard_bold"
             android:gravity="center"
@@ -151,21 +152,6 @@
             app:srcCompat="@drawable/btn_mypage_account" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/btn_Challenge"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_button_orange"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:text="이 유형에 적절한 챌린지 추천 받기"
-            android:fontFamily="@font/pretendard_medium"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myprofile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
