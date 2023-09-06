@@ -7,13 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.GlobalApplication
-import com.team7.tikkle.R
-import com.team7.tikkle.data.MyStickerResponse
-import com.team7.tikkle.data.ResponseHomeExistence
 import com.team7.tikkle.databinding.FragmentCheerBinding
-import com.team7.tikkle.databinding.FragmentConsumptionTypeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
@@ -22,6 +22,8 @@ import retrofit2.HttpException
 class CheerFragment : Fragment() {
     lateinit var binding: FragmentCheerBinding
     private lateinit var retService: APIS
+//    private lateinit var viewModel: RatingViewModel
+//    private lateinit var ratingRecyclerViewAdapter: RatingRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,18 +43,14 @@ class CheerFragment : Fragment() {
             .getRetrofitInstance()
             .create(APIS::class.java)
 
-        var stickerA: String = ""
-        var stickerB: String = ""
-        var stickerC: String = ""
-
         //스티커 개수
         lifecycleScope.launch {
             try {
                 val response = retService.mySticker(userAccessToken)
                 Log.d("MyStickerResponse", "mySticker : $response")
-                binding.myAwesomeSticker.text = response.result?.a.toString()
-                binding.myTrySticker.text = response.result?.b.toString()
-                binding.myEffortSticker.text = response.result?.b.toString()
+                binding.myAwesomeSticker.text = response.result.a.toString()
+                binding.myTrySticker.text = response.result.b.toString()
+                binding.myEffortSticker.text = response.result.b.toString()
             } catch (e: HttpException) {
                 // HTTP error
                 Log.e(ContentValues.TAG, "HTTP Exception: ${e.message}", e)
@@ -62,8 +60,37 @@ class CheerFragment : Fragment() {
             }
         }
 
+        //recyclerview
+        // ViewModel 초기화
+//        viewModel = ViewModelProvider(this).get(RatingViewModel::class.java)
+//
+//        ratingRecyclerViewAdapter = RatingRecyclerViewAdapter { task ->
+//            //click event 처리
+//            postId = task.postId
+//            var name = task.title
+//            var brand = task.brand
+//            binding.bottomTvName.text = name
+//            binding.bottomTvBrand.text = "["+brand+"]"
+//
+//        }
+//
+//        // recyclerview 구성
+//        val recyclerView: RecyclerView = binding.recyclerView
+//        recyclerView.adapter = ratingRecyclerViewAdapter
+//        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        recyclerView.layoutManager = layoutManager
+//
+//        // SnapHelper 설정
+//        val snapHelper = LinearSnapHelper()
+//        snapHelper.attachToRecyclerView(recyclerView)
+//
+//        // ViewModel과 RecyclerView 어댑터 연결
+//        viewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
+//            ratingRecyclerViewAdapter.updateTasks(tasks)
+//        })
+
+
+
         return binding.root
-
-
     }
 }

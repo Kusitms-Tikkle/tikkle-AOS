@@ -89,58 +89,26 @@
             app:layout_constraintTop_toTopOf="@+id/iv_effort_sticker_small" />
 
 
-
-
-
-
-
-
-
-
-
-<!--        스티커-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="320dp"
-            android:layout_height="90dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="98dp"
+            android:layout_marginStart="30dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
-            <ImageView
-                android:id="@+id/btn_awesome_sticker"
-                android:layout_width="100dp"
-                android:layout_height="90dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/iv_awesome_sticker"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="100dp"
-                android:layout_height="90dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/iv_try_sticker"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView15"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btn_awesome_sticker"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="100dp"
-                android:layout_height="90dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/iv_effort_sticker"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="230dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="327dp"
+            android:src="@drawable/ic_cheer_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
 
