@@ -128,7 +128,7 @@ class MemoCreateFragment : Fragment() {
                 Log.d("Memo Create memoTitle", memoTitle)
 
                 binding.delImg.visibility = View.INVISIBLE
-                binding.date.text = "$month" + "월 " +"$day" + "일 " + "$dayOfWeekText"
+                binding.date.text = "${month.toInt()}" + "월 " +"${day.toInt()}" + "일 " + "$dayOfWeekText"
                 binding.title.text = memoTitle
 
 
@@ -137,11 +137,15 @@ class MemoCreateFragment : Fragment() {
 
         // Memo
         binding.memo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo)
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
+                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo_true)
+
                 // 입력한 텍스트의 글자 수를 세서 표시
                 val charCount = s?.length ?: 0
                 binding.count.text = "$charCount/280자"

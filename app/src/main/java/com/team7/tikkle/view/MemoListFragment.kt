@@ -76,12 +76,51 @@ class MemoListFragment : Fragment() {
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.memo.observe(viewLifecycleOwner) { memo ->
-            GlobalApplication.prefs.setString("privateFlag", "0")
             recyclerViewAdapter.updateList(memo)
         }
 
         // 다음 날짜
         binding.btnNext.setOnClickListener {
+
+            when(gloMonth.toInt()) {
+                1 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                2 -> {
+                    if (gloDay.toInt() == 28) { return@setOnClickListener}
+                }
+                3 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                4 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                5 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                6 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                7 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                8 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                9 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                10 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                11 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                12 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+            }
+
             var intDay = gloDay.toInt() + 1
             if (intDay.toString().length == 1) {
                 gloDay = "0$intDay"
@@ -98,6 +137,10 @@ class MemoListFragment : Fragment() {
 
         // 이전 날짜
         binding.btnBack.setOnClickListener {
+            if ( gloDay.toInt() == 1 ) {
+                return@setOnClickListener
+            }
+
             var intDay = gloDay.toInt() - 1
             if (intDay.toString().length == 1) {
                 gloDay = "0$intDay"
@@ -125,7 +168,7 @@ class MemoListFragment : Fragment() {
 
     // 메모 공개/비공개 처리
     private fun callLockApiFunction(task: MemoResult, userAccessToken: String) {
-
+        //GlobalApplication.prefs.setString("privateFlag", "0")
         retService.private(userAccessToken, task.memo.memoId).enqueue(object : Callback<ResponseChallengeJoin> {
             override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
                 if (response.isSuccessful) {
@@ -133,8 +176,8 @@ class MemoListFragment : Fragment() {
                     Log.d("private API : ", result.toString())
 
                     // 리사이클러뷰 갱신
-                    GlobalApplication.prefs.setString("privateFlag", "0")
                     updateRecyclerViewAfterLock(task)
+
                 } else {
                     Log.d("private API : ", "fail")
                 }
@@ -225,7 +268,6 @@ class MemoListFragment : Fragment() {
         gloMonth = month.toString()
         gloDay = strday.toString()
 
-        GlobalApplication.prefs.setString("privateFlag", "0")
         viewModel.updateDate(date)
 
     }
@@ -258,13 +300,13 @@ class MemoListFragment : Fragment() {
                 val day = calendar.get(Calendar.DAY_OF_WEEK)
 
                 val week2 = when (day) {
-                    Calendar.SUNDAY -> "목요일"
-                    Calendar.MONDAY -> "금요일"
-                    Calendar.TUESDAY -> "토요일"
-                    Calendar.WEDNESDAY -> "일요일"
-                    Calendar.THURSDAY -> "월요일"
-                    Calendar.FRIDAY -> "화요일"
-                    Calendar.SATURDAY -> "수요일"
+                    Calendar.SUNDAY -> "금요일"
+                    Calendar.MONDAY -> "토요일"
+                    Calendar.TUESDAY -> "일요일"
+                    Calendar.WEDNESDAY -> "월요일"
+                    Calendar.THURSDAY -> "화요일"
+                    Calendar.FRIDAY -> "수요일"
+                    Calendar.SATURDAY -> "목요일"
                     else -> ""
                 }
 
@@ -282,7 +324,6 @@ class MemoListFragment : Fragment() {
                 date = "$selectedYear-$month-$strday"
                 Log.d("date", date)
 
-                GlobalApplication.prefs.setString("privateFlag", "0")
                 viewModel.updateDate(date)
 
             },

@@ -19,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -43,6 +44,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 import kotlin.collections.ArrayList
 
 class MemoFragment : Fragment() {
@@ -128,8 +134,68 @@ class MemoFragment : Fragment() {
 
         // 다음 날
         binding.btnNext.setOnClickListener {
+
+            when(mainMonth) {
+                1 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                2 -> {
+                    if (mainday == 28) { return@setOnClickListener}
+                }
+                3 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                4 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                5 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                6 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                7 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                8 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                9 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                10 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                11 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                12 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+            }
+
             mainday += 1
-            date = "$mainYear-$mainMonth-$mainday"
+
+            var strDay = ""
+            var strMonth = ""
+
+            if (mainday.toString().length == 1) {
+                strDay = "0$mainday"
+            } else {
+                strDay = mainday.toString()
+            }
+
+            if (mainMonth.toString().length == 1){
+                strMonth = "0$mainMonth"
+            } else {
+                strMonth = mainMonth.toString()
+            }
+
+            date = "$mainYear-$strMonth-$strDay"
+
+            var week = getDayOfWeek(date)
+
+            binding.date.text = "$mainMonth" + "월 " + "$mainday" + "일 " + "$week"
 
             getMission(userAccessToken, date)
 
@@ -137,8 +203,34 @@ class MemoFragment : Fragment() {
 
         // 이전 날
         binding.btnBack.setOnClickListener {
-            mainday += 1
-            date = "$mainYear-$mainMonth-$mainday"
+
+            if ( mainday == 1 ) {
+                return@setOnClickListener
+            }
+
+            mainday -= 1
+
+            var strDay = ""
+            var strMonth = ""
+
+            if (mainday.toString().length == 1) {
+                strDay = "0$mainday"
+            } else {
+                strDay = mainday.toString()
+            }
+
+            if (mainMonth.toString().length == 1){
+                strMonth = "0$mainMonth"
+            } else {
+                strMonth = mainMonth.toString()
+            }
+
+            date = "$mainYear-$strMonth-$strDay"
+
+            var week = getDayOfWeek(date)
+
+            binding.date.text = "$mainMonth" + "월 " + "$mainday" + "일 " + "$week"
+
             getMission(userAccessToken, date)
         }
 
@@ -147,13 +239,21 @@ class MemoFragment : Fragment() {
         binding.spinner.adapter = adapter
         binding.spinner.onItemSelectedListener = adapter
 
+        binding.constraintLayout4.setOnClickListener {
+            binding.constraintLayout4.setBackgroundResource(R.drawable.bg_memo_select_true)
+        }
+
         // Memo
         binding.memo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo)
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
+                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo_true)
+
                 // 입력한 텍스트의 글자 수를 세서 표시
                 val charCount = s?.length ?: 0
                 binding.count.text = "$charCount/280자"
@@ -161,13 +261,11 @@ class MemoFragment : Fragment() {
             }
         })
 
-        // binding.btnBack.setOnClickListener {  }
-        // binding.btnNext.setOnClickListener {  }
-
         // 이미지 추가
         binding.img.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             binding.delImg.visibility = View.VISIBLE
+            // binding.img.setBackgroundResource(R.drawable.bg_gray)
             startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
         }
 
@@ -260,13 +358,13 @@ class MemoFragment : Fragment() {
                 val day = calendar.get(Calendar.DAY_OF_WEEK)
 
                 val week2 = when (day) {
-                    Calendar.SUNDAY -> "목요일"
-                    Calendar.MONDAY -> "금요일"
-                    Calendar.TUESDAY -> "토요일"
-                    Calendar.WEDNESDAY -> "일요일"
-                    Calendar.THURSDAY -> "월요일"
-                    Calendar.FRIDAY -> "화요일"
-                    Calendar.SATURDAY -> "수요일"
+                    Calendar.SUNDAY -> "금요일"
+                    Calendar.MONDAY -> "토요일"
+                    Calendar.TUESDAY -> "일요일"
+                    Calendar.WEDNESDAY -> "월요일"
+                    Calendar.THURSDAY -> "화요일"
+                    Calendar.FRIDAY -> "수요일"
+                    Calendar.SATURDAY -> "목요일"
                     else -> ""
                 }
 
@@ -297,14 +395,6 @@ class MemoFragment : Fragment() {
         datePickerDialog.datePicker.minDate = firstDayOfMonth
         datePickerDialog.datePicker.maxDate = lastDayOfMonthInMillis
         datePickerDialog.show()
-    }
-
-    private fun nextDate() {
-
-    }
-
-    private fun backDate() {
-
     }
 
     private fun date() {
@@ -437,5 +527,26 @@ class MemoFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    // 날짜 화살표 이동 요일 구하기
+    fun getDayOfWeek(dateString: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = sdf.parse(dateString)
+        val calendar = Calendar.getInstance()
+        calendar.time = date ?: Date()
+
+        val dayOfWeek = when (calendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.SUNDAY -> "일요일"
+            Calendar.MONDAY -> "월요일"
+            Calendar.TUESDAY -> "화요일"
+            Calendar.WEDNESDAY -> "수요일"
+            Calendar.THURSDAY -> "목요일"
+            Calendar.FRIDAY -> "금요일"
+            Calendar.SATURDAY -> "토요일"
+            else -> ""
+        }
+
+        return dayOfWeek
     }
 }

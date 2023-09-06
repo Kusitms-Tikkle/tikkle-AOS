@@ -137,7 +137,7 @@ class MemoEditFragment : Fragment() {
                     binding.delImg.visibility = View.VISIBLE
                 }
 
-                binding.date.text = "$month" + "월 " +"$day" + "일 " + "$dayOfWeekText"
+                binding.date.text = "${month.toInt()}" + "월 " +"${day.toInt()}" + "일 " + "$dayOfWeekText"
                 binding.title.text = memoTitle
                 binding.memo.setText(memoContent)
 
@@ -188,7 +188,6 @@ class MemoEditFragment : Fragment() {
 
         // 삭제 하기
         binding.del.setOnClickListener {
-            // delMemo(userAccessToken, memoId)
             showDialog(userAccessToken,memoId)
         }
 
@@ -204,6 +203,7 @@ class MemoEditFragment : Fragment() {
             GlobalApplication.prefs.setString("memoImg", "")
             binding.delImg.visibility = View.GONE
             selectedImageUri = null
+            delMemoImg(userAccessToken,memoId)
         }
 
         return binding.root
@@ -290,6 +290,27 @@ class MemoEditFragment : Fragment() {
         val menoId = memoNum.toInt()
 
         retService.delMemo(userAccessToken, menoId).enqueue(object :
+            Callback<ResponseChallengeJoin> {
+            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+                if (response.isSuccessful) {
+                    val result = response.body()?.message
+                    Log.d("DelMemo API : ", result.toString())
+
+                } else {
+                    Log.d("DelMemo API : ", "fail")
+                }
+            }
+            override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
+                Log.d(t.toString(), "error: ${t.toString()}")
+            }
+        })
+    }
+
+    // 메모 이미지 삭제
+    private fun delMemoImg(userAccessToken: String, memoNum: String){
+        val menoId = memoNum.toInt()
+
+        retService.delMemoImg(userAccessToken, menoId).enqueue(object :
             Callback<ResponseChallengeJoin> {
             override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
                 if (response.isSuccessful) {
