@@ -76,7 +76,6 @@ class MemoListFragment : Fragment() {
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.memo.observe(viewLifecycleOwner) { memo ->
-            GlobalApplication.prefs.setString("privateFlag", "0")
             recyclerViewAdapter.updateList(memo)
         }
 
@@ -125,7 +124,7 @@ class MemoListFragment : Fragment() {
 
     // 메모 공개/비공개 처리
     private fun callLockApiFunction(task: MemoResult, userAccessToken: String) {
-
+        //GlobalApplication.prefs.setString("privateFlag", "0")
         retService.private(userAccessToken, task.memo.memoId).enqueue(object : Callback<ResponseChallengeJoin> {
             override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
                 if (response.isSuccessful) {
@@ -133,8 +132,8 @@ class MemoListFragment : Fragment() {
                     Log.d("private API : ", result.toString())
 
                     // 리사이클러뷰 갱신
-                    GlobalApplication.prefs.setString("privateFlag", "0")
                     updateRecyclerViewAfterLock(task)
+
                 } else {
                     Log.d("private API : ", "fail")
                 }
@@ -225,7 +224,6 @@ class MemoListFragment : Fragment() {
         gloMonth = month.toString()
         gloDay = strday.toString()
 
-        GlobalApplication.prefs.setString("privateFlag", "0")
         viewModel.updateDate(date)
 
     }
@@ -282,7 +280,6 @@ class MemoListFragment : Fragment() {
                 date = "$selectedYear-$month-$strday"
                 Log.d("date", date)
 
-                GlobalApplication.prefs.setString("privateFlag", "0")
                 viewModel.updateDate(date)
 
             },

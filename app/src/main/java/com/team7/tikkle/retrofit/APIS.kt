@@ -225,4 +225,11 @@ interface APIS {
 //    suspend fun getRating(
 //        @Header("Authorization") accessToken: String
 //    ): Response<List<RatingResponse>>
+
+    // 메모 이미지 삭제
+    @DELETE("/memo/{id}/image")
+    fun delMemoImg(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
 }

@@ -65,6 +65,15 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
         // title
         todo.text = task.title
 
+        // 수행 유무
+        if (!task.checked) {
+            btn_check.setImageResource(R.drawable.btn_memo_check_black)
+            todo.paintFlags = todo.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        } else {
+            btn_check.setImageResource(R.drawable.btn_memo_check_orange)
+            todo.paintFlags = todo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        }
+
         // 메모 유무
         if (task.memo == null) { // 메모 X
             memo.visibility = View.GONE
@@ -78,8 +87,14 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
 
         } else { // 메모 O
             memo.visibility = View.VISIBLE
+            bg.visibility = View.VISIBLE
+            btn_lock.visibility = View.VISIBLE
             memo.text = task.memo.content
             btn_edit.setImageResource(R.drawable.btn_memo_edit)
+
+            like1.visibility = View.VISIBLE
+            like2.visibility = View.VISIBLE
+            like3.visibility = View.VISIBLE
 
             // 좋아요 개수
             if(task.memo.sticker1 == null) { // 0개일 경우 null
@@ -102,7 +117,6 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
 
             if (task.memo.image == null) { // 이미지 X
                 img.visibility = View.GONE
-
             } else { // 이미지 O
                 img.visibility = View.VISIBLE
                 val imageUrl = task.memo.image
@@ -122,24 +136,20 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                 if (task.memo.private) { // 비공개일 경우
                     btn_lock.setImageResource(R.drawable.btn_memo_unlock)
                     GlobalApplication.prefs.setString("privateFlag", "1")
+                    Log.d("privateFlag 1", GlobalApplication.prefs.getString("privateFlag","#"))
                 } else { // 공개일 경우
                     btn_lock.setImageResource(R.drawable.btn_memo_lock)
                     GlobalApplication.prefs.setString("privateFlag", "2")
+                    Log.d("privateFlag 1", GlobalApplication.prefs.getString("privateFlag","#"))
                 }
-            }
-
-            // checked
-            if (!task.checked) {
-                btn_check.setImageResource(R.drawable.btn_memo_check_black)
-            } else {
-                btn_check.setImageResource(R.drawable.btn_memo_check_orange)
-                todo.paintFlags = todo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
 
         }
 
         // 비공개 버튼 클릭 시
         btn_lock.setOnClickListener {
+            Log.d("privateFlag 2", GlobalApplication.prefs.getString("privateFlag","#"))
+
             if (GlobalApplication.prefs.getString("privateFlag", "0") == "1") {
                 btn_lock.setImageResource(R.drawable.btn_memo_lock)
                 GlobalApplication.prefs.setString("privateFlag", "2")
@@ -147,6 +157,8 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                 btn_lock.setImageResource(R.drawable.btn_memo_unlock)
                 GlobalApplication.prefs.setString("privateFlag", "1")
             }
+
+            Log.d("privateFlag 3", GlobalApplication.prefs.getString("privateFlag","#"))
 
             lockClickListener(task)
         }
