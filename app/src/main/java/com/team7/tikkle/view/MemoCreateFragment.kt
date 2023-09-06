@@ -128,7 +128,7 @@ class MemoCreateFragment : Fragment() {
                 Log.d("Memo Create memoTitle", memoTitle)
 
                 binding.delImg.visibility = View.INVISIBLE
-                binding.date.text = "$month" + "월 " +"$day" + "일 " + "$dayOfWeekText"
+                binding.date.text = "${month.toInt()}" + "월 " +"${day.toInt()}" + "일 " + "$dayOfWeekText"
                 binding.title.text = memoTitle
 
 
