@@ -81,6 +81,46 @@ class MemoListFragment : Fragment() {
 
         // 다음 날짜
         binding.btnNext.setOnClickListener {
+
+            when(gloMonth.toInt()) {
+                1 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                2 -> {
+                    if (gloDay.toInt() == 28) { return@setOnClickListener}
+                }
+                3 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                4 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                5 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                6 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                7 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                8 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                9 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                10 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+                11 -> {
+                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                }
+                12 -> {
+                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                }
+            }
+
             var intDay = gloDay.toInt() + 1
             if (intDay.toString().length == 1) {
                 gloDay = "0$intDay"
@@ -97,6 +137,10 @@ class MemoListFragment : Fragment() {
 
         // 이전 날짜
         binding.btnBack.setOnClickListener {
+            if ( gloDay.toInt() == 1 ) {
+                return@setOnClickListener
+            }
+
             var intDay = gloDay.toInt() - 1
             if (intDay.toString().length == 1) {
                 gloDay = "0$intDay"
