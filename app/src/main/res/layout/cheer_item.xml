@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="308dp"
+        android:layout_height="205dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_memo_title"
+            android:layout_width="227dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_memo_title"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:paddingEnd="10dp"
+            android:text="메모 제목"
+            android:textColor="@color/gray_140"
+            android:textSize="11dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_memo_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="1dp"
+                android:elevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_memo_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iv_sample_image1"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <TextView
+            android:id="@+id/tv_memo"
+            android:layout_width="300dp"
+            android:layout_height="159dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="메모 내용 \n메모 내용 \n메모 내용 "
+            android:textColor="@color/gray_500"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_memo_title"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
