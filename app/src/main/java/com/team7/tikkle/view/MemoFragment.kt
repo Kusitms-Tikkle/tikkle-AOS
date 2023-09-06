@@ -135,6 +135,45 @@ class MemoFragment : Fragment() {
         // 다음 날
         binding.btnNext.setOnClickListener {
 
+            when(mainMonth) {
+                1 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                2 -> {
+                    if (mainday == 28) { return@setOnClickListener}
+                }
+                3 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                4 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                5 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                6 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                7 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                8 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                9 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                10 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+                11 -> {
+                    if (mainday == 30) { return@setOnClickListener}
+                }
+                12 -> {
+                    if (mainday == 31) { return@setOnClickListener}
+                }
+            }
+
             mainday += 1
 
             var strDay = ""
@@ -164,6 +203,11 @@ class MemoFragment : Fragment() {
 
         // 이전 날
         binding.btnBack.setOnClickListener {
+
+            if ( mainday == 1 ) {
+                return@setOnClickListener
+            }
+
             mainday -= 1
 
             var strDay = ""
@@ -195,13 +239,21 @@ class MemoFragment : Fragment() {
         binding.spinner.adapter = adapter
         binding.spinner.onItemSelectedListener = adapter
 
+        binding.constraintLayout4.setOnClickListener {
+            binding.constraintLayout4.setBackgroundResource(R.drawable.bg_memo_select_true)
+        }
+
         // Memo
         binding.memo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo)
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
+                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo_true)
+
                 // 입력한 텍스트의 글자 수를 세서 표시
                 val charCount = s?.length ?: 0
                 binding.count.text = "$charCount/280자"
