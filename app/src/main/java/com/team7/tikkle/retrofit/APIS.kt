@@ -220,9 +220,9 @@ interface APIS {
         @Header("X-ACCESS-TOKEN") accessToken: String
     ): MyStickerResponse
 
-    //전체 공개 메모 보기(cheer)
-//    @GET("/posts/estimating")
-//    suspend fun getRating(
-//        @Header("Authorization") accessToken: String
-//    ): Response<List<RatingResponse>>
+//    전체 공개 메모 보기(cheer)
+    @GET("/memo")
+    suspend fun getCheer(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): Response<CheerResponse>
 }

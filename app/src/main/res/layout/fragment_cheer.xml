@@ -104,13 +104,11 @@
             android:id="@+id/imageView9"
             android:layout_width="230dp"
             android:layout_height="32dp"
-            android:layout_marginTop="327dp"
+            android:layout_marginTop="41dp"
             android:src="@drawable/ic_cheer_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
