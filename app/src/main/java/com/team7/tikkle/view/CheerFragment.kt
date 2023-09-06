@@ -70,11 +70,19 @@ class CheerFragment : Fragment() {
 
         cheerRecyclerViewAdapter = CheerRecyclerViewAdapter { task ->
             //click event 처리
-//            postId = task.postId
-//            var name = task.title
-//            var brand = task.brand
-//            binding.bottomTvName.text = name
-//            binding.bottomTvBrand.text = "["+brand+"]"
+
+            //postid
+            var postId = task.id
+            var openCheck = GlobalApplication.prefs.getString("openCheck", "false")
+
+            if(openCheck=="true") {
+                binding.stickerLayout.visibility = View.VISIBLE
+                //스티커 check 확인
+
+            } else {
+                binding.stickerLayout.visibility = View.INVISIBLE
+            }
+
 
         }
 
