@@ -78,6 +78,23 @@ class CheerFragment : Fragment() {
             if(openCheck=="true") {
                 binding.stickerLayout.visibility = View.VISIBLE
                 //스티커 check 확인
+//                binding.btnAwesomeSticker.setOnClickListener {
+//                    lifecycleScope.launch {
+//                        try {
+//                            val response = retService.postSticker(userAccessToken, postId, "a")
+//                            Log.d("PostStickerResponse", "postSticker : $response")
+//                            binding.myAwesomeSticker.text = response.result.a.toString()
+//                            binding.myTrySticker.text = response.result.b.toString()
+//                            binding.myEffortSticker.text = response.result.b.toString()
+//                        } catch (e: HttpException) {
+//                            // HTTP error
+//                            Log.e(ContentValues.TAG, "HTTP Exception: ${e.message}", e)
+//                        } catch (e: Exception) {
+//                            // General error handling
+//                            Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
+//                        }
+//                    }
+//                }
 
             } else {
                 binding.stickerLayout.visibility = View.INVISIBLE
