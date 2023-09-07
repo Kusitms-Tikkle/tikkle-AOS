@@ -302,7 +302,7 @@ class MemoFragment : Fragment() {
 
                 // homeFragment 이동
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, HomeExistenceFragment())
+                    .replace(R.id.main_frm, MemoFinishFragment())
                     .addToBackStack(null)
                     .commit()
             }

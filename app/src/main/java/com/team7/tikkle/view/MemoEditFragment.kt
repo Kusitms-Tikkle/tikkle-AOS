@@ -179,7 +179,7 @@ class MemoEditFragment : Fragment() {
                 GlobalApplication.prefs.setString("memoImg", "")
 
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, MemoListFragment())
+                    .replace(R.id.main_frm, MemoFinishFragment())
                     .addToBackStack(null)
                     .commit()
 

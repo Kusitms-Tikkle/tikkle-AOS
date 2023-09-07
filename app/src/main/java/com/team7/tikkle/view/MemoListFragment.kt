@@ -57,6 +57,9 @@ class MemoListFragment : Fragment() {
         // viewModel
         viewModel = ViewModelProvider(this)[MemoListViewModel::class.java]
 
+        // nav bar 표시
+        requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+
         // Today date
         date()
 
