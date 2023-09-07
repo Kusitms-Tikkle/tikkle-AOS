@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,6 +63,7 @@ class MemoListFragment : Fragment() {
 
         // Today date
         date()
+        binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
 
         // Calender
         binding.btnCal.setOnClickListener {
@@ -84,6 +86,8 @@ class MemoListFragment : Fragment() {
 
         // 다음 날짜
         binding.btnNext.setOnClickListener {
+
+            binding.btnBack.setImageResource(R.drawable.btn_memo_right)
 
             when(gloMonth.toInt()) {
                 1 -> {
@@ -127,7 +131,12 @@ class MemoListFragment : Fragment() {
             val calendar = Calendar.getInstance()
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            if (day == gloDay.toInt()+1){
+                binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
+            }
+
             if (day == gloDay.toInt()){
+                Toast.makeText(activity, "내일 기록은 미리 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -147,7 +156,14 @@ class MemoListFragment : Fragment() {
 
         // 이전 날짜
         binding.btnBack.setOnClickListener {
+            binding.btnNext.setImageResource(R.drawable.btn_memo_left)
+
+            if (gloDay.toInt() == 2){
+                binding.btnBack.setImageResource(R.drawable.btn_memo_right_false)
+            }
+
             if ( gloDay.toInt() == 1 ) {
+                Toast.makeText(activity, "지난달 기록은 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -246,6 +262,7 @@ class MemoListFragment : Fragment() {
         var month = (calendar.get(Calendar.MONTH) + 1).toString()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
 
         val week = when (dayOfWeek) {
             Calendar.SUNDAY -> "일요일"
@@ -367,6 +384,10 @@ class MemoListFragment : Fragment() {
         }
 
         return dayOfWeek
+    }
+
+    fun endDay() {
+        binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
     }
 
 }
