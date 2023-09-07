@@ -83,19 +83,17 @@ class MypageFragment : Fragment() {
                         binding.myconsumption2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_500))
                         binding.myconsumption.text = "소비 유형 검사하고 나만의 티끌이 찾기"
                         binding.myconsumption.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_500))
+                        binding.myconsumptionBg.setImageResource(R.drawable.ic_mypage_null)
 
                         flag = 0
 
                     } else { // 소비 유형 검사 참여 후
                         binding.myconsumption.text = userLabel
                         binding.myconsumption2.text = userLabel
-
-                        // binding.btnChallenge.text = "이 유형에 적절한 챌린지 추천 받기"
+                        context?.let { Glide.with(it).load(userImage).error(R.drawable.ic_mypage_null).into(binding.myconsumptionBg)}
 
                         flag = 1
                     }
-
-                    context?.let { Glide.with(it).load(userImage).error(R.drawable.ic_mypage_null).into(binding.myconsumptionBg)}
 
                 } else {
                     // Error handling
