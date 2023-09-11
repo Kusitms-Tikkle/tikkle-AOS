@@ -116,15 +116,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
-                    <ImageView
-                        android:id="@+id/imageView16"
-                        android:layout_width="9dp"
-                        android:layout_height="14dp"
-                        android:layout_marginEnd="33dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/btn_challenge_next" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -139,15 +130,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/challenge_1">
 
-                    <ImageView
-                        android:id="@+id/imageView17"
-                        android:layout_width="9dp"
-                        android:layout_height="14dp"
-                        android:layout_marginEnd="33dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/btn_challenge_next" />
 
                     <ImageView
                         android:id="@+id/imageView13_2"
@@ -199,16 +181,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/challenge_2">
 
                     <ImageView
-                        android:id="@+id/imageView18"
-                        android:layout_width="9dp"
-                        android:layout_height="14dp"
-                        android:layout_marginEnd="33dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/btn_challenge_next" />
-
-                    <ImageView
                         android:id="@+id/imageView13_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -256,16 +228,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/challenge_3">
-
-                    <ImageView
-                        android:id="@+id/imageView19"
-                        android:layout_width="9dp"
-                        android:layout_height="14dp"
-                        android:layout_marginEnd="33dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/btn_challenge_next" />
 
                     <ImageView
                         android:id="@+id/imageView13_4"

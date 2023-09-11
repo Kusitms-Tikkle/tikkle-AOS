@@ -59,7 +59,7 @@ class MemoListFragment : Fragment() {
         viewModel = ViewModelProvider(this)[MemoListViewModel::class.java]
 
         // nav bar 표시
-        requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        // requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
 
         // Today date
         date()
@@ -194,6 +194,12 @@ class MemoListFragment : Fragment() {
 
     // 메모 공개/비공개 처리
     private fun callLockApiFunction(task: MemoResult, userAccessToken: String) {
+
+        if (GlobalApplication.prefs.getString("privateFlag", "0") == "2") {
+            Toast.makeText(activity, " 메모가 공개로 바뀌었어요", Toast.LENGTH_SHORT).show()
+        } else if (GlobalApplication.prefs.getString("privateFlag", "0") == "1") {
+            Toast.makeText(activity, " 메모가 비공개로 바뀌었어요", Toast.LENGTH_SHORT).show()        }
+
         //GlobalApplication.prefs.setString("privateFlag", "0")
         retService.private(userAccessToken, task.memo.memoId).enqueue(object : Callback<ResponseChallengeJoin> {
             override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {

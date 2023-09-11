@@ -35,8 +35,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
-        android:background="@drawable/bg_challenge_complete">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_challenge_complete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView5"
@@ -110,6 +118,7 @@
             app:layout_constraintEnd_toEndOf="@+id/btn_next"
             app:layout_constraintStart_toStartOf="@+id/btn_next"
             app:layout_constraintTop_toTopOf="@+id/btn_next" />
+        
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

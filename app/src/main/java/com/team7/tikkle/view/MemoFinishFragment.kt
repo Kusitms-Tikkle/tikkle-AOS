@@ -24,7 +24,7 @@ class MemoFinishFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMemoFinishBinding.inflate(inflater, container, false)
 
-         requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+         //requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         binding.btnGo.setOnClickListener {
             val memoListFragment = MemoListFragment()
