@@ -19,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
@@ -113,6 +114,7 @@ class MemoFragment : Fragment() {
 
         // Today date
         date()
+        binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
 
         // 갤러리 권한 요청
         requestPermissions()
@@ -134,6 +136,8 @@ class MemoFragment : Fragment() {
 
         // 다음 날
         binding.btnNext.setOnClickListener {
+
+            binding.btnBack.setImageResource(R.drawable.btn_memo_right)
 
             when(mainMonth) {
                 1 -> {
@@ -177,7 +181,12 @@ class MemoFragment : Fragment() {
             val calendar = Calendar.getInstance()
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            if (day == mainday + 1){
+                binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
+            }
+
             if (day == mainday){
+                Toast.makeText(activity, "내일 기록은 미리 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -211,7 +220,14 @@ class MemoFragment : Fragment() {
         // 이전 날
         binding.btnBack.setOnClickListener {
 
+            binding.btnNext.setImageResource(R.drawable.btn_memo_left)
+
+            if (mainday == 2){
+                binding.btnBack.setImageResource(R.drawable.btn_memo_right_false)
+            }
+
             if ( mainday == 1 ) {
+                Toast.makeText(activity, "지난달 기록은 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
