@@ -233,5 +233,11 @@ interface APIS {
         @Path("id") id: Int
     ): Call<ResponseChallengeJoin>
 
+    // todo : memo unwritten todo 조회
+    @GET("/todo/{date}/unwritten")
+    fun getMissionUnwritten(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path(value = "date") date: String
+    ): Call<ResponseUnwrittenTodo>
 
 }

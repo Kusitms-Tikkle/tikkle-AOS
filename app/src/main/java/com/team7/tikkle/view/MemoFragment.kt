@@ -34,7 +34,9 @@ import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import java.util.Calendar
 import com.team7.tikkle.data.ResponseTodo
+import com.team7.tikkle.data.ResponseUnwrittenTodo
 import com.team7.tikkle.data.TodoResult
+import com.team7.tikkle.data.UnwrittenResult
 import com.team7.tikkle.data.memoDto
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -64,7 +66,7 @@ class MemoFragment : Fragment() {
     var mainday : Int = 0
     var mainMonth : Int = 0
     var mainYear : Int = 0
-    var missionList =  ArrayList<TodoResult>()
+    var missionList =  ArrayList<UnwrittenResult>()
     var selectedImageUri : Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -469,10 +471,10 @@ class MemoFragment : Fragment() {
 
     // 미션 조회 API
     private fun getMission(userAccessToken : String, date: String){
-        retService.getMission(userAccessToken, date).enqueue(object : Callback<ResponseTodo> {
-            override fun onResponse(call: Call<ResponseTodo>, response: Response<ResponseTodo>) {
+        retService.getMissionUnwritten(userAccessToken, date).enqueue(object : Callback<ResponseUnwrittenTodo> {
+            override fun onResponse(call: Call<ResponseUnwrittenTodo>, response: Response<ResponseUnwrittenTodo>) {
                 if (response.isSuccessful) {
-                    val result = response.body()?.result
+                    val result : List<UnwrittenResult>? = response.body()?.result
                     Log.d("getMission API : ", result.toString())
                     Log.d("date", date.toString())
                     missionList.clear() // 기존 데이터를 삭제
@@ -488,7 +490,7 @@ class MemoFragment : Fragment() {
                     Log.d("getMission API : ", "fail")
                 }
             }
-            override fun onFailure(call: Call<ResponseTodo>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseUnwrittenTodo>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
         })
