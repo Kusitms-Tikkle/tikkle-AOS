@@ -10,9 +10,10 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.data.TodoResult
+import com.team7.tikkle.data.UnwrittenResult
 
 class MemoAdapter(
-    private val context: Context, private val text: List<TodoResult>)
+    private val context: Context, private val text: List<UnwrittenResult>)
     : BaseAdapter(), AdapterView.OnItemSelectedListener {
 
     override fun getCount(): Int {
@@ -36,9 +37,9 @@ class MemoAdapter(
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val selectedItem = text[position]
-        GlobalApplication.prefs.setString("memoId", selectedItem.id.toString())
-        Log.d("메모", selectedItem.id.toString())
+        val selectedItem = text[position].id
+        GlobalApplication.prefs.setString("memoId", selectedItem.toString())
+        Log.d("메모", selectedItem.toString())
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
