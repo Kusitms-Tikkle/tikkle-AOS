@@ -8,7 +8,7 @@ data class CheerResponse(
 ) {
     data class Result(
         val content: String,
-        val id: Int,
+        val id: Long,
         val imageUrl: String,
         val missionTitle: String,
         val nickname: String
