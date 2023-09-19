@@ -68,37 +68,12 @@ class CheerFragment : Fragment() {
 //         ViewModel 초기화
         viewModel = ViewModelProvider(this).get(CheerViewModel::class.java)
 
-        cheerRecyclerViewAdapter = CheerRecyclerViewAdapter { task ->
+        cheerRecyclerViewAdapter = CheerRecyclerViewAdapter(viewModel) { task ->
             //click event 처리
 
             //postid
             var postId = task.id
             var openCheck = GlobalApplication.prefs.getString("openCheck", "false")
-
-            if(openCheck=="true") {
-                binding.stickerLayout.visibility = View.VISIBLE
-                //스티커 check 확인
-//                binding.btnAwesomeSticker.setOnClickListener {
-//                    lifecycleScope.launch {
-//                        try {
-//                            val response = retService.postSticker(userAccessToken, postId, "a")
-//                            Log.d("PostStickerResponse", "postSticker : $response")
-//                            binding.myAwesomeSticker.text = response.result.a.toString()
-//                            binding.myTrySticker.text = response.result.b.toString()
-//                            binding.myEffortSticker.text = response.result.b.toString()
-//                        } catch (e: HttpException) {
-//                            // HTTP error
-//                            Log.e(ContentValues.TAG, "HTTP Exception: ${e.message}", e)
-//                        } catch (e: Exception) {
-//                            // General error handling
-//                            Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
-//                        }
-//                    }
-//                }
-
-            } else {
-                binding.stickerLayout.visibility = View.INVISIBLE
-            }
 
 
         }
@@ -109,16 +84,14 @@ class CheerFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = layoutManager
 
-        // SnapHelper 설정
-        val snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(recyclerView)
+//        // SnapHelper 설정
+//        val snapHelper = LinearSnapHelper()
+//        snapHelper.attachToRecyclerView(recyclerView)
 
         // ViewModel과 RecyclerView 어댑터 연결
         viewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
             cheerRecyclerViewAdapter.updateTasks(tasks)
         })
-
-
 
         return binding.root
     }

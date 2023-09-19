@@ -226,6 +226,29 @@ interface APIS {
         @Header("X-ACCESS-TOKEN") accessToken: String
     ): Response<CheerResponse>
 
+    // 응원 스티커 여부 확인
+    @GET("/sticker/{memo_id}/{dtype}")
+    suspend fun getSticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("memo_id") id: Long,
+        @Path("dtype") type: String
+    ): Response<ResponseGetSticker>
+
+    // 응원 스티커 저장
+    @POST("/sticker/{memo_id}/{dtype}")
+    suspend fun postSticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("memo_id") id: Long,
+        @Path("dtype") type: String
+    ): Response<ResponsePostSticker>
+
+    // 응원 스티커 삭제
+    @DELETE("/sticker/{sticker_id}")
+    suspend fun delSticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("sticker_id") id: Long
+    ): Response<ResponseDelSticker>
+
     // 메모 이미지 삭제
     @DELETE("/memo/{id}/image")
     fun delMemoImg(
