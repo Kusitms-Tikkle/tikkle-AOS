@@ -41,6 +41,7 @@ class CheerFragment : Fragment() {
 
     private fun initSticker() {
         val nickname = GlobalApplication.prefs.getString("userNickname", "익명")
+        binding.cheerViewModel = viewModel
         binding.textView.text = "${nickname}님이 받은 스티커"
         viewModel.awesomeStickerCount.observe(viewLifecycleOwner, Observer { count ->
             binding.myAwesomeSticker.text = count
