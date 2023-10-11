@@ -55,6 +55,7 @@ android {
 dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:18.4.1'
     implementation 'com.google.firebase:firebase-analytics:21.3.0'
+    implementation 'androidx.media3:media3-common:1.0.0-alpha03'
     def coroutines_version = "1.6.4"
     def lifecycle_version = "2.5.1"
     def retrofit_version = "2.9.0"

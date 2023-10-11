@@ -11,6 +11,9 @@ data class CheerResponse(
         val id: Long,
         val imageUrl: String,
         val missionTitle: String,
-        val nickname: String
+        val nickname: String,
+        val stickerA:Long,
+        val stickerB:Long,
+        val stickerC:Long,
     )
 }
