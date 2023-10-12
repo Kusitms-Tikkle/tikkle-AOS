@@ -7,7 +7,7 @@
         android:id="@+id/FrameconstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F5F5F5"
+        android:background="@color/bg_white"
         tools:context=".view.Mypage">
 
     <!--     메뉴바 -->
@@ -36,12 +36,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-<!--    사용자 프로필-->
-
-
-        <!--준비중입니다-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myprofile"
         android:layout_width="match_parent"
@@ -52,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
         app:layout_constraintVertical_bias="0.0"
-        android:background="@drawable/bg_item_line">
+        android:background="@color/bg_white">
 
         <ImageView
             android:id="@+id/myconsumption_bg"
@@ -143,17 +137,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imagewaiting"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="207dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/myprofile"-->
-<!--        app:srcCompat="@drawable/btn_waiting" />-->
-
 </layout>
 
 
