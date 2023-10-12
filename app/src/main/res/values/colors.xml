@@ -10,6 +10,7 @@
     <color name="orange_200">#FFFCFA</color>
     <color name="orange_500">#FFFAF3</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg_white">#FBFBFB</color>
     <color name="black">#FF000000</color>
     <color name="black_100">#222227</color>
 
