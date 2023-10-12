@@ -1,11 +1,15 @@
 package com.team7.tikkle
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -148,5 +152,17 @@ class HomeActivity : AppCompatActivity() {
         bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenName)
         analytics.setCurrentScreen(this, screenName, null) // 추가된 코드
         analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
+
+    //키보드 숨기기, 포커스 조정
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+
+        if(currentFocus is EditText) {
+            currentFocus!!.clearFocus()
+        }
+
+        return super.dispatchTouchEvent(ev)
     }
 }
