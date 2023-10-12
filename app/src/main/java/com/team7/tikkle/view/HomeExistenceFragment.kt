@@ -55,6 +55,37 @@ class HomeExistenceFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home_existence, container, false)
         binding = FragmentHomeExistenceBinding.inflate(inflater, container, false)
 
+        //floating action button
+        binding.mainFabClick.visibility = View.INVISIBLE
+        binding.btnMemo.visibility = View.INVISIBLE
+        binding.btnWrite.visibility = View.INVISIBLE
+        binding.mainFab.setOnClickListener {
+            binding.mainFab.visibility = View.INVISIBLE
+            binding.mainFabClick.visibility = View.VISIBLE
+            binding.btnMemo.visibility = View.VISIBLE
+            binding.btnWrite.visibility = View.VISIBLE
+            binding.btnWrite.setOnClickListener {
+                //화면 이동
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+            binding.btnMemo.setOnClickListener {
+                //화면 이동
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoListFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+        binding.mainFabClick.setOnClickListener {
+            binding.mainFab.visibility = View.VISIBLE
+            binding.mainFabClick.visibility = View.INVISIBLE
+            binding.btnMemo.visibility = View.INVISIBLE
+            binding.btnWrite.visibility = View.INVISIBLE
+        }
+
         //accessToken
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         //nickname
