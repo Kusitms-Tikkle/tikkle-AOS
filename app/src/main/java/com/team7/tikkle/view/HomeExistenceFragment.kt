@@ -413,5 +413,4 @@ class HomeExistenceFragment : Fragment() {
                 .commit()
         }
     }
-
 }
