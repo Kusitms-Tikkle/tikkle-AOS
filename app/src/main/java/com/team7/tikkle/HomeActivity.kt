@@ -42,36 +42,6 @@ class HomeActivity : AppCompatActivity() {
         //bottom navigation icon tint 제거
         binding.mainBnv.itemIconTintList = null
 
-        //floating action button
-        binding.mainFabClick.visibility = View.INVISIBLE
-        binding.btnMemo.visibility = View.INVISIBLE
-        binding.btnWrite.visibility = View.INVISIBLE
-        binding.mainFab.setOnClickListener {
-            binding.mainFab.visibility = View.INVISIBLE
-            binding.mainFabClick.visibility = View.VISIBLE
-            binding.btnMemo.visibility = View.VISIBLE
-            binding.btnWrite.visibility = View.VISIBLE
-            binding.btnWrite.setOnClickListener {
-                //화면 이동
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, MemoFragment())
-                    .commitAllowingStateLoss()
-            }
-            binding.btnMemo.setOnClickListener {
-                //화면 이동
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, MemoListFragment())
-                    .commitAllowingStateLoss()
-            }
-        }
-        binding.mainFabClick.setOnClickListener {
-            binding.mainFab.visibility = View.VISIBLE
-            binding.mainFabClick.visibility = View.INVISIBLE
-            binding.btnMemo.visibility = View.INVISIBLE
-            binding.btnWrite.visibility = View.INVISIBLE
-        }
-
-
         // Log an event
         analytics.setCurrentScreen(this, "HomeActivity", null /* class override */)
         val bundle = Bundle()
