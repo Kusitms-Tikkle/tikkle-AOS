@@ -64,6 +64,14 @@ class HomeExistenceFragment : Fragment() {
             binding.mainFabClick.visibility = View.VISIBLE
             binding.btnMemo.visibility = View.VISIBLE
             binding.btnWrite.visibility = View.VISIBLE
+
+            binding.mainFabClick.setOnClickListener {
+                binding.mainFab.visibility = View.VISIBLE
+                binding.mainFabClick.visibility = View.INVISIBLE
+                binding.btnMemo.visibility = View.INVISIBLE
+                binding.btnWrite.visibility = View.INVISIBLE
+            }
+
             binding.btnWrite.setOnClickListener {
                 //화면 이동
                 parentFragmentManager.beginTransaction()
@@ -78,12 +86,6 @@ class HomeExistenceFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
-        }
-        binding.mainFabClick.setOnClickListener {
-            binding.mainFab.visibility = View.VISIBLE
-            binding.mainFabClick.visibility = View.INVISIBLE
-            binding.btnMemo.visibility = View.INVISIBLE
-            binding.btnWrite.visibility = View.INVISIBLE
         }
 
         //accessToken
@@ -210,6 +212,7 @@ class HomeExistenceFragment : Fragment() {
                             showNoneExistenceFragment()
                         }
                         1 -> {
+                            binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
                             val challenge1Id = challenges[0].id.toInt()
                             setChallenge(challenge1Id)
                         }
