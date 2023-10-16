@@ -25,7 +25,7 @@
         android:fontFamily="@font/pretendard_semibold"
         android:text="할일"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_check"
         app:layout_constraintTop_toTopOf="parent"/>

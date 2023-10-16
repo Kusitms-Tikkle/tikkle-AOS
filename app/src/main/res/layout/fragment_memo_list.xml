@@ -6,13 +6,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/bg_white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray_700">
+        android:layout_height="wrap_content">
 
     <ImageButton
         android:id="@+id/btn_exit"
