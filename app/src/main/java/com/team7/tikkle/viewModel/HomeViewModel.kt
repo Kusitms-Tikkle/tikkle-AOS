@@ -40,6 +40,7 @@ class HomeViewModel () : ViewModel() {
                 val response = retService.todo(userAccessToken, currentDate)
                 if (response.isSuccessful) {
                     _tasks.value = response.body()?.result
+                    Log.d("HomeViewModel 날짜", currentDate)
                     Log.d("HomeViewModel API Success", "fetchTasks: ${response.body()?.result}")
                 } else {
                     // TODO: Handle error response

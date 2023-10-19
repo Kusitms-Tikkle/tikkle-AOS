@@ -2,12 +2,12 @@ package com.team7.tikkle.login
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.team7.tikkle.GlobalApplication
-import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
 import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
 import com.team7.tikkle.data.ExtraInfoResponse
@@ -29,64 +29,102 @@ class SigninActivity2 : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.warning.setVisibility(View.INVISIBLE)
+        binding.btnprivacy.setColorFilter(Color.parseColor("#F6F6F6"))
+        binding.btnUserAgreements.setColorFilter(Color.parseColor("#F6F6F6"))
 
-        //서버 연결을 위한 intent값 받아오기
-        val mynickname = this.intent.getStringExtra("nickname").toString()
-        val myid = this.intent.getIntExtra("id", 0)
+        //추가 정보 데이터
+        val mynickname = GlobalApplication.prefs.getString("userNickname", "")
+        val myid = GlobalApplication.prefs.getString("userid", "0").toInt()
         var myisChecked = false
 
         //닉네임 setString
         GlobalApplication.prefs.setString("userNickname", mynickname)
 
-        //개인정보처리방침
-       binding.privacy.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-        }
-        binding.btnprivacy.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-        }
+        //개인정보처리방침 조회
+        binding.privacy.setOnClickListener { openWebPage("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/") }
+        binding.btnprivacy.setOnClickListener { openWebPage("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/") }
+        // 이용약관 조회
+        binding.userAgreements.setOnClickListener { openWebPage("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/") }
+        binding.btnUserAgreements.setOnClickListener { openWebPage("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/") }
 
+        var box1 = false
+        var box2 = false
 
-        //checkBox 전체선택
+        //checkBox 전체 체크 선택
         binding.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.checkBox1.isChecked = true
                 binding.checkBox2.isChecked = true
+                binding.checkBox3.isChecked = true
 
-            } else {
-
+            }else{
+                binding.checkBox1.isChecked = false
+                binding.checkBox2.isChecked = false
+                binding.checkBox3.isChecked = false
             }
         }
 
-        //checkBox1,2 체크 여부에 따라 버튼 활성화
+        //만 14세 이상
         binding.checkBox1.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.warning.setVisibility(View.INVISIBLE)
-                binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
-                binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
-                binding.btnDone.setOnClickListener {
-                    Log.d("추가정보 요청 값", "$myid + $mynickname + $myisChecked")
-                    postData(myid, mynickname, myisChecked)
-//                    startActivity(Intent(this, SigninActivity1::class.java))
+                box1 = true
+                //필수 동의 체크 여부 -> btnDone 활성화
+                if(box1 && box2){
+                    binding.warning.setVisibility(View.INVISIBLE)
+                    binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
+                    binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
+                    binding.btnDone.setOnClickListener {
+                        Log.d("추가정보 요청 값", "$myid + $mynickname + $myisChecked")
+                        postData(myid, mynickname, myisChecked)
+                    }
                 }
+
             } else {
+                box1 = false
                 binding.warning.setVisibility(View.VISIBLE)
                 binding.btnDone.setBackgroundResource(R.drawable.bg_button_gray)
                 binding.btnDone.setTextColor(Color.parseColor("#000000"))
-                binding.checkBox.isChecked = false
             }
         }
-        //checkBox1,2 체크 여부에 따라 버튼 활성화
+
+        //개인정보처리방침
         binding.checkBox2.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                box2 = true
+                //필수 동의 체크 여부 -> btnDone 활성화
+                if(box1 && box2){
+                    binding.warning.setVisibility(View.INVISIBLE)
+                    binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
+                    binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
+                    binding.btnDone.setOnClickListener {
+                        Log.d("추가정보 요청 값", "$myid + $mynickname + $myisChecked")
+                        postData(myid, mynickname, myisChecked)
+                    }
+                }
+            } else {
+                box2 = false
+                binding.warning.setVisibility(View.VISIBLE)
+                binding.btnDone.setBackgroundResource(R.drawable.bg_button_gray)
+                binding.btnDone.setTextColor(Color.parseColor("#000000"))
+            }
+        }
+
+        //마케팅 수신 동의 체크 여부
+        binding.checkBox3.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 //서버에게 마케팅 수신 동의 값 전달
                 myisChecked = true
 
             } else {
                 myisChecked = false
-                binding.checkBox.isChecked = false
+                binding.checkBox3.isChecked = false
             }
         }
+    }
+
+    private fun openWebPage(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 
     //서버에게 닉네임, 마케팅 수신 동의 값 전달
@@ -112,7 +150,10 @@ class SigninActivity2 : AppCompatActivity() {
                     // useraccesstoken 속성 사용
                     val accessToken = user.useraccesstoken
 
-                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
+                    GlobalApplication.prefs.setString(
+                        "userAccessToken",
+                        myAccessToken.toString()
+                    )
 
                     // accessToken 변수 출력
 //                    println("Access token: $accessToken")

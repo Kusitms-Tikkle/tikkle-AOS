@@ -5,12 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.R
 import com.team7.tikkle.databinding.FragmentChallengeCompleteBinding
+
 
 class ChallengeCompleteFragment : Fragment() {
 
     lateinit var binding: FragmentChallengeCompleteBinding
+    private val firebaseAnalytics = Firebase.analytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,12 +27,21 @@ class ChallengeCompleteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_challenge_complete, container, false)
-        binding = FragmentChallengeCompleteBinding.inflate(inflater, container, false)
+        binding = com.team7.tikkle.databinding.FragmentChallengeCompleteBinding.inflate(inflater, container, false)
 
         binding.btnNext.setOnClickListener {
+            //challenge_subscribe_complete
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "subscribe_complete")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "challenge_subscribe_complete")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
+            }
+            firebaseAnalytics.logEvent("challenge_subscribeComplete", bundle)
+
+
             val home = HomeFragment()
             fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.View_constraint_layout, home)
+                replace(R.id.main_frm, home)
                 addToBackStack(null)
                 commit()
             }

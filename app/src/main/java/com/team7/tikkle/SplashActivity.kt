@@ -12,13 +12,23 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+
         // Splash Handler
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(Runnable {
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-                overridePendingTransition(0, 0);
-                finish()
+            if(userAccessToken == "") {
+                Intent(this, MainActivity::class.java).apply {
+                    startActivity(this)
+                    overridePendingTransition(0, 0);
+                    finish()
+                }
+            } else {
+                Intent(this, HomeActivity::class.java).apply {
+                    startActivity(this)
+                    overridePendingTransition(0, 0);
+                    finish()
+                }
             }
         }, 2000)
     }

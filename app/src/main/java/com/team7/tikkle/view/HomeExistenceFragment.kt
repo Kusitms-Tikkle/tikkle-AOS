@@ -1,6 +1,7 @@
 package com.team7.tikkle.view
 
 import android.content.ContentValues
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.*
 import com.team7.tikkle.data.*
 import com.team7.tikkle.databinding.FragmentHomeExistenceBinding
@@ -33,10 +36,13 @@ class HomeExistenceFragment : Fragment() {
     lateinit var homeActivity: HomeActivity
     val cal = Calendar.getInstance()
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)
+    val analytics = Firebase.analytics
+    var total: Int = 1
+    var mytodo: Int =  GlobalApplication.prefs.getString("checkedCount", "0").toInt()
+    var progress: Int = 0
 
     //이달의 마지막 달
     val lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
-
     private lateinit var viewModel: HomeViewModel
     private lateinit var homeRecyclerViewAdapter: HomeRecyclerViewAdapter
 
@@ -45,8 +51,42 @@ class HomeExistenceFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("checkedCount", "checkedCount : $mytodo 초기")
         val view = inflater.inflate(R.layout.fragment_home_existence, container, false)
         binding = FragmentHomeExistenceBinding.inflate(inflater, container, false)
+
+        //floating action button
+        binding.mainFabClick.visibility = View.INVISIBLE
+        binding.btnMemo.visibility = View.INVISIBLE
+        binding.btnWrite.visibility = View.INVISIBLE
+        binding.mainFab.setOnClickListener {
+            binding.mainFab.visibility = View.INVISIBLE
+            binding.mainFabClick.visibility = View.VISIBLE
+            binding.btnMemo.visibility = View.VISIBLE
+            binding.btnWrite.visibility = View.VISIBLE
+
+            binding.mainFabClick.setOnClickListener {
+                binding.mainFab.visibility = View.VISIBLE
+                binding.mainFabClick.visibility = View.INVISIBLE
+                binding.btnMemo.visibility = View.INVISIBLE
+                binding.btnWrite.visibility = View.INVISIBLE
+            }
+
+            binding.btnWrite.setOnClickListener {
+                //화면 이동
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+            binding.btnMemo.setOnClickListener {
+                //화면 이동
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoListFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
 
         //accessToken
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
@@ -54,10 +94,52 @@ class HomeExistenceFragment : Fragment() {
         val userNickname = GlobalApplication.prefs.getString("userNickname", "")
         binding.mynickname.text = userNickname
 
+        binding.challengeContainer.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, ChallengeDetailFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
         //retrofit
         retService = RetrofitClient
             .getRetrofitInstance()
             .create(APIS::class.java)
+
+        // ViewModel 초기화
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        //click event 처리
+        homeRecyclerViewAdapter = HomeRecyclerViewAdapter { task ->
+            if(task.checked){
+                //post false (이미 체크된거 체크)
+                mytodo -= 1
+                GlobalApplication.prefs.setString("checkedCount", mytodo.toString())
+                postTodo(userAccessToken, task.id.toLong())
+                task.checked = false
+            } else{
+                //post true
+                mytodo += 1
+                GlobalApplication.prefs.setString("checkedCount", mytodo.toString())
+                postTodo(userAccessToken, task.id.toLong())
+                task.checked = true
+            }
+            updateProgressBar()
+        }
+
+        // RecyclerView 구성
+        val recyclerView: RecyclerView = binding.recyclerview
+        recyclerView.adapter = homeRecyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // ViewModel과 RecyclerView 어댑터 연결
+        viewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
+            homeRecyclerViewAdapter.updateTasks(tasks)
+            total = tasks.size
+            GlobalApplication.prefs.setString("total", total.toString())
+            updateProgressBar() //ProgressBar 업데이트
+        })
+        
 
         //calendar
         val monday: String? = doDayOfWeek().toString()
@@ -118,85 +200,46 @@ class HomeExistenceFragment : Fragment() {
             }
         })
 
-        // 내가 참여중인 챌린지 조회
         val call2 = retService.myChallengeList(userAccessToken)
         call2.enqueue(object : Callback<ResponseMyChallengeList> {
             override fun onResponse(call: Call<ResponseMyChallengeList>, response: Response<ResponseMyChallengeList>) {
                 if (response.isSuccessful) {
-                    val myChallengeList = response.body()
-                    val challenges = myChallengeList?.result
-                    val count = challenges?.size
-                    val challenge1 = challenges?.get(0)
-                    val challenge1_id = challenge1?.id?.toInt()!!
+                    val challenges = response.body()?.result ?: listOf()
+                    val count = challenges.size
 
-                    if(count==2){
-                        //참여중인 챌린지가 2개
-                        val challenge2 = challenges.get(1)
-                        val challenge2_id = challenge2.id.toInt()
-                        binding.challengeName.text = challenge1.title
-                        binding.next.setOnClickListener() {
-                            binding.challengeName.text = challenge2.title
-                            challengeListSetting(challenge2_id)
-                            binding.before.setColorFilter(Color.parseColor("#222227"))
+                    when (count) {
+                        0 -> {
+                            showNoneExistenceFragment()
+                        }
+                        1 -> {
                             binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
+                            val challenge1Id = challenges[0].id.toInt()
+                            setChallenge(challenge1Id)
                         }
-                        binding.before.setOnClickListener() {
-                            binding.challengeName.text = challenge1.title
-                            challengeListSetting(challenge1_id)
-                            binding.before.setColorFilter(Color.parseColor("#D9D9D9"))
-                            binding.next.setColorFilter(Color.parseColor("#222227"))
+                        2 -> {
+                            val challenge1Id = challenges[0].id.toInt()
+                            val challenge2Id = challenges[1].id.toInt()
+
+                            setChallenge(challenge1Id)
+
+                            binding.next.setOnClickListener {
+                                setChallenge(challenge2Id, isNext = true)
+                            }
+                            binding.before.setOnClickListener {
+                                setChallenge(challenge1Id, isNext = false)
+                            }
                         }
-
-
-                    }else {
-                        //참여중인 챌린지가 1개
-                        binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
-                        binding.challengeName.text = challenge1.title
-                        challengeListSetting(challenge1_id)
                     }
-                    Log.d("HomeExistenceFragment My challenge", "$count, $challenges, challenge1 : $challenge1")
-
                 } else {
-                    // error handling
                     Log.e("HomeExistenceFragment My challenge", "Error : ${response.errorBody()}")
                 }
             }
 
             override fun onFailure(call: Call<ResponseMyChallengeList>, t: Throwable) {
-                // error handling
                 Log.e("HomeExistenceFragment My challenge", "Error : $t")
             }
         })
 
-        // ViewModel 초기화
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
-
-        homeRecyclerViewAdapter = HomeRecyclerViewAdapter { task ->
-            //click event 처리
-            Toast.makeText(requireContext(), "Clicked item ${task.id}", Toast.LENGTH_SHORT).show()
-            if(task.checked){
-                //post true
-                postTodo(userAccessToken, task.id.toLong())
-                task.checked = false
-
-            } else{
-                //post false
-                postTodo(userAccessToken, task.id.toLong())
-                task.checked = true
-            }
-
-        }
-
-        // RecyclerView 구성
-        val recyclerView: RecyclerView = binding.recyclerview
-        recyclerView.adapter = homeRecyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        // ViewModel과 RecyclerView 어댑터 연결
-        viewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
-            homeRecyclerViewAdapter.updateTasks(tasks)
-        })
 
         homeActivity = context as HomeActivity
 
@@ -214,9 +257,13 @@ class HomeExistenceFragment : Fragment() {
                     val myProgress: ResponseProgress? = response.body()
                     Log.d("Home progress", "Progress : $myProgress")
                     var progress = myProgress?.result?.toInt()
-                    val progressBar = binding.progressBar
-                    progressBar.progress = progress!!.toInt()
-                    binding.percent.text = progress.toString()
+//                    val progressBar = binding.progressBar
+//                    progressBar.progress = progress!!.toInt()
+//                    binding.percent.text = progress.toString()
+                    // Log an event
+                    val bundle = Bundle()
+                    bundle.putString("missionProgress", "progress : $progress%")
+                    analytics.logEvent("missionProgress", bundle)
 
                 } else {
                     // Error handling
@@ -347,23 +394,57 @@ class HomeExistenceFragment : Fragment() {
     fun challengeListSetting(challengeId: Int) {
         when(challengeId) {
             1 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon1)
-                binding.challengeIntro.text = "알뜰한 하루가 모이면 하루 무(無)심기도 거뜬!"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon1)
             }
             2 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon2)
-                binding.challengeIntro.text = "나를 위한 최고의 선물이 건강하고\n알뜰한 음식은 아닐까요?"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon2)
             }
             3 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon3)
-                binding.challengeIntro.text = "도토리처럼 하나하나 모으는 지출 계획 챌린지"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon3)
             }
             4 -> {
-                binding.challengeImage.setImageResource(R.drawable.ic_challenge_icon4)
-                binding.challengeIntro.text = "나 자신을 위한 시간으로 꽉 채운 하루를\n가져보세요!"
+                binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon4)
             }
         }
     }
 
-}
+    private fun updateProgressBar() {
+        mytodo = GlobalApplication.prefs.getString("checkedCount", "0")!!.toInt()
+        progress = (mytodo.toFloat() / total.toFloat() * 100).toInt() // 100을 곱해 percentage로 변환
+        binding.progressBar.progress = progress
+        binding.percent.text = "$progress"
+        Log.d("progress", "progress: $progress todoNum: $mytodo total: $total")
+        GlobalApplication.prefs.setString("progress", progress.toString())
+    }
 
+    private fun showNoneExistenceFragment() {
+        val secondFragment = HomeNoneExistenceFragment()
+        fragmentManager?.beginTransaction()?.apply {
+            replace(R.id.home_fragment, secondFragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
+
+    private fun setChallenge(challengeId: Int, isNext: Boolean? = null) {
+        GlobalApplication.prefs.setString("challengeNum", challengeId.toString())
+        challengeListSetting(challengeId)
+
+        isNext?.let {
+            if (it) {
+                binding.before.setColorFilter(Color.parseColor("#222227"))
+                binding.next.setColorFilter(Color.parseColor("#D9D9D9"))
+            } else {
+                binding.before.setColorFilter(Color.parseColor("#D9D9D9"))
+                binding.next.setColorFilter(Color.parseColor("#222227"))
+            }
+        }
+
+        binding.challengeContainer.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, ChallengeEditFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+}

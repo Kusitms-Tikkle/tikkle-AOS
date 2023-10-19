@@ -7,15 +7,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
-import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
-import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
-import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_7
 import com.team7.tikkle.data.LoginResponse
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
@@ -25,6 +25,8 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var retService: APIS
     private var authToken : String ?= null
+    val analytics = Firebase.analytics
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,15 +37,15 @@ class MainActivity : AppCompatActivity() {
             .create(APIS::class.java)
 
         /** Hash값 **/
-//        val keyHash = Utility.getKeyHash(this)
-//        Log.d("Hash", keyHash)
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
 
         /** 로그인 정보 확인 **/
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 Log.e("토큰 정보 보기 실패", "error")
             } else if (tokenInfo != null) {
-                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else if (token != null) {
-                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
 
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
 //                binding.tvAccessToken.text = "access token : \n${token.accessToken}\n"
@@ -135,8 +137,11 @@ class MainActivity : AppCompatActivity() {
 
 
 //                                    intent로 accessToken값 넘기기 & sharedPreference에 저장
-                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
-//                                    //signIn인 경우 Home 화면으로 넘어감 <진찌>
+                                    GlobalApplication.prefs.setString(
+                                        "userAccessToken",
+                                        myAccessToken.toString()
+                                    )
+//                                    //signIn인 경우 Home 화면으로 넘어감
                                     val intent = Intent(this@MainActivity, HomeActivity::class.java)
                                     intent.putExtra("accessToken", myAccessToken)
                                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))

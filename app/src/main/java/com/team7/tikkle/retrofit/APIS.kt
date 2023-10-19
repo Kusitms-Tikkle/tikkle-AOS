@@ -1,6 +1,8 @@
 package com.team7.tikkle.retrofit
 
 import com.team7.tikkle.data.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -53,17 +55,17 @@ interface APIS {
     ): Response<ResponseLogout>
 
     //계정 삭제
-    @PATCH("/accounts/delete")
+    @DELETE("/accounts/delete")
     suspend fun delete(
         @Header("X-ACCESS-TOKEN") token: String,
     ): Response<ResponseAccountDelete>
 
     //마이페이지 정보 수정
-    data class RequestAccountBody(val nickname: String, val mbti: String)
-    @PATCH("/accounts/information")
+//    data class RequestAccountBody(val nickname: String, val mbti: String)
+    @PATCH("/accounts/information/{nickname}")
     suspend fun edit(
         @Header("X-ACCESS-TOKEN") token: String,
-        @Body body: RequestAccountBody
+        @Path(value = "nickname") nickname: String
     ): Response<ResponseAccountEdit>
 
    //홈 화면 Todo 조회
@@ -119,6 +121,13 @@ interface APIS {
         @Path("id") id: Int
     ): Call<ChallengeDetail>
 
+    // ChallengeEdit : 챌린지 세부 정보 조회(챌린지 참여 O)
+    @GET("/challenge/detail/participate/{id}")
+    fun challengeEdit(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ChallengeDetail>
+
     // ChallengeDetail : 챌린지 참여 개수 조회
     @GET("/participate/challenge/check")
     fun challengeCount(
@@ -132,18 +141,126 @@ interface APIS {
         @Path("id") id: Int
     ): Call<ResponseChallengeJoin>
 
-    // ChallengeEdit : 챌린지 세부 정보 조회(챌린지 참여 O)
-    @GET("/challenge/detail/participate/{id}")
-    fun challengeEdit(
-        @Header("X-ACCESS-TOKEN") accessToken: String,
-        @Path("id") id: Int
-    ): Call<ChallengeDetail>
-
     // ChallengeEdit : 챌린지 삭제
     @DELETE("/participate/challenge/{id}")
     fun challengeDelete(
         @Header("X-ACCESS-TOKEN") accessToken: String,
-        @Path("id") id: Int
+        @Path("id") id: Long
     ): Call<ResponseChallengeDelete>
+
+    // addMission : 미션 추가
+    @POST("/participate/mission/{id}")
+    fun addMission(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
+    // deleteMission : 미션 삭제
+    @DELETE("/participate/mission/{id}")
+    fun deleteMission(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
+    // checkMbti : 소비유형검사 참여 여부 확인
+    @GET("/accounts/mbti")
+    fun checkMbti(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): Call<ResponseMbtiCheck>
+
+    // memo : 메모 작성
+    @Multipart
+    @POST("/memo")
+    fun memo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Part("memoDto") memoDto: okhttp3.RequestBody,
+        @Part image: MultipartBody.Part?
+    ): Call<ResponseChallengeJoin>
+
+    // todo : memo todo 조회
+    @GET("/todo/{date}")
+    fun getMission(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path(value = "date") date: String
+    ): Call<ResponseTodo>
+
+    // memo date : 날짜별 내 메모 조회
+    @GET("/memo/{date}")
+    fun getMemo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path(value = "date") date: String
+    ): Call<ResponseMemoList>
+
+    // 메모 비공개/공개 전환
+    @POST("/memo/private/{id}")
+    fun private(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
+    // updateMemo : 메모 수정
+    @Multipart
+    @PATCH("/memo")
+    fun updateMemo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Part("memoDto") memoDto: okhttp3.RequestBody,
+        @Part image: MultipartBody.Part?
+    ): Call<ResponseChallengeJoin>
+
+    // 메모 삭제
+    @DELETE("/memo/{id}")
+    fun delMemo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
+    //내가 받은 스티커 개수
+    @GET("/sticker/received")
+    suspend fun mySticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): MyStickerResponse
+
+//    전체 공개 메모 보기(cheer)
+    @GET("/memo")
+    suspend fun getCheer(
+        @Header("X-ACCESS-TOKEN") accessToken: String
+    ): Response<CheerResponse>
+
+    // 응원 스티커 여부 확인
+    @GET("/sticker/{memo_id}/{dtype}")
+    suspend fun getSticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("memo_id") id: Long,
+        @Path("dtype") type: String
+    ): Response<ResponseGetSticker>
+
+    // 응원 스티커 저장
+    @POST("/sticker/{memo_id}/{dtype}")
+    suspend fun postSticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("memo_id") id: Long,
+        @Path("dtype") type: String
+    ): Response<ResponsePostSticker>
+
+    // 응원 스티커 삭제
+    @DELETE("/sticker/{sticker_id}")
+    suspend fun delSticker(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("sticker_id") id: Long
+    ): Response<ResponseDelSticker>
+
+    // 메모 이미지 삭제
+    @DELETE("/memo/{id}/image")
+    fun delMemoImg(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path("id") id: Int
+    ): Call<ResponseChallengeJoin>
+
+    // todo : memo unwritten todo 조회
+    @GET("/todo/{date}/unwritten")
+    fun getMissionUnwritten(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Path(value = "date") date: String
+    ): Call<ResponseUnwrittenTodo>
 
 }

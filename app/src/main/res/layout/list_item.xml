@@ -5,34 +5,29 @@
     android:id="@+id/clListItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp">
 
     <ImageView
         android:id="@+id/tv_check"
         android:layout_width="14dp"
         android:layout_height="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@drawable/ic_check" />
 
     <TextView
         android:id="@+id/tv_todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:fontFamily="@font/pretendard_regular"
+        android:layout_marginLeft="15dp"
+        android:fontFamily="@font/pretendard_semibold"
         android:text="할일"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/tv_check"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

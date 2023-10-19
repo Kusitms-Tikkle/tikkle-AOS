@@ -5,19 +5,33 @@
 
     <item
         android:id="@+id/challengeFragment"
-        android:icon="@drawable/ic_bottom_challenge_no_select"
+        android:icon="@drawable/bottom_nav_challenge"
         app:showAsAction="always"
         android:enabled="true"
-        android:title="챌린지"
+        android:title=""
         tools:ignore="AlwaysShowAction" />
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_bottom_home_no_select"
+        android:icon="@drawable/bottom_nav_home"
         app:showAsAction="always"
-        android:title="홈" />
+        android:enabled="true"
+        android:title=""
+        tools:ignore="AlwaysShowAction"/>
+
+
+    <item
+        android:id="@+id/cheerFragment"
+        android:icon="@drawable/bottom_nav_cheer"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title=""
+        tools:ignore="AlwaysShowAction"/>
+
     <item
         android:id="@+id/mypageFragment"
-        android:icon="@drawable/ic_bottom_mypage_no_select"
+        android:icon="@drawable/bottom_nav_mypage"
         app:showAsAction="always"
-        android:title="마이페이지" />
+        android:enabled="true"
+        android:title=""
+        tools:ignore="AlwaysShowAction"/>
 </menu>
