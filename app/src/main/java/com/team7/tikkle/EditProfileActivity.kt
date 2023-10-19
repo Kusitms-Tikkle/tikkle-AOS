@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.liveData
+import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
 import com.team7.tikkle.data.ResponseMyPage
 import com.team7.tikkle.data.ResponseNamecheck
 import com.team7.tikkle.databinding.ActivityEditProfileBinding
@@ -32,6 +33,8 @@ class EditProfileActivity : AppCompatActivity() {
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.nicknameCheck.visibility = android.view.View.GONE
+
         retService = RetrofitClient
             .getRetrofitInstance()
             .create(APIS::class.java)
@@ -40,13 +43,16 @@ class EditProfileActivity : AppCompatActivity() {
             inputNicknameCheck()
         }
 
-        binding.btnConsumptionType.setOnClickListener(){
-            Toast.makeText(this@EditProfileActivity, "추후 업데이트될 기능입니다.", Toast.LENGTH_LONG).show()
-        }
+//        binding.btnConsumptionType.setOnClickListener(){
+//            Toast.makeText(this@EditProfileActivity, "추후 업데이트될 기능입니다.", Toast.LENGTH_LONG).show()
+//            val intent = Intent(this, ConsumptionTypeActivity_1::class.java)
+//            startActivity(intent)
+//        }
 
         binding.btnDone.setOnClickListener{
             startActivity(Intent(this, HomeActivity::class.java))
         }
+
         lifecycleScope.launch {
             try {
                 val response1 = retService.getMyPage(userAccessToken)
@@ -91,6 +97,7 @@ class EditProfileActivity : AppCompatActivity() {
             val check = it.body()?.result
 //            Toast.makeText(this@EditProfileActivity, "$check", Toast.LENGTH_LONG).show()
             if (check == false){
+                binding.nicknameCheck.visibility = android.view.View.VISIBLE
                 binding.nicknameCheck.setTextColor(Color.parseColor("#67C451"))
                 binding.nicknameCheck.setText("사용할 수 있는 닉네임입니다.")
                 binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
@@ -101,7 +108,7 @@ class EditProfileActivity : AppCompatActivity() {
                     lifecycleScope.launch {
                         try {
                             val mbti = GlobalApplication.prefs.getString("mbti", "")
-                            val response3 = retService.edit(userAccessToken, APIS.RequestAccountBody(nickname, mbti))
+                            val response3 = retService.edit(userAccessToken, nickname)
                             if (response3.isSuccessful) {
                                 // 요청이 성공적으로 처리되었을 때의 처리
                                 Log.d("EditProfileActivity", "Result: ${response3.body()}")
@@ -121,6 +128,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             }
             else{
+                binding.nicknameCheck.visibility = android.view.View.VISIBLE
                 binding.nicknameCheck.setTextColor(Color.parseColor("#F95D5D"))
                 binding.nicknameCheck.setText("사용할 수 없는 닉네임입니다.")
             }

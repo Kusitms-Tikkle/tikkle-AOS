@@ -1,25 +1,27 @@
 package com.team7.tikkle
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.team7.tikkle.consumptionType.ConsumptionResultActivity_1
-import com.team7.tikkle.data.ResponseHomeExistence
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.data.ResponseMyPage
-import com.team7.tikkle.data.ResponseProgress
 import com.team7.tikkle.databinding.ActivityHomeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import com.team7.tikkle.roomdb.UserDatabase
 import com.team7.tikkle.roomdb.UserViewModel
-import com.team7.tikkle.view.ChallengeFragment
-import com.team7.tikkle.view.HomeExistenceFragment
-import com.team7.tikkle.view.HomeFragment
-import com.team7.tikkle.view.MypageFragment
+import com.team7.tikkle.view.*
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -31,6 +33,9 @@ class HomeActivity : AppCompatActivity() {
     private val userDao by lazy { UserDatabase.getDatabase(this).userDao() }
     private val userViewModel by viewModels<UserViewModel> { UserViewModel.Factory(userDao) }
 
+    val analytics = Firebase.analytics
+    var floatingClick = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,25 +43,26 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //bottom navigation icon tint 제거
+        binding.mainBnv.itemIconTintList = null
+
+        // Log an event
+        analytics.setCurrentScreen(this, "HomeActivity", null /* class override */)
+        val bundle = Bundle()
+        bundle.putString("message", "[Test] Home Activity Started")
+        analytics.logEvent("my_event", bundle)
+
         //retrofit
         retService = RetrofitClient
             .getRetrofitInstance()
             .create(APIS::class.java)
 
-        //ConsumptionResultActivity_1 확인용
-//        val intent = Intent(this, ConsumptionResultActivity_1::class.java)
-//        startActivity(intent)
-
-
-//        val userAccessToken = this.intent.getStringExtra("accessToken").toString()
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         Log.d("Home : accessToken 값", userAccessToken)
 
         var userName = ""
         var existence = false
 
-        // 데이터 조회
-//        GlobalApplication.prefs.getString("userNickname", "티끌")
         //닉네임 불러와서 저장
         lifecycleScope.launch {
             try {
@@ -78,41 +84,6 @@ class HomeActivity : AppCompatActivity() {
                 Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
             }
         }
-//        //home challenge 존재 여부 조회
-//        lifecycleScope.launch {
-//            try {
-//                val response1 = retService.homeExistence(userAccessToken)
-//                if (response1.isSuccessful) {
-//                    // Response body를 ResponseMyPage 타입으로 변환
-//                    val myexistence: ResponseHomeExistence? = response1.body()
-//                    Log.d("my existence", "Progress : $myexistence")
-//                    if (!existence) {
-//                        supportFragmentManager.beginTransaction()
-//                            .replace(R.id.main_frm, HomeExistenceFragment())
-//                            .commitAllowingStateLoss()
-//                    }
-//
-//
-//                } else {
-//                    // Error handling
-//                    Log.d(ContentValues.TAG, "Error: ${response1.code()} ${response1.message()}")
-//                }
-//            } catch (e: Exception) {
-//                // Exception handling
-//                Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
-//            }
-//        }
-
-        // 데이터 저장
-        //room db에 accessToken과 nickname 넣기
-        // User 정보를 가져오고 UI 업데이트
-//        lifecycleScope.launch {
-//            val user = userViewModel.getUser(myAccessToken)
-//            userViewModel.getNickname(myNickname)
-//            user?.let {
-//                updateUI(it.nickname, it.userAccessToken)
-//            }
-//        }
 
         initBottomNavigation()
 
@@ -124,9 +95,18 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initBottomNavigation(){
 
-        supportFragmentManager.beginTransaction()
+        var challengeDetail = GlobalApplication.prefs.getString("challengeDetail", "")
+        Log.d("HomeActivity11", "challengeDetail: $challengeDetail")
+        if( challengeDetail == "challengeDetail") {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, ChallengeDetailFragment())
+                .commitAllowingStateLoss()
+            GlobalApplication.prefs.setString("challengeDetail", "")
+        }else {
+            supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, ChallengeFragment())
             .commitAllowingStateLoss()
+        }
 
         binding.mainBnv.setOnItemSelectedListener{ item ->
             when (item.itemId) {
@@ -134,6 +114,7 @@ class HomeActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, ChallengeFragment())
                         .commitAllowingStateLoss()
+                    logScreenView(ChallengeFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
 
@@ -141,6 +122,15 @@ class HomeActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, HomeFragment())
                         .commitAllowingStateLoss()
+                    logScreenView(HomeFragment::class.java.simpleName)
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.cheerFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, CheerFragment())
+                        .commitAllowingStateLoss()
+                    logScreenView(CheerFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
 
@@ -148,10 +138,31 @@ class HomeActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, MypageFragment())
                         .commitAllowingStateLoss()
+                    logScreenView(MypageFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
             }
             false
         }
+    }
+
+    private fun logScreenView(screenName: String) {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenName)
+        analytics.setCurrentScreen(this, screenName, null) // 추가된 코드
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
+
+    //키보드 숨기기, 포커스 조정
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+
+        if(currentFocus is EditText) {
+            currentFocus!!.clearFocus()
+        }
+
+        return super.dispatchTouchEvent(ev)
     }
 }

@@ -12,7 +12,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.liveData
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
+import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
 import com.team7.tikkle.data.ResponseNamecheck
 import com.team7.tikkle.databinding.ActivitySignin1Binding
 import com.team7.tikkle.retrofit.APIS
@@ -67,10 +69,11 @@ class SigninActivity1 : AppCompatActivity() {
                     val intent = getIntent()
                     val myId = intent.getIntExtra("id", 0)
                     Log.d("SigninActivity1 id값", "$myId")
-                    val intent1 = Intent(this, SigninActivity2::class.java)
-                    intent1.putExtra("nickname", inputText)
-                    intent1.putExtra("id", myId)
-                    startActivity(intent1)
+                    GlobalApplication.prefs.setString("userNickname", inputText)
+                    GlobalApplication.prefs.setString("userid", myId.toString())
+
+                    val intent1 = Intent(this@SigninActivity1, SigninActivity2::class.java)
+                    startActivity(intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                     finish()
                 }
             }

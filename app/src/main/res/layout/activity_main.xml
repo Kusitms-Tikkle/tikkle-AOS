@@ -6,19 +6,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/orange_100"
+        android:background="@drawable/bg_login"
         tools:context=".login.MainActivity">
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="티끌 모아,"
+            android:layout_marginTop="30dp"
+            android:text="티끌을 모아,"
             android:textColor="@color/white"
             android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/text2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textTikkle" />
 
         <TextView
             android:id="@+id/text2"
@@ -27,29 +28,42 @@
             android:text="꾸준한 하루로 나아가는 방법"
             android:textColor="@color/white"
             android:textSize="15dp"
-            android:layout_marginBottom="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/bgTikkle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text1" />
 
 
         <ImageView
             android:id="@+id/bgTikkle"
-            android:layout_width="match_parent"
-            android:layout_height="528sp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="190dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/bg_signin"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_logo_symbol"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/textTikkle"
+            android:layout_width="148dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_logo_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bgTikkle" />
 
         <ImageButton
             android:id="@+id/btnKakaoLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="65dp"
             android:layout_marginBottom="50dp"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"
             android:src="@drawable/btn_kakao_login"
-            android:background="@drawable/shadow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
