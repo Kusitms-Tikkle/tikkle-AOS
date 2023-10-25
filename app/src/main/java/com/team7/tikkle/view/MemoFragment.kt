@@ -18,16 +18,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
-import com.team7.tikkle.adapter.MemoAdapter
 import com.team7.tikkle.data.ResponseChallengeJoin
 import com.team7.tikkle.databinding.FragmentMemoBinding
 import com.team7.tikkle.retrofit.APIS
@@ -56,18 +55,18 @@ import kotlin.collections.ArrayList
 
 class MemoFragment : Fragment() {
 
-    lateinit var binding : FragmentMemoBinding
+    lateinit var binding: FragmentMemoBinding
     lateinit var retService: APIS
 
     private val PICK_IMAGE_REQUEST_CODE = 1
     private val PERMISSION_REQUEST_CODE = 123
 
-    var date : String = "2000-00-00"
-    var mainday : Int = 0
-    var mainMonth : Int = 0
-    var mainYear : Int = 0
-    var missionList =  ArrayList<UnwrittenResult>()
-    var selectedImageUri : Uri? = null
+    var date: String = "2000-00-00"
+    var mainday: Int = 0
+    var mainMonth: Int = 0
+    var mainYear: Int = 0
+    val missionList: MutableList<String> = mutableListOf()
+    var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,7 +125,8 @@ class MemoFragment : Fragment() {
             try {
                 getMission(userAccessToken, date)
                 binding.delImg.visibility = View.GONE
-            } catch (e: Exception) { }
+            } catch (e: Exception) {
+            }
         }
 
         // Calender
@@ -141,53 +141,77 @@ class MemoFragment : Fragment() {
 
             binding.btnBack.setImageResource(R.drawable.btn_memo_right)
 
-            when(mainMonth) {
+            when (mainMonth) {
                 1 -> {
-                    if (mainday == 31) { return@setOnClickListener}
+                    if (mainday == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 2 -> {
-                    if (mainday == 28) { return@setOnClickListener}
+                    if (mainday == 28) {
+                        return@setOnClickListener
+                    }
                 }
                 3 -> {
-                    if (mainday == 31) { return@setOnClickListener}
+                    if (mainday == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 4 -> {
-                    if (mainday == 30) { return@setOnClickListener}
+                    if (mainday == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 5 -> {
-                    if (mainday == 31) { return@setOnClickListener}
+                    if (mainday == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 6 -> {
-                    if (mainday == 30) { return@setOnClickListener}
+                    if (mainday == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 7 -> {
-                    if (mainday == 31) { return@setOnClickListener}
+                    if (mainday == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 8 -> {
-                    if (mainday == 31) { return@setOnClickListener}
+                    if (mainday == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 9 -> {
-                    if (mainday == 30) { return@setOnClickListener}
+                    if (mainday == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 10 -> {
-                    if (mainday == 31) { return@setOnClickListener}
+                    if (mainday == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 11 -> {
-                    if (mainday == 30) { return@setOnClickListener}
+                    if (mainday == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 12 -> {
-                    if (mainday == 31) { return@setOnClickListener}
+                    if (mainday == 31) {
+                        return@setOnClickListener
+                    }
                 }
             }
 
             val calendar = Calendar.getInstance()
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            if (day == mainday + 1){
+            if (day == mainday + 1) {
                 binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
             }
 
-            if (day == mainday){
+            if (day == mainday) {
                 Toast.makeText(activity, "내일 기록은 미리 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -203,7 +227,7 @@ class MemoFragment : Fragment() {
                 strDay = mainday.toString()
             }
 
-            if (mainMonth.toString().length == 1){
+            if (mainMonth.toString().length == 1) {
                 strMonth = "0$mainMonth"
             } else {
                 strMonth = mainMonth.toString()
@@ -224,11 +248,11 @@ class MemoFragment : Fragment() {
 
             binding.btnNext.setImageResource(R.drawable.btn_memo_left)
 
-            if (mainday == 2){
+            if (mainday == 2) {
                 binding.btnBack.setImageResource(R.drawable.btn_memo_right_false)
             }
 
-            if ( mainday == 1 ) {
+            if (mainday == 1) {
                 Toast.makeText(activity, "지난달 기록은 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -244,7 +268,7 @@ class MemoFragment : Fragment() {
                 strDay = mainday.toString()
             }
 
-            if (mainMonth.toString().length == 1){
+            if (mainMonth.toString().length == 1) {
                 strMonth = "0$mainMonth"
             } else {
                 strMonth = mainMonth.toString()
@@ -260,9 +284,19 @@ class MemoFragment : Fragment() {
         }
 
         // Spinner
-        val adapter = MemoAdapter(requireContext(), missionList)
+//        val adapter = MemoAdapter(requireContext(), missionList)
+//        binding.spinner.adapter = adapter
+//        binding.spinner.onItemSelectedListener = adapter
+
+        // spinner
+        val countOptions = arrayOf("0회", "5회 미만", "10회 이상", "30회 이상")
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.rounded_spinner_dropdown_item,
+            missionList.toMutableList()
+        )
+        adapter.setDropDownViewResource(R.layout.rounded_spinner_dropdown_item)
         binding.spinner.adapter = adapter
-        binding.spinner.onItemSelectedListener = adapter
 
         binding.constraintLayout4.setOnClickListener {
             binding.constraintLayout4.setBackgroundResource(R.drawable.bg_memo_select_true)
@@ -373,7 +407,8 @@ class MemoFragment : Fragment() {
         calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
         val lastDayOfMonthInMillis = calendar.timeInMillis
 
-        val datePickerDialog = DatePickerDialog(requireActivity(),
+        val datePickerDialog = DatePickerDialog(
+            requireActivity(),
             { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
 
@@ -396,7 +431,7 @@ class MemoFragment : Fragment() {
                     else -> ""
                 }
 
-                binding.date.text = "$selectedMonth" + "월 " +"$selectedDay" + "일 " + "$week2"
+                binding.date.text = "$selectedMonth" + "월 " + "$selectedDay" + "일 " + "$week2"
 
                 var month = selectedMonth.toString()
                 if (month.length == 1) {
@@ -443,13 +478,13 @@ class MemoFragment : Fragment() {
             else -> ""
         }
 
-        binding.date.text = "$month" + "월 " +"$day" + "일 " + "$week"
+        binding.date.text = "$month" + "월 " + "$day" + "일 " + "$week"
 
         if (month.length == 1) {
             month = "0$month"
         }
 
-        var strday =day.toString()
+        var strday = day.toString()
         if (strday.length == 1) {
             strday = "0$day"
         }
@@ -465,44 +500,57 @@ class MemoFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 getMission(userAccessToken, date)
-            } catch (e: Exception) { }
+            } catch (e: Exception) {
+            }
         }
     }
 
     // 미션 조회 API
-    private fun getMission(userAccessToken : String, date: String){
-        retService.getMissionUnwritten(userAccessToken, date).enqueue(object : Callback<ResponseUnwrittenTodo> {
-            override fun onResponse(call: Call<ResponseUnwrittenTodo>, response: Response<ResponseUnwrittenTodo>) {
-                if (response.isSuccessful) {
-                    val result : List<UnwrittenResult>? = response.body()?.result
-                    Log.d("getMission API : ", result.toString())
-                    Log.d("date", date.toString())
-                    missionList.clear() // 기존 데이터를 삭제
-                    if (result != null) {
-                        missionList.addAll(result)
+    private fun getMission(userAccessToken: String, date: String) {
+        retService.getMissionUnwritten(userAccessToken, date)
+            .enqueue(object : Callback<ResponseUnwrittenTodo> {
+                override fun onResponse(
+                    call: Call<ResponseUnwrittenTodo>,
+                    response: Response<ResponseUnwrittenTodo>
+                ) {
+                    if (response.isSuccessful) {
+                        val result: List<UnwrittenResult>? = response.body()?.result
+                        Log.d("getMission API : ", result.toString())
+                        Log.d("date", date.toString())
+                        missionList.clear() // 기존 데이터를 삭제
+                        if (result != null) {
+                            for (item in result) {
+                                missionList.add(item.title)
+                            }
+                        }
+
+                        // 어댑터를 다시 설정하고 데이터 갱신
+                        val adapter = ArrayAdapter(
+                            requireContext(),
+                            R.layout.rounded_spinner_dropdown_item,
+                            missionList.toMutableList()
+                        )
+                        binding.spinner.adapter = adapter
+
+                    } else {
+                        Log.d("getMission API : ", "fail")
                     }
-
-                    // 어댑터를 다시 설정하고 데이터 갱신
-                    val adapter = MemoAdapter(requireContext(), missionList)
-                    binding.spinner.adapter = adapter
-
-                } else {
-                    Log.d("getMission API : ", "fail")
                 }
-            }
-            override fun onFailure(call: Call<ResponseUnwrittenTodo>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.toString()}")
-            }
-        })
+
+                override fun onFailure(call: Call<ResponseUnwrittenTodo>, t: Throwable) {
+                    Log.d(t.toString(), "error: ${t.toString()}")
+                }
+            })
     }
 
     // 메모 전송
-    private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?){
-        val num : Int = memoNum.toInt()
+    private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?) {
+        val num: Int = memoNum.toInt()
         val memoDto = memoDto(memo, num)
 
         val gson = Gson()
-        val memoDtoRequestBody = gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
+        val memoDtoRequestBody =
+            gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
 
         val imagePart: MultipartBody.Part? = if (uri != null) {
             val imagePath = getImagePathFromUri(uri, requireContext())
@@ -516,7 +564,10 @@ class MemoFragment : Fragment() {
 
         retService.memo(userAccessToken, memoDtoRequestBody, imagePart).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("PostMemo API : ", result.toString())
@@ -525,6 +576,7 @@ class MemoFragment : Fragment() {
                     Log.d("PostMemo API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
