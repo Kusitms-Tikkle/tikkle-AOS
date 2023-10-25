@@ -19,9 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -32,9 +30,7 @@ import com.team7.tikkle.databinding.FragmentMemoBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import java.util.Calendar
-import com.team7.tikkle.data.ResponseTodo
 import com.team7.tikkle.data.ResponseUnwrittenTodo
-import com.team7.tikkle.data.TodoResult
 import com.team7.tikkle.data.UnwrittenResult
 import com.team7.tikkle.data.memoDto
 import kotlinx.coroutines.launch
@@ -47,11 +43,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
-import kotlin.collections.ArrayList
 
 class MemoFragment : Fragment() {
     
