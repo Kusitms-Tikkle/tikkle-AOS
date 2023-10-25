@@ -56,7 +56,10 @@ class CheerViewModel(application: Application) : AndroidViewModel(application) {
                     _tasks.value = response.body()?.result
                     Log.d("CheerViewModel API Success", "fetchTasks: ${response.body()}")
                 } else {
-                    Log.d("CheerViewModel API Fail1", "fetchTasks: ${response.errorBody()?.string()}")
+                    Log.d(
+                        "CheerViewModel API Fail1",
+                        "fetchTasks: ${response.errorBody()?.string()}"
+                    )
                 }
             } catch (e: Exception) {
                 Log.d("CheerViewModel API Fail2", "fetchTasks: ${e.message}")
@@ -72,9 +75,18 @@ class CheerViewModel(application: Application) : AndroidViewModel(application) {
                 _awesomeStickerCount.postValue(response.result.a.toString())
                 _tryStickerCount.postValue(response.result.b.toString())
                 _effortStickerCount.postValue(response.result.c.toString())
-                GlobalApplication.prefs.setString("userAwesomeStickerCount", response.result.a.toString())
-                GlobalApplication.prefs.setString("userTryStickerCount", response.result.b.toString())
-                GlobalApplication.prefs.setString("userEffortStickerCount", response.result.c.toString())
+                GlobalApplication.prefs.setString(
+                    "userAwesomeStickerCount",
+                    response.result.a.toString()
+                )
+                GlobalApplication.prefs.setString(
+                    "userTryStickerCount",
+                    response.result.b.toString()
+                )
+                GlobalApplication.prefs.setString(
+                    "userEffortStickerCount",
+                    response.result.c.toString()
+                )
             } catch (e: HttpException) {
                 Log.e(ContentValues.TAG, "HTTP Exception: ${e.message}", e)
             } catch (e: Exception) {
@@ -90,10 +102,19 @@ class CheerViewModel(application: Application) : AndroidViewModel(application) {
                 response.body()?.let { stickerResponse ->
                     _stickerResponses.value?.put(stickerType, stickerResponse)
                     _stickerResponses.postValue(_stickerResponses.value)
-                    GlobalApplication.prefs.setString("Click${stickerType}","${response.body()!!.result}" )
-                    Log.d("CheerViewModel Sticker $memoId, $stickerType", "Sticker fetch success: ${response.body()}")
+                    GlobalApplication.prefs.setString(
+                        "Click${stickerType}",
+                        "${response.body()!!.result}"
+                    )
+                    Log.d(
+                        "CheerViewModel Sticker $memoId, $stickerType",
+                        "Sticker fetch success: ${response.body()}"
+                    )
                 } ?: run {
-                    Log.d("CheerViewModel Sticker", "Sticker response body is null or failed: ${response.errorBody()?.string()}")
+                    Log.d(
+                        "CheerViewModel Sticker",
+                        "Sticker response body is null or failed: ${response.errorBody()?.string()}"
+                    )
                 }
             } catch (e: Exception) {
                 Log.d("CheerViewModel Sticker", "Sticker fetch exception: ${e.message}")
@@ -115,28 +136,46 @@ class CheerViewModel(application: Application) : AndroidViewModel(application) {
                     if (stickerClickResponse.result == 0L) {
                         // 스티커가 없을 경우, 스티커 저장
                         stickerStatus.value = mapOf(stickerType to true)
-                        val postStickerResponse = retService.postSticker(accessToken, memoId, stickerType)
+                        val postStickerResponse =
+                            retService.postSticker(accessToken, memoId, stickerType)
                         if (postStickerResponse.isSuccessful) {
                             _stickerResponses.value?.put(stickerType, stickerClickResponse)
                             _stickerResponses.postValue(_stickerResponses.value)
-                            Log.d("CheerViewModel postSticker", "Sticker saved successfully: ${postStickerResponse.body()}")
+                            Log.d(
+                                "CheerViewModel postSticker",
+                                "Sticker saved successfully: ${postStickerResponse.body()}"
+                            )
                         } else {
-                            Log.e("CheerViewModel postSticker", "Failed to save sticker: ${postStickerResponse.errorBody()?.string()}")
+                            Log.e(
+                                "CheerViewModel postSticker",
+                                "Failed to save sticker: ${
+                                    postStickerResponse.errorBody()?.string()
+                                }"
+                            )
                         }
                     } else {
                         // 스티커가 이미 있을 경우, 스티커 삭제
                         stickerStatus.value = mapOf(stickerType to false) // 스티커가 삭제됨
-                        val delStickerResponse = retService.delSticker(accessToken, stickerClickResponse.result)
+                        val delStickerResponse =
+                            retService.delSticker(accessToken, stickerClickResponse.result)
                         if (delStickerResponse.isSuccessful) {
                             _stickerResponses.value?.put(stickerType, stickerClickResponse)
                             _stickerResponses.postValue(_stickerResponses.value)
                             Log.d("CheerViewModel delSticker", "Sticker deleted successfully")
                         } else {
-                            Log.e("CheerViewModel delSticker", "Failed to delete sticker: ${delStickerResponse.errorBody()?.string()}")
+                            Log.e(
+                                "CheerViewModel delSticker",
+                                "Failed to delete sticker: ${
+                                    delStickerResponse.errorBody()?.string()
+                                }"
+                            )
                         }
                     }
                 } ?: run {
-                    Log.e("CheerViewModel click", "Sticker response body is null or failed: ${response.errorBody()?.string()}")
+                    Log.e(
+                        "CheerViewModel click",
+                        "Sticker response body is null or failed: ${response.errorBody()?.string()}"
+                    )
                 }
                 fetchSticker(memoId, stickerType)
             } catch (e: Exception) {

@@ -33,10 +33,10 @@ import retrofit2.Response
 
 class ChallengeDetailFragment : Fragment() {
 
-    private lateinit var retService : APIS
-    private lateinit var viewModel : ChallengeDetailViewModel
-    private lateinit var recyclerViewAdapter : ChallengeDetailRecyclerViewAdapter
-    lateinit var binding : FragmentChallengeDetailBinding
+    private lateinit var retService: APIS
+    private lateinit var viewModel: ChallengeDetailViewModel
+    private lateinit var recyclerViewAdapter: ChallengeDetailRecyclerViewAdapter
+    lateinit var binding: FragmentChallengeDetailBinding
 
     var arrMutable = mutableListOf<Int>()
     private val firebaseAnalytics = Firebase.analytics
@@ -45,6 +45,7 @@ class ChallengeDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -84,7 +85,7 @@ class ChallengeDetailFragment : Fragment() {
         }
 
         // RecyclerView
-        val recyclerView : RecyclerView = binding.recyclerView
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.mission.observe(viewLifecycleOwner) { mission ->
@@ -107,11 +108,14 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     // 챌린지 세부 정보 조회 API
-    private fun challengeDetail(challengeNum: String, userAccessToken : String){
+    private fun challengeDetail(challengeNum: String, userAccessToken: String) {
         val num = challengeNum.toInt()
         retService.challengeDetail(userAccessToken, num).enqueue(object :
             Callback<ChallengeDetail> {
-            override fun onResponse(call: Call<ChallengeDetail>, response: Response<ChallengeDetail>) {
+            override fun onResponse(
+                call: Call<ChallengeDetail>,
+                response: Response<ChallengeDetail>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.result
                     val info = result?.intro.toString()
@@ -120,12 +124,16 @@ class ChallengeDetailFragment : Fragment() {
                     binding.challengeInfo.text = info.replace("@", "\n")
 
                     val url = result?.imageUrl.toString()
-                    context?.let { Glide.with(it).load(url).error(R.drawable.ic_challenge_1).into(binding.challengeImg)}
+                    context?.let {
+                        Glide.with(it).load(url).error(R.drawable.ic_challenge_1)
+                            .into(binding.challengeImg)
+                    }
 
                 } else {
                     Log.d("challengeDetail API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ChallengeDetail>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
@@ -133,56 +141,66 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     // 챌린지 참여 신청 API
-    private fun challengeJoin(challengeNum : String, userAccessToken : String){
+    private fun challengeJoin(challengeNum: String, userAccessToken: String) {
         val num = challengeNum.toInt()
-        retService.challengeJoin(userAccessToken, num).enqueue(object : Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
-                if (response.isSuccessful) {
-                    val result = response.body()?.message
-                    Log.d("challengeJoin API : ", result.toString())
+        retService.challengeJoin(userAccessToken, num)
+            .enqueue(object : Callback<ResponseChallengeJoin> {
+                override fun onResponse(
+                    call: Call<ResponseChallengeJoin>,
+                    response: Response<ResponseChallengeJoin>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()?.message
+                        Log.d("challengeJoin API : ", result.toString())
 
-                    // 미션 참여 API 호출
-                    for (item in arrMutable) {
-                        addMission(userAccessToken, item)
-                        Log.d("미션 추가 API 호출", item.toString())
+                        // 미션 참여 API 호출
+                        for (item in arrMutable) {
+                            addMission(userAccessToken, item)
+                            Log.d("미션 추가 API 호출", item.toString())
+                        }
+
+                    } else {
+                        Log.d("challengeJoin API : ", "fail")
                     }
-
-                } else {
-                    Log.d("challengeJoin API : ", "fail")
                 }
-            }
-            override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.toString()}")
-            }
-        })
+
+                override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
+                    Log.d(t.toString(), "error: ${t.toString()}")
+                }
+            })
     }
 
     // 챌린지 참여 개수 조회 API
-    private fun challengeCount(userAccessToken : String){
-        retService.challengeCount(userAccessToken).enqueue(object : Callback<ResponseChallengeCount> {
-            override fun onResponse(call: Call<ResponseChallengeCount>, response: Response<ResponseChallengeCount>) {
-                if (response.isSuccessful) {
-                    val message = response.body()?.message
-                    val result = response.body()?.result
-                    Log.d("challengeCount API : ", message.toString())
+    private fun challengeCount(userAccessToken: String) {
+        retService.challengeCount(userAccessToken)
+            .enqueue(object : Callback<ResponseChallengeCount> {
+                override fun onResponse(
+                    call: Call<ResponseChallengeCount>,
+                    response: Response<ResponseChallengeCount>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        val result = response.body()?.result
+                        Log.d("challengeCount API : ", message.toString())
 
-                    if(result == true) {
-                        binding.btnJoin.setImageResource(R.drawable.bg_button_gray_300)
-                        binding.textJoin.text = "챌린지는 2개까지만 신청 가능해요!"
-                        binding.btnJoin.isClickable = false
-                        binding.btnJoin.isEnabled = false
+                        if (result == true) {
+                            binding.btnJoin.setImageResource(R.drawable.bg_button_gray_300)
+                            binding.textJoin.text = "챌린지는 2개까지만 신청 가능해요!"
+                            binding.btnJoin.isClickable = false
+                            binding.btnJoin.isEnabled = false
+                        } else {
+                            binding.btnJoin.setImageResource(R.drawable.bg_button_orange)
+                            binding.textJoin.text = "챌린지 신청하기"
+                        }
                     } else {
-                        binding.btnJoin.setImageResource(R.drawable.bg_button_orange)
-                        binding.textJoin.text = "챌린지 신청하기"
+                        Log.d("challengeCount API : ", "fail")
                     }
-                } else {
-                    Log.d("challengeCount API : ", "fail")
                 }
-            }
-            override fun onFailure(call: Call<ResponseChallengeCount>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.toString()}")
-            }
-        })
+
+                override fun onFailure(call: Call<ResponseChallengeCount>, t: Throwable) {
+                    Log.d(t.toString(), "error: ${t.toString()}")
+                }
+            })
     }
 
     // 챌린지 참여 API 호출 + 화면 이동
@@ -199,12 +217,15 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     // 소비 유형 검사 참여 여부 확인 API
-    private fun checkMbti(challengeNum : String, userAccessToken: String) {
+    private fun checkMbti(challengeNum: String, userAccessToken: String) {
         retService.checkMbti(userAccessToken).enqueue(object : Callback<ResponseMbtiCheck> {
-            override fun onResponse(call: Call<ResponseMbtiCheck>, response: Response<ResponseMbtiCheck>) {
+            override fun onResponse(
+                call: Call<ResponseMbtiCheck>,
+                response: Response<ResponseMbtiCheck>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
-                    val check : Boolean? = response.body()?.result
+                    val check: Boolean? = response.body()?.result
                     //val check : Boolean = false
                     Log.d("checkMbti API : ", result.toString())
 
@@ -218,6 +239,7 @@ class ChallengeDetailFragment : Fragment() {
                     Log.d("checkMbti API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseMbtiCheck>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
@@ -225,7 +247,7 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     // Dialog 출력 함수
-    private fun showDialog(challengeNumber : String, userAccessToken : String) {
+    private fun showDialog(challengeNumber: String, userAccessToken: String) {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_join_challenge)
 
@@ -275,10 +297,13 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     // 미션 추가 API
-    private fun addMission(userAccessToken : String, id: Int){
+    private fun addMission(userAccessToken: String, id: Int) {
         retService.addMission(userAccessToken, id).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("addMission API : ", result.toString())
@@ -286,6 +311,7 @@ class ChallengeDetailFragment : Fragment() {
                     Log.d("addMission API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }

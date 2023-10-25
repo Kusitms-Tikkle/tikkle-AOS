@@ -33,10 +33,10 @@ import retrofit2.Response
 
 class ChallengeEditFragment : Fragment() {
 
-    private lateinit var retService : APIS
-    private lateinit var viewModel : ChallengeEditViewModel
-    private lateinit var recyclerViewAdapter : ChallengeEditRecyclerViewAdapter
-    lateinit var binding : FragmentChallengeEditBinding
+    private lateinit var retService: APIS
+    private lateinit var viewModel: ChallengeEditViewModel
+    private lateinit var recyclerViewAdapter: ChallengeEditRecyclerViewAdapter
+    lateinit var binding: FragmentChallengeEditBinding
     private val firebaseAnalytics = Firebase.analytics
 
     override fun onCreateView(
@@ -78,7 +78,7 @@ class ChallengeEditFragment : Fragment() {
         }
 
         // RecyclerView
-        val recyclerView : RecyclerView = binding.recyclerView
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.mission.observe(viewLifecycleOwner) { mission ->
@@ -90,11 +90,14 @@ class ChallengeEditFragment : Fragment() {
 
         // 챌린지 그만 하기
         binding.delete.setOnClickListener {
-            showDialog(challengeNumber,userAccessToken)
+            showDialog(challengeNumber, userAccessToken)
             //delete_challengedelete_challenge(challengeNumber)
             val bundle = Bundle().apply {
                 putString(FirebaseAnalytics.Param.ITEM_ID, "delete_challenge")
-                putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_challenge ($challengeNumber)")
+                putString(
+                    FirebaseAnalytics.Param.ITEM_NAME,
+                    "delete_challengedelete_challenge ($challengeNumber)"
+                )
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
             firebaseAnalytics.logEvent("detail_deleteChallenge", bundle)
@@ -113,11 +116,14 @@ class ChallengeEditFragment : Fragment() {
     }
 
     // 챌린지 세부 정보 조회 API
-    private fun challengeDetail(challengeNum: String, userAccessToken : String){
+    private fun challengeDetail(challengeNum: String, userAccessToken: String) {
         val num = challengeNum.toInt()
         retService.challengeEdit(userAccessToken, num).enqueue(object :
             Callback<ChallengeDetail> {
-            override fun onResponse(call: Call<ChallengeDetail>, response: Response<ChallengeDetail>) {
+            override fun onResponse(
+                call: Call<ChallengeDetail>,
+                response: Response<ChallengeDetail>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.result
                     val info = result?.intro.toString()
@@ -126,12 +132,16 @@ class ChallengeEditFragment : Fragment() {
                     binding.challengeInfo.text = info.replace("@", "\n")
 
                     val url = result?.imageUrl.toString()
-                    context?.let { Glide.with(it).load(url).error(R.drawable.ic_challenge_1).into(binding.challengeImg)}
+                    context?.let {
+                        Glide.with(it).load(url).error(R.drawable.ic_challenge_1)
+                            .into(binding.challengeImg)
+                    }
 
                 } else {
                     Log.d("challengeDetail API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ChallengeDetail>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
@@ -139,10 +149,13 @@ class ChallengeEditFragment : Fragment() {
     }
 
     // 미션 추가 API
-    private fun addMission(userAccessToken : String, id: Int){
+    private fun addMission(userAccessToken: String, id: Int) {
         retService.addMission(userAccessToken, id).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("addMission API : ", result.toString())
@@ -150,6 +163,7 @@ class ChallengeEditFragment : Fragment() {
                     Log.d("addMission API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
@@ -157,10 +171,13 @@ class ChallengeEditFragment : Fragment() {
     }
 
     // 미션 취소 API
-    private fun deleteMission(userAccessToken : String, id: Int){
+    private fun deleteMission(userAccessToken: String, id: Int) {
         retService.deleteMission(userAccessToken, id).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("deleteMission API : ", result.toString())
@@ -168,13 +185,14 @@ class ChallengeEditFragment : Fragment() {
                     Log.d("deleteMission API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
         })
     }
 
-    private fun showDialog(challengeNumber : String, userAccessToken : String) {
+    private fun showDialog(challengeNumber: String, userAccessToken: String) {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_delete_challenge)
 
@@ -185,7 +203,10 @@ class ChallengeEditFragment : Fragment() {
 //            delete_challengedelete_cancel(challengeNumber)
             val bundle = Bundle().apply {
                 putString(FirebaseAnalytics.Param.ITEM_ID, "cancel")
-                putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_cancel ($challengeNumber)")
+                putString(
+                    FirebaseAnalytics.Param.ITEM_NAME,
+                    "delete_challengedelete_cancel ($challengeNumber)"
+                )
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
             firebaseAnalytics.logEvent("delete_challengedelete_cancel ($challengeNumber)", bundle)
@@ -197,10 +218,16 @@ class ChallengeEditFragment : Fragment() {
             //delete_challengedelete_challenge(challengeNumber)
             val bundle = Bundle().apply {
                 putString(FirebaseAnalytics.Param.ITEM_ID, "delete_challenge")
-                putString(FirebaseAnalytics.Param.ITEM_NAME, "delete_challengedelete_challenge ($challengeNumber)")
+                putString(
+                    FirebaseAnalytics.Param.ITEM_NAME,
+                    "delete_challengedelete_challenge ($challengeNumber)"
+                )
                 putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button")
             }
-            firebaseAnalytics.logEvent("delete_challengedelete_challenge ($challengeNumber)", bundle)
+            firebaseAnalytics.logEvent(
+                "delete_challengedelete_challenge ($challengeNumber)",
+                bundle
+            )
 
             delete(challengeNumber, userAccessToken)
             dialog.dismiss()
@@ -221,11 +248,14 @@ class ChallengeEditFragment : Fragment() {
     }
 
     // 챌린지 그만 두기 API
-    private fun challengeDelete(challengeNum: String, userAccessToken : String){
+    private fun challengeDelete(challengeNum: String, userAccessToken: String) {
         val num = challengeNum.toLong()
         retService.challengeDelete(userAccessToken, num).enqueue(object :
             Callback<ResponseChallengeDelete> {
-            override fun onResponse(call: Call<ResponseChallengeDelete>, response: Response<ResponseChallengeDelete>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeDelete>,
+                response: Response<ResponseChallengeDelete>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("challengeDelete API : ", result.toString())
@@ -233,6 +263,7 @@ class ChallengeEditFragment : Fragment() {
                     Log.d("challengeDelete API : ", response.toString())
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeDelete>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }

@@ -22,7 +22,7 @@ import com.team7.tikkle.retrofit.RetrofitClient
 import retrofit2.Response
 
 class SigninActivity1 : AppCompatActivity() {
-    private lateinit var binding : ActivitySignin1Binding
+    private lateinit var binding: ActivitySignin1Binding
     private lateinit var retService: APIS
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +41,7 @@ class SigninActivity1 : AppCompatActivity() {
             inputNicknameCheck()
         }
     }
+
     private fun inputNicknameCheck() {
         var Inputnickname = ""
         binding.apply {
@@ -49,7 +50,8 @@ class SigninActivity1 : AppCompatActivity() {
         getRequestWithPathParameters(Inputnickname)
 
     }
-    private fun getRequestWithPathParameters(inputText:String) {
+
+    private fun getRequestWithPathParameters(inputText: String) {
         val pathResponse: LiveData<Response<ResponseNamecheck>> = liveData {
             val response = retService.nameCheck(inputText)
             emit(response)
@@ -58,14 +60,14 @@ class SigninActivity1 : AppCompatActivity() {
         pathResponse.observe(this, Observer {
             val check = it.body()?.result
 //            Toast.makeText(this@EditProfileActivity, "$check", Toast.LENGTH_LONG).show()
-            if (check == false){
+            if (check == false) {
                 binding.nicknameCheck.setVisibility(View.VISIBLE)
                 binding.nicknameCheck.setTextColor(Color.parseColor("#67C451"))
                 binding.nicknameCheck.setText("사용할 수 있는 닉네임입니다.")
                 binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
                 binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
 
-                binding.btnDone.setOnClickListener{
+                binding.btnDone.setOnClickListener {
                     val intent = getIntent()
                     val myId = intent.getIntExtra("id", 0)
                     Log.d("SigninActivity1 id값", "$myId")
@@ -76,8 +78,7 @@ class SigninActivity1 : AppCompatActivity() {
                     startActivity(intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                     finish()
                 }
-            }
-            else{
+            } else {
                 binding.string3.setVisibility(View.VISIBLE)
                 binding.nicknameCheck.setVisibility(View.VISIBLE)
                 binding.nicknameCheck.setTextColor(Color.parseColor("#F95D5D"))
@@ -88,7 +89,8 @@ class SigninActivity1 : AppCompatActivity() {
 
     //edit text가 아닌 다른 곳을 클릭할시 키보드 내려감
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         return true
     }

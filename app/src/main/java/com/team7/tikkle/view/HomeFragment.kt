@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         val userNickname = GlobalApplication.prefs.getString("userNickname", "")
 
-        var existence : Boolean = false
+        var existence: Boolean = false
 
 
         //retrofit
@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
                             addToBackStack(null)
                             commit()
                         }
-                    }else {
+                    } else {
                         val secondFragment = HomeNoneExistenceFragment()
                         fragmentManager?.beginTransaction()?.apply {
                             replace(R.id.home_fragment, secondFragment)
@@ -69,9 +69,9 @@ class HomeFragment : Fragment() {
                         }
                     }
                 } else {
-                        // Error handling
-                        Log.d(ContentValues.TAG, "Error: ${response1.code()} ${response1.message()}")
-                    }
+                    // Error handling
+                    Log.d(ContentValues.TAG, "Error: ${response1.code()} ${response1.message()}")
+                }
             } catch (e: Exception) {
                 // Exception handling
                 Log.e(ContentValues.TAG, "Exception: ${e.message}", e)

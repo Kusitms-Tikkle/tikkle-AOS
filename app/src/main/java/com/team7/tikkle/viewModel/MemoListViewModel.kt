@@ -16,9 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MemoListViewModel : ViewModel() {
-    private lateinit var retService : APIS
+    private lateinit var retService: APIS
     private val _memo = MutableLiveData<List<MemoResult>>()
-    val memo : LiveData<List<MemoResult>> = _memo
+    val memo: LiveData<List<MemoResult>> = _memo
 
     private val _date = MutableLiveData<String>()
     val date2: LiveData<String> = _date
@@ -34,6 +34,7 @@ class MemoListViewModel : ViewModel() {
     init {
         fetchMemoList()
     }
+
     init {
         date2.observeForever { newDate ->
             fetchMemoList(newDate)
@@ -52,7 +53,10 @@ class MemoListViewModel : ViewModel() {
             try {
                 retService.getMemo(userAccessToken, newDate).enqueue(object :
                     Callback<ResponseMemoList> {
-                    override fun onResponse(call: Call<ResponseMemoList>, response: Response<ResponseMemoList>) {
+                    override fun onResponse(
+                        call: Call<ResponseMemoList>,
+                        response: Response<ResponseMemoList>
+                    ) {
                         if (response.isSuccessful) {
                             _memo.value = response.body()?.result
                             Log.d("getMemo : ", "${response.body()?.result}")
@@ -60,11 +64,12 @@ class MemoListViewModel : ViewModel() {
                             Log.d("getMemo : ", "fail")
                         }
                     }
+
                     override fun onFailure(call: Call<ResponseMemoList>, t: Throwable) {
                         Log.d(t.toString(), "error: ${t.toString()}")
                     }
                 })
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 Log.d("getMemo : ", e.message.toString())
             }
         }
@@ -77,7 +82,10 @@ class MemoListViewModel : ViewModel() {
             try {
                 retService.getMemo(userAccessToken, date).enqueue(object :
                     Callback<ResponseMemoList> {
-                    override fun onResponse(call: Call<ResponseMemoList>, response: Response<ResponseMemoList>) {
+                    override fun onResponse(
+                        call: Call<ResponseMemoList>,
+                        response: Response<ResponseMemoList>
+                    ) {
                         if (response.isSuccessful) {
                             _memo.value = response.body()?.result
                             Log.d("getMemo : ", "${response.body()?.result}")
@@ -85,11 +93,12 @@ class MemoListViewModel : ViewModel() {
                             Log.d("getMemo : ", "fail")
                         }
                     }
+
                     override fun onFailure(call: Call<ResponseMemoList>, t: Throwable) {
                         Log.d(t.toString(), "error: ${t.toString()}")
                     }
                 })
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 Log.d("getMemo : ", e.message.toString())
             }
         }

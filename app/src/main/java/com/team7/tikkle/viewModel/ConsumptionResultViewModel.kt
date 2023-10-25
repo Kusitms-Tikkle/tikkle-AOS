@@ -12,7 +12,7 @@ import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
 
-class ConsumptionResultViewModel () : ViewModel() {
+class ConsumptionResultViewModel() : ViewModel() {
     val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
     private lateinit var retService: APIS
     private val _tasks = MutableLiveData<List<ChallengeList>>()
@@ -43,9 +43,15 @@ class ConsumptionResultViewModel () : ViewModel() {
                         intro = response.body()?.result?.intro.toString()
                     )
                     _tasks.value = response.body()?.result?.challengeList
-                    Log.d("ConsumptionResultViewModel API Success", "fetchTasks: ${response.body()?.result?.challengeList}")
+                    Log.d(
+                        "ConsumptionResultViewModel API Success",
+                        "fetchTasks: ${response.body()?.result?.challengeList}"
+                    )
                 } else {
-                    Log.d("ConsumptionResultViewModel API Fail", "fetchTasks: ${response.errorBody()?.string()}")
+                    Log.d(
+                        "ConsumptionResultViewModel API Fail",
+                        "fetchTasks: ${response.errorBody()?.string()}"
+                    )
                 }
             } catch (e: Exception) {
                 Log.d("ConsumptionResultViewModel API Fail", "fetchTasks: ${e.message}")

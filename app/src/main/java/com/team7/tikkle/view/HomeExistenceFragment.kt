@@ -38,7 +38,7 @@ class HomeExistenceFragment : Fragment() {
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)
     val analytics = Firebase.analytics
     var total: Int = 1
-    var mytodo: Int =  GlobalApplication.prefs.getString("checkedCount", "0").toInt()
+    var mytodo: Int = GlobalApplication.prefs.getString("checkedCount", "0").toInt()
     var progress: Int = 0
 
     //이달의 마지막 달
@@ -111,13 +111,13 @@ class HomeExistenceFragment : Fragment() {
 
         //click event 처리
         homeRecyclerViewAdapter = HomeRecyclerViewAdapter { task ->
-            if(task.checked){
+            if (task.checked) {
                 //post false (이미 체크된거 체크)
                 mytodo -= 1
                 GlobalApplication.prefs.setString("checkedCount", mytodo.toString())
                 postTodo(userAccessToken, task.id.toLong())
                 task.checked = false
-            } else{
+            } else {
                 //post true
                 mytodo += 1
                 GlobalApplication.prefs.setString("checkedCount", mytodo.toString())
@@ -139,7 +139,7 @@ class HomeExistenceFragment : Fragment() {
             GlobalApplication.prefs.setString("total", total.toString())
             updateProgressBar() //ProgressBar 업데이트
         })
-        
+
 
         //calendar
         val monday: String? = doDayOfWeek().toString()
@@ -148,7 +148,10 @@ class HomeExistenceFragment : Fragment() {
         //주별 스티커 조회
         val call = retService.weeklySticker(userAccessToken, "$monday")
         call.enqueue(object : Callback<ResponseWeeklySticker> {
-            override fun onResponse(call: Call<ResponseWeeklySticker>, response: Response<ResponseWeeklySticker>) {
+            override fun onResponse(
+                call: Call<ResponseWeeklySticker>,
+                response: Response<ResponseWeeklySticker>
+            ) {
                 if (response.isSuccessful) {
                     val stickerResponse = response.body()
                     val stickers = stickerResponse?.result
@@ -202,7 +205,10 @@ class HomeExistenceFragment : Fragment() {
 
         val call2 = retService.myChallengeList(userAccessToken)
         call2.enqueue(object : Callback<ResponseMyChallengeList> {
-            override fun onResponse(call: Call<ResponseMyChallengeList>, response: Response<ResponseMyChallengeList>) {
+            override fun onResponse(
+                call: Call<ResponseMyChallengeList>,
+                response: Response<ResponseMyChallengeList>
+            ) {
                 if (response.isSuccessful) {
                     val challenges = response.body()?.result ?: listOf()
                     val count = challenges.size
@@ -392,7 +398,7 @@ class HomeExistenceFragment : Fragment() {
     }
 
     fun challengeListSetting(challengeId: Int) {
-        when(challengeId) {
+        when (challengeId) {
             1 -> {
                 binding.challengeContainer.setImageResource(R.drawable.ic_challenge_icon1)
             }

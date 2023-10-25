@@ -17,11 +17,11 @@ import com.team7.tikkle.R
 import com.team7.tikkle.data.MemoResult
 
 
-class MemoListRecyclerViewAdapter (
-    private val memo : MutableList<MemoResult> = mutableListOf(),
+class MemoListRecyclerViewAdapter(
+    private val memo: MutableList<MemoResult> = mutableListOf(),
     private val lockClickListener: (MemoResult) -> Unit,
     private val editClickListener: (MemoResult) -> Unit
-) : RecyclerView.Adapter<MemoListViewHolder>(){
+) : RecyclerView.Adapter<MemoListViewHolder>() {
 
     var flag = 0
 
@@ -48,20 +48,24 @@ class MemoListRecyclerViewAdapter (
 
 }
 
-class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
-    private val btn_edit : ImageButton = view.findViewById<ImageButton>(R.id.btn_edit)
-    private val btn_lock : ImageButton = view.findViewById<ImageButton>(R.id.btn_lock)
-    private val btn_check : ImageView = view.findViewById<ImageView>(R.id.btn_check)
+class MemoListViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    private val btn_edit: ImageButton = view.findViewById<ImageButton>(R.id.btn_edit)
+    private val btn_lock: ImageButton = view.findViewById<ImageButton>(R.id.btn_lock)
+    private val btn_check: ImageView = view.findViewById<ImageView>(R.id.btn_check)
 
-    private val todo : TextView = view.findViewById<TextView>(R.id.todo)
-    private val memo : TextView= view.findViewById<TextView>(R.id.memo)
-    private val like1 : TextView= view.findViewById<TextView>(R.id.like1)
-    private val like2 : TextView= view.findViewById<TextView>(R.id.like2)
-    private val like3 : TextView= view.findViewById<TextView>(R.id.like3)
-    private val img : ImageView = view.findViewById<ImageView>(R.id.img)
-    private val bg : ImageView = view.findViewById<ImageView>(R.id.bg)
+    private val todo: TextView = view.findViewById<TextView>(R.id.todo)
+    private val memo: TextView = view.findViewById<TextView>(R.id.memo)
+    private val like1: TextView = view.findViewById<TextView>(R.id.like1)
+    private val like2: TextView = view.findViewById<TextView>(R.id.like2)
+    private val like3: TextView = view.findViewById<TextView>(R.id.like3)
+    private val img: ImageView = view.findViewById<ImageView>(R.id.img)
+    private val bg: ImageView = view.findViewById<ImageView>(R.id.bg)
 
-    fun bind(task : MemoResult, lockClickListener: (MemoResult) -> Unit, editClickListener: (MemoResult) -> Unit) {
+    fun bind(
+        task: MemoResult,
+        lockClickListener: (MemoResult) -> Unit,
+        editClickListener: (MemoResult) -> Unit
+    ) {
 
         // title
         todo.text = task.title
@@ -98,19 +102,19 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             like3.visibility = View.VISIBLE
 
             // 좋아요 개수
-            if(task.memo.sticker1 == null) { // 0개일 경우 null
+            if (task.memo.sticker1 == null) { // 0개일 경우 null
                 like1.text = "0"
             } else {
                 like1.text = task.memo.sticker1.toString()
             }
 
-            if(task.memo.sticker2 == null) {
+            if (task.memo.sticker2 == null) {
                 like2.text = "0"
             } else {
                 like2.text = task.memo.sticker2.toString()
             }
 
-            if(task.memo.sticker3 == null) {
+            if (task.memo.sticker3 == null) {
                 like3.text = "0"
             } else {
                 like3.text = task.memo.sticker3.toString()
@@ -137,11 +141,11 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                 if (task.memo.private) { // 비공개일 경우
                     btn_lock.setImageResource(R.drawable.btn_memo_unlock)
                     GlobalApplication.prefs.setString("privateFlag", "1")
-                    Log.d("privateFlag 1", GlobalApplication.prefs.getString("privateFlag","#"))
+                    Log.d("privateFlag 1", GlobalApplication.prefs.getString("privateFlag", "#"))
                 } else { // 공개일 경우
                     btn_lock.setImageResource(R.drawable.btn_memo_lock)
                     GlobalApplication.prefs.setString("privateFlag", "2")
-                    Log.d("privateFlag 1", GlobalApplication.prefs.getString("privateFlag","#"))
+                    Log.d("privateFlag 1", GlobalApplication.prefs.getString("privateFlag", "#"))
                 }
             }
 
@@ -149,7 +153,7 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
 
         // 비공개 버튼 클릭 시
         btn_lock.setOnClickListener {
-            Log.d("privateFlag 2", GlobalApplication.prefs.getString("privateFlag","#"))
+            Log.d("privateFlag 2", GlobalApplication.prefs.getString("privateFlag", "#"))
 
             if (GlobalApplication.prefs.getString("privateFlag", "0") == "1") {
                 btn_lock.setImageResource(R.drawable.btn_memo_lock)
@@ -159,7 +163,7 @@ class MemoListViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                 GlobalApplication.prefs.setString("privateFlag", "1")
             }
 
-            Log.d("privateFlag 3", GlobalApplication.prefs.getString("privateFlag","#"))
+            Log.d("privateFlag 3", GlobalApplication.prefs.getString("privateFlag", "#"))
 
             lockClickListener(task)
         }

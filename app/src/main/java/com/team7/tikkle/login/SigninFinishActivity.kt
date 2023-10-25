@@ -16,7 +16,7 @@ import com.team7.tikkle.retrofit.APIS
 
 class SigninFinishActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivitySigninFinishBinding
+    private lateinit var binding: ActivitySigninFinishBinding
     private lateinit var retService: APIS
     private val firebaseAnalytics = Firebase.analytics
 

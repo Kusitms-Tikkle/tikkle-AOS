@@ -7,7 +7,7 @@ import com.team7.tikkle.R
 
 class SigninActivity : AppCompatActivity() {
 
-    lateinit var tokenInfo : TextView
+    lateinit var tokenInfo: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

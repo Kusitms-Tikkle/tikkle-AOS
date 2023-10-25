@@ -46,13 +46,13 @@ import java.util.Locale
 
 class MemoCreateFragment : Fragment() {
 
-    lateinit var binding : FragmentMemoCreateBinding
+    lateinit var binding: FragmentMemoCreateBinding
     lateinit var retService: APIS
 
     private val PICK_IMAGE_REQUEST_CODE = 1
     private val PERMISSION_REQUEST_CODE = 123
 
-    var selectedImageUri : Uri? = null
+    var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,11 +128,13 @@ class MemoCreateFragment : Fragment() {
                 Log.d("Memo Create memoTitle", memoTitle)
 
                 binding.delImg.visibility = View.INVISIBLE
-                binding.date.text = "${month.toInt()}" + "월 " +"${day.toInt()}" + "일 " + "$dayOfWeekText"
+                binding.date.text =
+                    "${month.toInt()}" + "월 " + "${day.toInt()}" + "일 " + "$dayOfWeekText"
                 binding.title.text = memoTitle
 
 
-            } catch (e: Exception) { }
+            } catch (e: Exception) {
+            }
         }
 
         // Memo
@@ -220,12 +222,13 @@ class MemoCreateFragment : Fragment() {
     }
 
     // 메모 전송 API
-    private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?){
-        val num : Int = memoNum.toInt()
+    private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?) {
+        val num: Int = memoNum.toInt()
         val memoDto = memoDto(memo, num)
 
         val gson = Gson()
-        val memoDtoRequestBody = gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
+        val memoDtoRequestBody =
+            gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
 
         // 이미지 선택 여부에 따라 MultipartBody.Part 생성
         val imagePart: MultipartBody.Part? = if (uri != null) {
@@ -240,7 +243,10 @@ class MemoCreateFragment : Fragment() {
 
         retService.memo(userAccessToken, memoDtoRequestBody, imagePart).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("PostMemo API : ", result.toString())
@@ -249,6 +255,7 @@ class MemoCreateFragment : Fragment() {
                     Log.d("PostMemo API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
