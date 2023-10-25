@@ -80,13 +80,12 @@
                 android:id="@+id/text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="미션 선택하기"
                 android:textColor="@color/black"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
                 app:layout_constraintTop_toBottomOf="@+id/btn_cal" />
 
             <TextView
@@ -102,44 +101,18 @@
                 app:layout_constraintStart_toEndOf="@+id/text1"
                 app:layout_constraintTop_toTopOf="@+id/text1" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout1"
-                android:layout_width="370dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_memo_select"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text1">
 
-                <TextView
-                    android:id="@+id/text_join"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginBottom="11dp"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:text="메모를 남기고 싶은 미션을 선택해요."
-                    android:textColor="@color/gray_800"
-                    android:textSize="13dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/text3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="메모 남기기"
                 android:textColor="@color/black"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
             <TextView
@@ -159,20 +132,21 @@
                 android:id="@+id/text5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/pretendard_regular"
                 android:text="메모는 전체 공개돼요. 비공개로 설정하고 싶다면 메모 작성 후,\n ‘내 메모 보기’ 페이지에서 공개 범위를 변경할 수 있어요."
                 android:textColor="@color/gray_800"
                 android:textSize="11dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
                 app:layout_constraintTop_toBottomOf="@+id/text3" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout4"
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/bg_memo_select"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -187,9 +161,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout3"
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:padding="11dp"
                 android:background="@drawable/bg_memo"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -198,12 +174,14 @@
 
                 <EditText
                     android:id="@+id/memo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/pretendard_regular"
+                    android:gravity="left|top"
                     android:hint="선택한 미션에 대해 자유롭게 메모를 작성해주세요."
                     android:textColor="@color/gray_800"
                     android:maxLength="280"
@@ -227,25 +205,23 @@
                 android:id="@+id/text7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="사진 추가하기"
                 android:textColor="@color/black"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
             <ImageButton
                 android:id="@+id/img"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:scaleType="fitXY"
                 android:background="@android:color/transparent"
+                android:scaleType="fitXY"
                 android:src="@drawable/btn_memo_img"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
                 app:layout_constraintTop_toBottomOf="@+id/text7" />
 
             <ImageView
@@ -258,41 +234,24 @@
                 app:layout_constraintBottom_toTopOf="@+id/img"
                 app:layout_constraintEnd_toEndOf="@+id/img" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="60dp"
+                android:background="@drawable/bg_button_orange"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="저장하기"
+                android:textColor="@color/white"
+                android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img">
-
-                <ImageButton
-                    android:id="@+id/btn_save"
-                    android:layout_width="360dp"
-                    android:layout_height="42dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/bg_button_orange"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-                <TextView
-                    android:id="@+id/text_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:text="저장하기"
-                    android:textColor="@color/white"
-                    android:textSize="13dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/btn_save"
-                    app:layout_constraintEnd_toEndOf="@+id/btn_save"
-                    app:layout_constraintStart_toStartOf="@+id/btn_save"
-                    app:layout_constraintTop_toTopOf="@+id/btn_save" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@+id/img" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
