@@ -54,37 +54,37 @@ import java.util.Locale
 import kotlin.collections.ArrayList
 
 class MemoFragment : Fragment() {
-
+    
     lateinit var binding: FragmentMemoBinding
     lateinit var retService: APIS
-
+    
     private val PICK_IMAGE_REQUEST_CODE = 1
     private val PERMISSION_REQUEST_CODE = 123
-
+    
     var date: String = "2000-00-00"
     var mainday: Int = 0
     var mainMonth: Int = 0
     var mainYear: Int = 0
     val missionList: MutableList<String> = mutableListOf()
     var selectedImageUri: Uri? = null
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        
     }
-
+    
     // 파일 액세스 권한 요청
     private fun requestPermissions() {
         val permissions = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
-
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, PERMISSION_REQUEST_CODE)
         }
     }
-
+    
     // 권한 요청 결과 처리
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -92,7 +92,7 @@ class MemoFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 권한 획득 성공
@@ -103,23 +103,23 @@ class MemoFragment : Fragment() {
             }
         }
     }
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMemoBinding.inflate(inflater, container, false)
         retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
-
+        
         // SharedPreferences
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-
+        
         // Today date
         date()
         binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
-
+        
         // 갤러리 권한 요청
         requestPermissions()
-
+        
         // 화면 생성 시 오늘 날짜 미션 세팅
         lifecycleScope.launch {
             try {
@@ -128,19 +128,19 @@ class MemoFragment : Fragment() {
             } catch (e: Exception) {
             }
         }
-
+        
         // Calender
         binding.btnCal.setOnClickListener {
             showDatePickerDialog()
             // 미션 다시 불러오기
             getMission(userAccessToken, date)
         }
-
+        
         // 다음 날
         binding.btnNext.setOnClickListener {
-
+            
             binding.btnBack.setImageResource(R.drawable.btn_memo_right)
-
+            
             when (mainMonth) {
                 1 -> {
                     if (mainday == 31) {
@@ -203,91 +203,91 @@ class MemoFragment : Fragment() {
                     }
                 }
             }
-
+            
             val calendar = Calendar.getInstance()
             val day = calendar.get(Calendar.DAY_OF_MONTH)
-
+            
             if (day == mainday + 1) {
                 binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
             }
-
+            
             if (day == mainday) {
                 Toast.makeText(activity, "내일 기록은 미리 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
+            
             mainday += 1
-
+            
             var strDay = ""
             var strMonth = ""
-
+            
             if (mainday.toString().length == 1) {
                 strDay = "0$mainday"
             } else {
                 strDay = mainday.toString()
             }
-
+            
             if (mainMonth.toString().length == 1) {
                 strMonth = "0$mainMonth"
             } else {
                 strMonth = mainMonth.toString()
             }
-
+            
             date = "$mainYear-$strMonth-$strDay"
-
+            
             var week = getDayOfWeek(date)
-
+            
             binding.date.text = "$mainMonth" + "월 " + "$mainday" + "일 " + "$week"
-
+            
             getMission(userAccessToken, date)
-
+            
         }
-
+        
         // 이전 날
         binding.btnBack.setOnClickListener {
-
+            
             binding.btnNext.setImageResource(R.drawable.btn_memo_left)
-
+            
             if (mainday == 2) {
                 binding.btnBack.setImageResource(R.drawable.btn_memo_right_false)
             }
-
+            
             if (mainday == 1) {
                 Toast.makeText(activity, "지난달 기록은 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
+            
             mainday -= 1
-
+            
             var strDay = ""
             var strMonth = ""
-
+            
             if (mainday.toString().length == 1) {
                 strDay = "0$mainday"
             } else {
                 strDay = mainday.toString()
             }
-
+            
             if (mainMonth.toString().length == 1) {
                 strMonth = "0$mainMonth"
             } else {
                 strMonth = mainMonth.toString()
             }
-
+            
             date = "$mainYear-$strMonth-$strDay"
-
+            
             var week = getDayOfWeek(date)
-
+            
             binding.date.text = "$mainMonth" + "월 " + "$mainday" + "일 " + "$week"
-
+            
             getMission(userAccessToken, date)
         }
-
+        
         // Spinner
 //        val adapter = MemoAdapter(requireContext(), missionList)
 //        binding.spinner.adapter = adapter
 //        binding.spinner.onItemSelectedListener = adapter
-
+        
         // spinner
         val countOptions = arrayOf("0회", "5회 미만", "10회 이상", "30회 이상")
         val adapter = ArrayAdapter(
@@ -297,29 +297,29 @@ class MemoFragment : Fragment() {
         )
         adapter.setDropDownViewResource(R.layout.rounded_spinner_dropdown_item)
         binding.spinner.adapter = adapter
-
+        
         binding.constraintLayout4.setOnClickListener {
             binding.constraintLayout4.setBackgroundResource(R.drawable.bg_memo_select_true)
         }
-
+        
         // Memo
         binding.memo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo)
             }
-
+            
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
+            
             override fun afterTextChanged(s: Editable?) {
                 binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo_true)
-
+                
                 // 입력한 텍스트의 글자 수를 세서 표시
                 val charCount = s?.length ?: 0
                 binding.count.text = "$charCount/280자"
                 //binding.text.visibility = View.GONE
             }
         })
-
+        
         // 이미지 추가
         binding.img.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -330,28 +330,28 @@ class MemoFragment : Fragment() {
 //            binding.img.setBackgroundResource(R.drawable.bg_gray)
 //            binding.img.clipToOutline = true
         }
-
+        
         // 이미지 삭제
         binding.delImg.setOnClickListener {
             binding.img.setImageResource(R.drawable.btn_memo_img)
             binding.delImg.visibility = View.GONE
             selectedImageUri = null
         }
-
+        
         // 나가기
         binding.btnExit.setOnClickListener {
             showDialog()
         }
-
+        
         // 저장 하기
         binding.btnSave.setOnClickListener {
             val memoNum = GlobalApplication.prefs.getString("memoId", "")
             val memo = binding.memo.text.toString()
-
+            
             // 메모가 작성 되었을 경우
             if (memo.count() !== null) {
                 postMemo(userAccessToken, memoNum, memo, selectedImageUri)
-
+                
                 // homeFragment 이동
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, MemoFinishFragment())
@@ -359,25 +359,25 @@ class MemoFragment : Fragment() {
                     .commit()
             }
         }
-
+        
         return binding.root
     }
-
+    
     // 갤러리
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.data!!
-
+            
             // 이미지 세팅
             Glide.with(this)
                 .load(selectedImageUri)
                 .into(binding.img)
-
+            
             binding.delImg.visibility = View.VISIBLE
         }
     }
-
+    
     fun getImagePathFromUri(uri: Uri, context: Context): String {
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = context.contentResolver.query(uri, projection, null, null, null)
@@ -390,36 +390,36 @@ class MemoFragment : Fragment() {
         }
         return ""
     }
-
-
+    
+    
     // Calender
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-
+        
         // 현재 달의 첫째 날과 마지막 날을 구해서 범위로 설정
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         val firstDayOfMonth = calendar.timeInMillis
         val lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-
+        
         calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
         val lastDayOfMonthInMillis = calendar.timeInMillis
-
+        
         val datePickerDialog = DatePickerDialog(
             requireActivity(),
             { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
-
+                
                 var selectedYear = selectedYear // 연도
                 var selectedMonth = selectedMonth + 1 // 월
                 var selectedDay = selectedDay // 일
-
+                
                 val calendar = Calendar.getInstance()
                 calendar.set(selectedYear, selectedMonth, selectedDay)
                 val day = calendar.get(Calendar.DAY_OF_WEEK)
-
+                
                 val week2 = when (day) {
                     Calendar.SUNDAY -> "금요일"
                     Calendar.MONDAY -> "토요일"
@@ -430,43 +430,43 @@ class MemoFragment : Fragment() {
                     Calendar.SATURDAY -> "목요일"
                     else -> ""
                 }
-
+                
                 binding.date.text = "$selectedMonth" + "월 " + "$selectedDay" + "일 " + "$week2"
-
+                
                 var month = selectedMonth.toString()
                 if (month.length == 1) {
                     month = "0$month"
                 }
-
+                
                 var strday = day.toString()
                 if (strday.length == 1) {
                     strday = "0$strday"
                 }
-
+                
                 mainday = strday.toInt()
                 mainMonth = month.toInt()
                 mainYear = selectedYear
                 date = "$selectedYear-$month-$strday"
-
+                
             },
             year,
             month,
             day
         )
-
+        
         // 이번 달만 보여주기
         datePickerDialog.datePicker.minDate = firstDayOfMonth
         datePickerDialog.datePicker.maxDate = lastDayOfMonthInMillis
         datePickerDialog.show()
     }
-
+    
     private fun date() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         var month = (calendar.get(Calendar.MONTH) + 1).toString()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-
+        
         val week = when (dayOfWeek) {
             Calendar.SUNDAY -> "일요일"
             Calendar.MONDAY -> "월요일"
@@ -477,25 +477,25 @@ class MemoFragment : Fragment() {
             Calendar.SATURDAY -> "토요일"
             else -> ""
         }
-
+        
         binding.date.text = "$month" + "월 " + "$day" + "일 " + "$week"
-
+        
         if (month.length == 1) {
             month = "0$month"
         }
-
+        
         var strday = day.toString()
         if (strday.length == 1) {
             strday = "0$day"
         }
-
+        
         mainday = strday.toInt()
         mainMonth = month.toInt()
         mainYear = year
         date = "$year-$month-$strday"
-
+        
     }
-
+    
     private fun updateRecyclerView(userAccessToken: String, date: String) {
         lifecycleScope.launch {
             try {
@@ -504,7 +504,7 @@ class MemoFragment : Fragment() {
             }
         }
     }
-
+    
     // 미션 조회 API
     private fun getMission(userAccessToken: String, date: String) {
         retService.getMissionUnwritten(userAccessToken, date)
@@ -523,7 +523,7 @@ class MemoFragment : Fragment() {
                                 missionList.add(item.title)
                             }
                         }
-
+                        
                         // 어댑터를 다시 설정하고 데이터 갱신
                         val adapter = ArrayAdapter(
                             requireContext(),
@@ -531,27 +531,27 @@ class MemoFragment : Fragment() {
                             missionList.toMutableList()
                         )
                         binding.spinner.adapter = adapter
-
+                        
                     } else {
                         Log.d("getMission API : ", "fail")
                     }
                 }
-
+                
                 override fun onFailure(call: Call<ResponseUnwrittenTodo>, t: Throwable) {
                     Log.d(t.toString(), "error: ${t.toString()}")
                 }
             })
     }
-
+    
     // 메모 전송
     private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?) {
         val num: Int = memoNum.toInt()
         val memoDto = memoDto(memo, num)
-
+        
         val gson = Gson()
         val memoDtoRequestBody =
             gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
-
+        
         val imagePart: MultipartBody.Part? = if (uri != null) {
             val imagePath = getImagePathFromUri(uri, requireContext())
             val imageFile = File(imagePath)
@@ -561,7 +561,7 @@ class MemoFragment : Fragment() {
             // 이미지가 없을 경우 null 값으로 설정
             null
         }
-
+        
         retService.memo(userAccessToken, memoDtoRequestBody, imagePart).enqueue(object :
             Callback<ResponseChallengeJoin> {
             override fun onResponse(
@@ -571,30 +571,30 @@ class MemoFragment : Fragment() {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("PostMemo API : ", result.toString())
-
+                    
                 } else {
                     Log.d("PostMemo API : ", "fail")
                 }
             }
-
+            
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
         })
     }
-
+    
     private fun showDialog() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_memo_back_new)
-
+        
         val delete = dialog.findViewById<ConstraintLayout>(R.id.btn_delete)
         val undo = dialog.findViewById<ConstraintLayout>(R.id.btn_undo)
         val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
-
+        
         exit.setOnClickListener {
             dialog.dismiss()
         }
-
+        
         delete.setOnClickListener {// 나가기
             dialog.dismiss()
             parentFragmentManager.beginTransaction()
@@ -602,20 +602,20 @@ class MemoFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-
+        
         undo.setOnClickListener {// 취소
             dialog.dismiss()
         }
         dialog.show()
     }
-
+    
     // 날짜 화살표 이동 요일 구하기
     fun getDayOfWeek(dateString: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = sdf.parse(dateString)
         val calendar = Calendar.getInstance()
         calendar.time = date ?: Date()
-
+        
         val dayOfWeek = when (calendar.get(Calendar.DAY_OF_WEEK)) {
             Calendar.SUNDAY -> "일요일"
             Calendar.MONDAY -> "월요일"
@@ -626,7 +626,7 @@ class MemoFragment : Fragment() {
             Calendar.SATURDAY -> "토요일"
             else -> ""
         }
-
+        
         return dayOfWeek
     }
 }
