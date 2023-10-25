@@ -57,7 +57,8 @@ class CheerRecyclerViewAdapter(
 
     override fun getItemCount(): Int = tasks.size
 
-    inner class MyViewHolder(val view: View, private val viewModel: CheerViewModel) : RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder(val view: View, private val viewModel: CheerViewModel) :
+        RecyclerView.ViewHolder(view) {
         private val memo: TextView = view.findViewById(R.id.tv_memo)
         private val title: TextView = view.findViewById(R.id.tv_memo_title)
         private val imageView: ImageView = view.findViewById(R.id.iv_memo_image)
@@ -134,9 +135,11 @@ class CheerRecyclerViewAdapter(
             layout.background = view.context.getDrawable(R.drawable.bg_memo_content_open)
             title.background = view.context.getDrawable(R.drawable.iv_memo_title_open)
             title.setTextColor(view.context.getColor(R.color.orange_100))
+            memo.maxLines = 25
             nickname.visibility = View.VISIBLE
             nickname.text = task.nickname ?: "닉네임"
-            imageView1.visibility = if (task.imageUrl?.isNotEmpty() == true) View.VISIBLE else View.GONE
+            imageView1.visibility =
+                if (task.imageUrl?.isNotEmpty() == true) View.VISIBLE else View.GONE
             if (task.imageUrl?.isNotEmpty() == true) {
                 Glide.with(view).load(task.imageUrl).into(imageView1)
             }
@@ -153,6 +156,7 @@ class CheerRecyclerViewAdapter(
             layout.background = view.context.getDrawable(R.drawable.bg_memo_content)
             title.background = view.context.getDrawable(R.drawable.iv_memo_title)
             title.setTextColor(view.context.getColor(R.color.gray_140))
+            memo.maxLines = 9
             nickname.visibility = View.GONE
             imageView1.visibility = View.GONE
             stickerLayout.visibility = View.INVISIBLE
