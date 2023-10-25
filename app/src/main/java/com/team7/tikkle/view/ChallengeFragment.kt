@@ -24,7 +24,7 @@ class ChallengeFragment : Fragment() {
     lateinit var binding: FragmentChallengeBinding
     lateinit var retService: APIS
     private var challengeNum = 0
-    private var checkValue : Boolean = false
+    private var checkValue: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,24 +142,30 @@ class ChallengeFragment : Fragment() {
         }
 
         return binding.root
-        }
+    }
 
     // 챌린지 참여 여부 확인 API
     fun doChallengeCheck(token: String, challengeNum: Int, onResult: (Boolean) -> Unit) {
         lifecycleScope.launch {
             try {
-                retService.challengeCheck(token, challengeNum).enqueue(object : Callback<ChallengeCheck> {
-                    override fun onResponse(call: Call<ChallengeCheck>, response: Response<ChallengeCheck>) {
-                        if (response.isSuccessful) { // 챌린지 참여
-                            val checkResponse = response.body()?.result
-                            onResult(checkResponse == true)
-                        } else { // 챌린지 미 참여
+                retService.challengeCheck(token, challengeNum)
+                    .enqueue(object : Callback<ChallengeCheck> {
+                        override fun onResponse(
+                            call: Call<ChallengeCheck>,
+                            response: Response<ChallengeCheck>
+                        ) {
+                            if (response.isSuccessful) { // 챌린지 참여
+                                val checkResponse = response.body()?.result
+                                onResult(checkResponse == true)
+                            } else { // 챌린지 미 참여
+                                onResult(false)
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ChallengeCheck>, t: Throwable) {
                             onResult(false)
                         }
-                    } override fun onFailure(call: Call<ChallengeCheck>, t: Throwable) {
-                        onResult(false)
-                    }
-                })
+                    })
             } catch (e: Exception) {
                 onResult(false)
             }

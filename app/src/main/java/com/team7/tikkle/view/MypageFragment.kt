@@ -32,8 +32,12 @@ class MypageFragment : Fragment() {
 
     private lateinit var retService: APIS
     lateinit var binding: FragmentMypageBinding
-    var flag : Int = 0
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    var flag: Int = 0
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentMypageBinding.inflate(inflater, container, false)
         //retrofit
         retService = RetrofitClient
@@ -80,9 +84,19 @@ class MypageFragment : Fragment() {
 
                     if (userLabel == null) { // 소비 유형 검사 참여 전
                         binding.myconsumption2.text = "유형이 없어요"
-                        binding.myconsumption2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_500))
+                        binding.myconsumption2.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.gray_500
+                            )
+                        )
                         binding.myconsumption.text = "소비 유형 검사하고 나만의 티끌이 찾기"
-                        binding.myconsumption.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_500))
+                        binding.myconsumption.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.gray_500
+                            )
+                        )
                         binding.myconsumptionBg.setImageResource(R.drawable.ic_mypage_null)
 
                         flag = 0
@@ -90,7 +104,10 @@ class MypageFragment : Fragment() {
                     } else { // 소비 유형 검사 참여 후
                         binding.myconsumption.text = userLabel
                         binding.myconsumption2.text = userLabel
-                        context?.let { Glide.with(it).load(userImage).error(R.drawable.ic_mypage_null).into(binding.myconsumptionBg)}
+                        context?.let {
+                            Glide.with(it).load(userImage).error(R.drawable.ic_mypage_null)
+                                .into(binding.myconsumptionBg)
+                        }
 
                         flag = 1
                     }

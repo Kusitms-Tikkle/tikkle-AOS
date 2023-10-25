@@ -11,7 +11,7 @@ import com.team7.tikkle.databinding.FragmentMemoBinding
 
 class ConsumptionTypeFragment : Fragment() {
 
-    lateinit var binding : FragmentConsumptionTypeBinding
+    lateinit var binding: FragmentConsumptionTypeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +22,8 @@ class ConsumptionTypeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentConsumptionTypeBinding.inflate(inflater, container, false)
-        
-        binding.btn1.setOnClickListener { 
+
+        binding.btn1.setOnClickListener {
             binding.btn1.setImageResource(R.drawable.btn_icon_1_true)
             binding.content.setImageResource(R.drawable.bg_consumption_content_1)
 

@@ -27,7 +27,11 @@ class ChallengeCompleteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_challenge_complete, container, false)
-        binding = com.team7.tikkle.databinding.FragmentChallengeCompleteBinding.inflate(inflater, container, false)
+        binding = com.team7.tikkle.databinding.FragmentChallengeCompleteBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         binding.btnNext.setOnClickListener {
             //challenge_subscribe_complete

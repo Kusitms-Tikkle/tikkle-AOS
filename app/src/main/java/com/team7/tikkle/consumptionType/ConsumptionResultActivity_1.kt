@@ -41,7 +41,7 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
         setContentView(binding.root)
 
         // x 버튼 누르면 홈으로 이동
-        binding.imageButton.setOnClickListener(){
+        binding.imageButton.setOnClickListener() {
             val intent = Intent(this, HomeActivity::class.java)
             finish()
             startActivity(intent)
@@ -152,7 +152,7 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
     }
 
     //consumption type check
-    private fun checkMyconsumption(a: Int, b: Int, c: Int, d: Int, t : String) : String {
+    private fun checkMyconsumption(a: Int, b: Int, c: Int, d: Int, t: String): String {
 
         //소비 타입
         var myconsumption = ""
@@ -167,7 +167,7 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
         if (sortedList[0] == sortedList[1] && sortedList[1] == sortedList[2]) {
             // 가장 큰 값이 3개이상
             myconsumption = "abc"
-        } else if (sortedList[0] == sortedList[1] && sortedList[1] != sortedList[2]){
+        } else if (sortedList[0] == sortedList[1] && sortedList[1] != sortedList[2]) {
             // 가장 큰 값이 2개
             // 가장 큰 값에 따라 사용자의 유형을 검사합니다.
             when (max) {
@@ -176,7 +176,7 @@ class ConsumptionResultActivity_1 : AppCompatActivity() {
                     if (a == b) {
                         //ab
                         myconsumption = "ab"
-                    } else if( a == c) {
+                    } else if (a == c) {
                         //ac
                         myconsumption = "ac"
                     } else {

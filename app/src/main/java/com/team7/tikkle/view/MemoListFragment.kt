@@ -33,13 +33,13 @@ class MemoListFragment : Fragment() {
     lateinit var binding: FragmentMemoListBinding
     lateinit var retService: APIS
 
-    private lateinit var viewModel : MemoListViewModel
-    private lateinit var recyclerViewAdapter : MemoListRecyclerViewAdapter
+    private lateinit var viewModel: MemoListViewModel
+    private lateinit var recyclerViewAdapter: MemoListRecyclerViewAdapter
 
-    var date : String = "2000-00-00"
-    var gloYear : String = "2000"
-    var gloMonth : String = "00"
-    var gloDay : String = "00"
+    var date: String = "2000-00-00"
+    var gloYear: String = "2000"
+    var gloMonth: String = "00"
+    var gloDay: String = "00"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +77,7 @@ class MemoListFragment : Fragment() {
         )
 
         // RecyclerView
-        val recyclerView : RecyclerView = binding.recyclerView
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         viewModel.memo.observe(viewLifecycleOwner) { memo ->
@@ -89,53 +89,77 @@ class MemoListFragment : Fragment() {
 
             binding.btnBack.setImageResource(R.drawable.btn_memo_right)
 
-            when(gloMonth.toInt()) {
+            when (gloMonth.toInt()) {
                 1 -> {
-                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                    if (gloDay.toInt() == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 2 -> {
-                    if (gloDay.toInt() == 28) { return@setOnClickListener}
+                    if (gloDay.toInt() == 28) {
+                        return@setOnClickListener
+                    }
                 }
                 3 -> {
-                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                    if (gloDay.toInt() == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 4 -> {
-                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                    if (gloDay.toInt() == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 5 -> {
-                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                    if (gloDay.toInt() == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 6 -> {
-                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                    if (gloDay.toInt() == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 7 -> {
-                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                    if (gloDay.toInt() == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 8 -> {
-                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                    if (gloDay.toInt() == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 9 -> {
-                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                    if (gloDay.toInt() == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 10 -> {
-                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                    if (gloDay.toInt() == 31) {
+                        return@setOnClickListener
+                    }
                 }
                 11 -> {
-                    if (gloDay.toInt() == 30) { return@setOnClickListener}
+                    if (gloDay.toInt() == 30) {
+                        return@setOnClickListener
+                    }
                 }
                 12 -> {
-                    if (gloDay.toInt() == 31) { return@setOnClickListener}
+                    if (gloDay.toInt() == 31) {
+                        return@setOnClickListener
+                    }
                 }
             }
 
             val calendar = Calendar.getInstance()
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            if (day == gloDay.toInt()+1){
+            if (day == gloDay.toInt() + 1) {
                 binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
             }
 
-            if (day == gloDay.toInt()){
+            if (day == gloDay.toInt()) {
                 Toast.makeText(activity, "내일 기록은 미리 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -158,11 +182,11 @@ class MemoListFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             binding.btnNext.setImageResource(R.drawable.btn_memo_left)
 
-            if (gloDay.toInt() == 2){
+            if (gloDay.toInt() == 2) {
                 binding.btnBack.setImageResource(R.drawable.btn_memo_right_false)
             }
 
-            if ( gloDay.toInt() == 1 ) {
+            if (gloDay.toInt() == 1) {
                 Toast.makeText(activity, "지난달 기록은 작성할 수 없어요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -198,27 +222,32 @@ class MemoListFragment : Fragment() {
         if (GlobalApplication.prefs.getString("privateFlag", "0") == "2") {
             Toast.makeText(activity, " 메모가 공개로 바뀌었어요", Toast.LENGTH_SHORT).show()
         } else if (GlobalApplication.prefs.getString("privateFlag", "0") == "1") {
-            Toast.makeText(activity, " 메모가 비공개로 바뀌었어요", Toast.LENGTH_SHORT).show()        }
+            Toast.makeText(activity, " 메모가 비공개로 바뀌었어요", Toast.LENGTH_SHORT).show()
+        }
 
         //GlobalApplication.prefs.setString("privateFlag", "0")
-        retService.private(userAccessToken, task.memo.memoId).enqueue(object : Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
-                if (response.isSuccessful) {
-                    val result = response.body()?.message
-                    Log.d("private API : ", result.toString())
+        retService.private(userAccessToken, task.memo.memoId)
+            .enqueue(object : Callback<ResponseChallengeJoin> {
+                override fun onResponse(
+                    call: Call<ResponseChallengeJoin>,
+                    response: Response<ResponseChallengeJoin>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()?.message
+                        Log.d("private API : ", result.toString())
 
-                    // 리사이클러뷰 갱신
-                    updateRecyclerViewAfterLock(task)
+                        // 리사이클러뷰 갱신
+                        updateRecyclerViewAfterLock(task)
 
-                } else {
-                    Log.d("private API : ", "fail")
+                    } else {
+                        Log.d("private API : ", "fail")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.toString()}")
-            }
-        })
+                override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
+                    Log.d(t.toString(), "error: ${t.toString()}")
+                }
+            })
     }
 
     // 리사이클러뷰 갱신 함수
@@ -231,7 +260,6 @@ class MemoListFragment : Fragment() {
             newMemoList?.let { viewModel.updateMemoList(it) }
         }
     }
-
 
 
     // 메모 수정/삭제
@@ -281,13 +309,13 @@ class MemoListFragment : Fragment() {
             else -> ""
         }
 
-        binding.date.text = "${month.toInt()}" + "월 " +"$day" + "일 " + "$week"
+        binding.date.text = "${month.toInt()}" + "월 " + "$day" + "일 " + "$week"
 
         if (month.length == 1) {
             month = "0$month"
         }
 
-        var strday =day.toString()
+        var strday = day.toString()
         if (strday.length == 1) {
             strday = "0$day"
         }
@@ -320,7 +348,8 @@ class MemoListFragment : Fragment() {
         calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
         val lastDayOfMonthInMillis = calendar.timeInMillis
 
-        val datePickerDialog = DatePickerDialog(requireActivity(),
+        val datePickerDialog = DatePickerDialog(
+            requireActivity(),
             { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
 
@@ -343,14 +372,14 @@ class MemoListFragment : Fragment() {
                     else -> ""
                 }
 
-                binding.date.text = "$selectedMonth" + "월 " +"$selectedDay" + "일 " + "$week2"
+                binding.date.text = "$selectedMonth" + "월 " + "$selectedDay" + "일 " + "$week2"
 
                 var month = selectedMonth.toString()
                 if (month.length == 1) {
                     month = "0$month"
                 }
 
-                var strday =selectedDay.toString()
+                var strday = selectedDay.toString()
                 if (strday.length == 1) {
                     strday = "0$day"
                 }

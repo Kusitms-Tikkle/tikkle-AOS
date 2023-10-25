@@ -44,7 +44,7 @@ class HomeNoneExistenceFragment : Fragment() {
         val userNickname = GlobalApplication.prefs.getString("userNickname", "")
         binding.mynickname.text = userNickname
 
-        var existence : Boolean = false
+        var existence: Boolean = false
 
         binding.challengeContainer.setOnClickListener {
             startActivity(Intent(activity, HomeActivity::class.java))

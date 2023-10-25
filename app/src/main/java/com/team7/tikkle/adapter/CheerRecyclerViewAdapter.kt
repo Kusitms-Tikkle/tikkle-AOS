@@ -79,9 +79,7 @@ class CheerRecyclerViewAdapter(
             memo.text = task.content ?: "내용"
 
             if (task.imageUrl?.isNotEmpty() == true) {
-                Glide.with(view)
-                    .load(task.imageUrl)
-                    .into(imageView)
+                Glide.with(view).load(task.imageUrl).into(imageView)
             } else {
                 cardView1.visibility = View.INVISIBLE
             }

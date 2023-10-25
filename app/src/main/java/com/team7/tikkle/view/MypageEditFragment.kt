@@ -57,23 +57,29 @@ class MypageEditFragment : Fragment() {
         }
 
         // 회원 탈퇴
-        binding.accountDeletion.setOnClickListener{
+        binding.accountDeletion.setOnClickListener {
             showDialog(userAccessToken)
         }
 
-        binding.termsOfUse.setOnClickListener{
+        binding.termsOfUse.setOnClickListener {
             // 이용약관 조회
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/"))
+            var intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://charm-drive-cfb.notion.site/95b0eae6c343473a878e5eceefa75156?pvs=4/")
+            )
             startActivity(intent)
         }
 
-        binding.privacyPolicy.setOnClickListener{
+        binding.privacyPolicy.setOnClickListener {
             //개인정보처리방침 조회
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/"))
+            var intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://charm-drive-cfb.notion.site/4dbe18fe34f6472badd3774cd6745eb2?pvs=4/")
+            )
             startActivity(intent)
         }
 
-        binding.changeNickname.setOnClickListener{
+        binding.changeNickname.setOnClickListener {
             //닉네임 변경
             val intent = Intent(activity, EditProfileActivity::class.java)
             startActivity(intent)

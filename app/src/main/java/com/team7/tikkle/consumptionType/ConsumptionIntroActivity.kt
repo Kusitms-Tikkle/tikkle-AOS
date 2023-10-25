@@ -25,7 +25,7 @@ import com.team7.tikkle.retrofit.APIS
 
 class ConsumptionIntroActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityConsumptionIntroBinding
+    private lateinit var binding: ActivityConsumptionIntroBinding
     private lateinit var retService: APIS
     private val firebaseAnalytics = Firebase.analytics
 
@@ -71,7 +71,6 @@ class ConsumptionIntroActivity : AppCompatActivity() {
             showDialog()
 
         }
-
 
 
     }

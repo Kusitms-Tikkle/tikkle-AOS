@@ -13,8 +13,8 @@ import com.team7.tikkle.data.TodoResult
 import com.team7.tikkle.data.UnwrittenResult
 
 class MemoAdapter(
-    private val context: Context, private val text: List<UnwrittenResult>)
-    : BaseAdapter(), AdapterView.OnItemSelectedListener {
+    private val context: Context, private val text: List<UnwrittenResult>
+) : BaseAdapter(), AdapterView.OnItemSelectedListener {
 
     override fun getCount(): Int {
         return text.size
@@ -29,7 +29,8 @@ class MemoAdapter(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_item, parent, false)
+        val view = LayoutInflater.from(context)
+            .inflate(android.R.layout.simple_spinner_item, parent, false)
         val textView = view.findViewById<TextView>(android.R.id.text1)
         textView.text = text[position].title
 
