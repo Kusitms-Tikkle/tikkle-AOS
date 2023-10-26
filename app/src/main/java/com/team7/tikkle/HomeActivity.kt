@@ -19,8 +19,6 @@ import com.team7.tikkle.data.ResponseMyPage
 import com.team7.tikkle.databinding.ActivityHomeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
-import com.team7.tikkle.roomdb.UserDatabase
-import com.team7.tikkle.roomdb.UserViewModel
 import com.team7.tikkle.view.*
 import kotlinx.coroutines.launch
 
@@ -29,9 +27,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var retService: APIS
 
     var userAccessToken: String = ""
-
-    private val userDao by lazy { UserDatabase.getDatabase(this).userDao() }
-    private val userViewModel by viewModels<UserViewModel> { UserViewModel.Factory(userDao) }
 
     val analytics = Firebase.analytics
     var floatingClick = false
