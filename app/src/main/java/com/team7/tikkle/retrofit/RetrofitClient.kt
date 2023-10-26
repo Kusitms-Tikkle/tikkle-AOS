@@ -3,6 +3,7 @@ package com.team7.tikkle.retrofit
 import android.content.Context
 import android.provider.Settings.Global
 import com.google.gson.GsonBuilder
+import com.team7.tikkle.Constants.BASE_URL
 import com.team7.tikkle.GlobalApplication
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,7 +19,7 @@ import retrofit2.Response as Response
 
 // object는 싱글턴
 object RetrofitClient {
-    private const val URL = "http://15.164.10.19:8080"
+    private const val URL = BASE_URL
 
     private val retrofit= Retrofit.Builder()
         .baseUrl(URL)

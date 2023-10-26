@@ -17,14 +17,16 @@ android {
         applicationId "com.team7.tikkle"
         minSdk 24
         targetSdk 33
-        versionCode 6
-        versionName "1.2.0"
+        versionCode 7
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // 네이티브 앱 키
-        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
-        resValue "string", "kakao_oauth_host", properties['kakao_oauth_host']
+        buildConfigField "String", "BASE_URL", properties["base.url"]
+        buildConfigField "String", "KAKAO_API_KEY", properties["kakao.api.key"]
+        manifestPlaceholders = [
+                kakaoNativeKey: properties["kakao.native.key"]
+        ]
     }
 
     buildTypes {
@@ -108,9 +110,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    //viewmodel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
