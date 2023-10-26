@@ -35,7 +35,7 @@
                     android:layout_height="match_parent"
                     android:alpha="0.1"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/iv_sample_image1"
+                    android:src="@drawable/iv_back_image2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -97,7 +97,7 @@
             android:layout_height="170dp"
             android:layout_marginBottom="25dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/iv_sample_image1"
+            android:src="@drawable/iv_back_image2"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -32,7 +32,7 @@
                 android:textColor="@color/gray_500"
                 android:textSize="17dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/pretendard_medium"
+                android:fontFamily="@font/pretendard_regular"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
