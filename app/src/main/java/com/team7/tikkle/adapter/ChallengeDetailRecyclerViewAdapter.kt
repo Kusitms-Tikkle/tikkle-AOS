@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.R
 import com.team7.tikkle.data.MissionList
 
-class ChallengeDetailRecyclerViewAdapter (
-    private val mission : MutableList<MissionList> = mutableListOf(),
-    private val clickListener : (MissionList) -> Unit
-) : RecyclerView.Adapter<DetailViewHolder>(){
+class ChallengeDetailRecyclerViewAdapter(
+    private val mission: MutableList<MissionList> = mutableListOf(),
+    private val clickListener: (MissionList) -> Unit
+) : RecyclerView.Adapter<DetailViewHolder>() {
 
-    fun updateList(newList : List<MissionList>){ // commit
+    fun updateList(newList: List<MissionList>) { // commit
         mission.clear()
         mission.addAll(newList)
         notifyDataSetChanged()
@@ -47,13 +47,13 @@ class ChallengeDetailRecyclerViewAdapter (
 
 }
 
-class DetailViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
-    private val text : TextView = view.findViewById<TextView>(R.id.challengeText)
-    private val must : ImageView = view.findViewById<ImageView>(R.id.ic_must)
-    private val day : TextView = view.findViewById<TextView>(R.id.challengeDate)
-    private val check : ImageView = view.findViewById<ImageView>(R.id.check)
+class DetailViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    private val text: TextView = view.findViewById<TextView>(R.id.challengeText)
+    private val must: ImageView = view.findViewById<ImageView>(R.id.ic_must)
+    private val day: TextView = view.findViewById<TextView>(R.id.challengeDate)
+    private val check: ImageView = view.findViewById<ImageView>(R.id.check)
 
-    fun bind(task : MissionList, clickListener: (MissionList) -> Unit) {
+    fun bind(task: MissionList, clickListener: (MissionList) -> Unit) {
 
         if (task.check) { // 미션 참여 O
             check.setImageResource(R.drawable.ic_challenge_checkbox_true)
@@ -71,19 +71,19 @@ class DetailViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
         val newText = task.title.replace("@", "\n")
         text.text = newText
 
-        if (task.day == "ALL"){
+        if (task.day == "ALL") {
             day.text = "매일"
-        } else if (task.day == "MON"){
+        } else if (task.day == "MON") {
             day.text = "월요일"
-        } else if (task.day == "TUE"){
+        } else if (task.day == "TUE") {
             day.text = "화요일"
-        } else if (task.day == "WED"){
+        } else if (task.day == "WED") {
             day.text = "수요일"
-        } else if (task.day == "THUR"){
+        } else if (task.day == "THUR") {
             day.text = "목요일"
-        } else if (task.day == "FRI"){
+        } else if (task.day == "FRI") {
             day.text = "금요일"
-        } else if (task.day == "SAT"){
+        } else if (task.day == "SAT") {
             day.text = "토요일"
         } else {
             day.text = "일요일"

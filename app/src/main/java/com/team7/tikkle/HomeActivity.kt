@@ -19,8 +19,6 @@ import com.team7.tikkle.data.ResponseMyPage
 import com.team7.tikkle.databinding.ActivityHomeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
-import com.team7.tikkle.roomdb.UserDatabase
-import com.team7.tikkle.roomdb.UserViewModel
 import com.team7.tikkle.view.*
 import kotlinx.coroutines.launch
 
@@ -28,10 +26,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding
     private lateinit var retService: APIS
 
-    var userAccessToken : String = ""
-
-    private val userDao by lazy { UserDatabase.getDatabase(this).userDao() }
-    private val userViewModel by viewModels<UserViewModel> { UserViewModel.Factory(userDao) }
+    var userAccessToken: String = ""
 
     val analytics = Firebase.analytics
     var floatingClick = false
@@ -93,22 +88,22 @@ class HomeActivity : AppCompatActivity() {
         Log.d("home 유저 정보", "닉네임: $nickname usertoken: $accessToken")
     }
 
-    private fun initBottomNavigation(){
+    private fun initBottomNavigation() {
 
         var challengeDetail = GlobalApplication.prefs.getString("challengeDetail", "")
         Log.d("HomeActivity11", "challengeDetail: $challengeDetail")
-        if( challengeDetail == "challengeDetail") {
+        if (challengeDetail == "challengeDetail") {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, ChallengeDetailFragment())
                 .commitAllowingStateLoss()
             GlobalApplication.prefs.setString("challengeDetail", "")
-        }else {
+        } else {
             supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frm, ChallengeFragment())
-            .commitAllowingStateLoss()
+                .replace(R.id.main_frm, ChallengeFragment())
+                .commitAllowingStateLoss()
         }
 
-        binding.mainBnv.setOnItemSelectedListener{ item ->
+        binding.mainBnv.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.challengeFragment -> {
                     supportFragmentManager.beginTransaction()
@@ -156,10 +151,11 @@ class HomeActivity : AppCompatActivity() {
 
     //키보드 숨기기, 포커스 조정
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
 
-        if(currentFocus is EditText) {
+        if (currentFocus is EditText) {
             currentFocus!!.clearFocus()
         }
 

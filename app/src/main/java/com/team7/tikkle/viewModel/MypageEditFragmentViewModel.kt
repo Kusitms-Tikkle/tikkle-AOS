@@ -7,7 +7,7 @@ import com.team7.tikkle.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
 
 
-class MypageEditFragmentViewModel (private val myApi: APIS) : ViewModel() {
+class MypageEditFragmentViewModel(private val myApi: APIS) : ViewModel() {
 
     fun logout(token: String) {
         viewModelScope.launch {

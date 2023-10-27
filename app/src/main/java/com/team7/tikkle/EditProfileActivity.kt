@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class EditProfileActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityEditProfileBinding
+    private lateinit var binding: ActivityEditProfileBinding
     private lateinit var retService: APIS
     val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
 
@@ -49,7 +49,7 @@ class EditProfileActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
-        binding.btnDone.setOnClickListener{
+        binding.btnDone.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
 
@@ -87,7 +87,8 @@ class EditProfileActivity : AppCompatActivity() {
         getRequestWithPathParameters(Inputnickname)
 
     }
-    private fun getRequestWithPathParameters(inputText:String) {
+
+    private fun getRequestWithPathParameters(inputText: String) {
         val pathResponse: LiveData<Response<ResponseNamecheck>> = liveData {
             val response = retService.nameCheck(inputText)
             emit(response)
@@ -96,7 +97,7 @@ class EditProfileActivity : AppCompatActivity() {
         pathResponse.observe(this, Observer {
             val check = it.body()?.result
 //            Toast.makeText(this@EditProfileActivity, "$check", Toast.LENGTH_LONG).show()
-            if (check == false){
+            if (check == false) {
                 binding.nicknameCheck.visibility = android.view.View.VISIBLE
                 binding.nicknameCheck.setTextColor(Color.parseColor("#67C451"))
                 binding.nicknameCheck.setText("사용할 수 있는 닉네임입니다.")
@@ -112,22 +113,38 @@ class EditProfileActivity : AppCompatActivity() {
                             if (response3.isSuccessful) {
                                 // 요청이 성공적으로 처리되었을 때의 처리
                                 Log.d("EditProfileActivity", "Result: ${response3.body()}")
-                                Toast.makeText(this@EditProfileActivity, "닉네임이 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(this@EditProfileActivity, HomeActivity::class.java))
+                                Toast.makeText(
+                                    this@EditProfileActivity,
+                                    "닉네임이 변경되었습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(
+                                    Intent(
+                                        this@EditProfileActivity,
+                                        HomeActivity::class.java
+                                    )
+                                )
                             } else {
                                 // 요청이 실패한 경우의 처리
                                 Log.d("EditProfileActivity", "Result: ${response3.errorBody()}")
-                                Toast.makeText(this@EditProfileActivity, "요청에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this@EditProfileActivity,
+                                    "요청에 실패했습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         } catch (e: Exception) {
                             // 예외 발생 시 처리
                             Log.d("EditProfileActivity", "Error: ${e.message}")
-                            Toast.makeText(this@EditProfileActivity, "예외가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@EditProfileActivity,
+                                "예외가 발생했습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
-            }
-            else{
+            } else {
                 binding.nicknameCheck.visibility = android.view.View.VISIBLE
                 binding.nicknameCheck.setTextColor(Color.parseColor("#F95D5D"))
                 binding.nicknameCheck.setText("사용할 수 없는 닉네임입니다.")
@@ -135,9 +152,10 @@ class EditProfileActivity : AppCompatActivity() {
         })
     }
 
-//edit text가 아닌 다른 곳을 클릭할시 키보드 내려감
+    //edit text가 아닌 다른 곳을 클릭할시 키보드 내려감
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         return true
     }

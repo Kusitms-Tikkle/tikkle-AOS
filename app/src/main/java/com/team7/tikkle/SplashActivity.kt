@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
         // Splash Handler
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(Runnable {
-            if(userAccessToken == "") {
+            if (userAccessToken == "") {
                 Intent(this, MainActivity::class.java).apply {
                     startActivity(this)
                     overridePendingTransition(0, 0);

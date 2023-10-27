@@ -19,7 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SigninActivity2 : AppCompatActivity() {
-    private lateinit var binding : ActivitySignin2Binding
+    private lateinit var binding: ActivitySignin2Binding
     private lateinit var retService: APIS
 
 
@@ -57,7 +57,7 @@ class SigninActivity2 : AppCompatActivity() {
                 binding.checkBox2.isChecked = true
                 binding.checkBox3.isChecked = true
 
-            }else{
+            } else {
                 binding.checkBox1.isChecked = false
                 binding.checkBox2.isChecked = false
                 binding.checkBox3.isChecked = false
@@ -69,7 +69,7 @@ class SigninActivity2 : AppCompatActivity() {
             if (isChecked) {
                 box1 = true
                 //필수 동의 체크 여부 -> btnDone 활성화
-                if(box1 && box2){
+                if (box1 && box2) {
                     binding.warning.setVisibility(View.INVISIBLE)
                     binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
                     binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
@@ -92,7 +92,7 @@ class SigninActivity2 : AppCompatActivity() {
             if (isChecked) {
                 box2 = true
                 //필수 동의 체크 여부 -> btnDone 활성화
-                if(box1 && box2){
+                if (box1 && box2) {
                     binding.warning.setVisibility(View.INVISIBLE)
                     binding.btnDone.setBackgroundResource(R.drawable.bg_button_orange)
                     binding.btnDone.setTextColor(Color.parseColor("#FFFFFF"))
@@ -133,13 +133,17 @@ class SigninActivity2 : AppCompatActivity() {
         val requestBody = APIS.RequestBody(nickname, isChecked)
 
         apiService.updateData(id, requestBody).enqueue(object : Callback<ExtraInfoResponse> {
-            override fun onResponse(call: Call<ExtraInfoResponse>, response: Response<ExtraInfoResponse>) {
+            override fun onResponse(
+                call: Call<ExtraInfoResponse>,
+                response: Response<ExtraInfoResponse>
+            ) {
                 if (response.isSuccessful) {
                     // 요청 성공
                     Log.d("로그인 추가정보 통신 성공, 요청 성공", response.toString())
                     Log.d("로그인 추가정보 통신 성공, 요청 성공", response.body().toString())
                     //acessToken보내기
                     val myAccessToken = response.body()?.result?.accessToken
+
                     //User에 accessToken 저장
                     data class User(
                         var useraccesstoken: String,

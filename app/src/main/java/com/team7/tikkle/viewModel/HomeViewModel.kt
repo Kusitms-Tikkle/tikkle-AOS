@@ -13,11 +13,12 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeViewModel () : ViewModel() {
+class HomeViewModel() : ViewModel() {
     private lateinit var retService: APIS
     private val _tasks = MutableLiveData<List<TodoResult>>()
     val tasks: LiveData<List<TodoResult>> = _tasks
     val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+
     // 현재 날짜 변수
     private var currentDate: String = ""
 

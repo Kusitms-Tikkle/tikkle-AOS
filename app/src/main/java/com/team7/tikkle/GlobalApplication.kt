@@ -8,9 +8,10 @@ class GlobalApplication : Application() {
     companion object {
         lateinit var prefs: PreferenceUtil
     }
+
     override fun onCreate() {
         prefs = PreferenceUtil(applicationContext)
         super.onCreate()
-        KakaoSdk.init(this, "4f444e8815868b65a842725e9610b1d0")
+        KakaoSdk.init(this, Constants.KAKAO_API_KEY)
     }
 }

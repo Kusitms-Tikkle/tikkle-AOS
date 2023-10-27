@@ -16,9 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ChallengeDetailViewModel : ViewModel() {
-    private lateinit var retService : APIS
+    private lateinit var retService: APIS
     private val _mission = MutableLiveData<List<MissionList>>()
-    val mission : LiveData<List<MissionList>> = _mission
+    val mission: LiveData<List<MissionList>> = _mission
 
     // SharedPreferences
     val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
@@ -37,19 +37,26 @@ class ChallengeDetailViewModel : ViewModel() {
                 val num = challengeNumber.toInt()
                 retService.challengeDetail(userAccessToken, num).enqueue(object :
                     Callback<ChallengeDetail> {
-                    override fun onResponse(call: Call<ChallengeDetail>, response: Response<ChallengeDetail>) {
+                    override fun onResponse(
+                        call: Call<ChallengeDetail>,
+                        response: Response<ChallengeDetail>
+                    ) {
                         if (response.isSuccessful) {
                             _mission.value = response.body()?.result?.missionList
-                            Log.d("challengeDetail API-Mission : ", "${response.body()?.result?.missionList}")
+                            Log.d(
+                                "challengeDetail API-Mission : ",
+                                "${response.body()?.result?.missionList}"
+                            )
                         } else {
                             Log.d("challengeDetail API-Mission : ", "fail")
                         }
                     }
+
                     override fun onFailure(call: Call<ChallengeDetail>, t: Throwable) {
                         Log.d(t.toString(), "error: ${t.toString()}")
                     }
                 })
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 Log.d("challengeDetail API-Mission : ", e.message.toString())
             }
         }

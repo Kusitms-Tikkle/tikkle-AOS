@@ -46,13 +46,13 @@ import java.util.Locale
 
 class MemoEditFragment : Fragment() {
 
-    lateinit var binding : FragmentMemoEditBinding
+    lateinit var binding: FragmentMemoEditBinding
     lateinit var retService: APIS
 
     private val PICK_IMAGE_REQUEST_CODE = 1
     private val PERMISSION_REQUEST_CODE = 123
 
-    var selectedImageUri : Uri? = null
+    var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,11 +137,13 @@ class MemoEditFragment : Fragment() {
                     binding.delImg.visibility = View.VISIBLE
                 }
 
-                binding.date.text = "${month.toInt()}" + "월 " +"${day.toInt()}" + "일 " + "$dayOfWeekText"
+                binding.date.text =
+                    "${month.toInt()}" + "월 " + "${day.toInt()}" + "일 " + "$dayOfWeekText"
                 binding.title.text = memoTitle
                 binding.memo.setText(memoContent)
 
-            } catch (e: Exception) { }
+            } catch (e: Exception) {
+            }
         }
 
         // Memo
@@ -188,7 +190,7 @@ class MemoEditFragment : Fragment() {
 
         // 삭제 하기
         binding.del.setOnClickListener {
-            showDialog(userAccessToken,memoId)
+            showDialog(userAccessToken, memoId)
         }
 
         //나가기
@@ -203,7 +205,7 @@ class MemoEditFragment : Fragment() {
             GlobalApplication.prefs.setString("memoImg", "")
             binding.delImg.visibility = View.GONE
             selectedImageUri = null
-            delMemoImg(userAccessToken,memoId)
+            delMemoImg(userAccessToken, memoId)
         }
 
         return binding.root
@@ -237,14 +239,15 @@ class MemoEditFragment : Fragment() {
     }
 
     // 메모 전송 API
-    private fun updateMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?){
+    private fun updateMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?) {
 
         Log.d("Update memo", "1")
-        val num : Int = memoNum.toInt()
+        val num: Int = memoNum.toInt()
         val memoDto = memoDto(memo, num)
 
         val gson = Gson()
-        val memoDtoRequestBody = gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
+        val memoDtoRequestBody =
+            gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
 
         // 이미지 선택 여부에 따라 MultipartBody.Part 생성
         val imagePart: MultipartBody.Part? = if (uri != null) {
@@ -257,16 +260,19 @@ class MemoEditFragment : Fragment() {
             null
         }
 
-        if (uri==null) {
+        if (uri == null) {
             Log.d("postMemo API 내 uri ", "null")
         }
-        if (imagePart==null) {
+        if (imagePart == null) {
             Log.d("postMemo API 내 imagePart ", "null")
         }
 
         retService.updateMemo(userAccessToken, memoDtoRequestBody, imagePart).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("PostMemo API : ", result.toString())
@@ -277,6 +283,7 @@ class MemoEditFragment : Fragment() {
                     Log.d("Update memo", "3")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
                 Log.d("Update memo", "4")
@@ -286,12 +293,15 @@ class MemoEditFragment : Fragment() {
 
     // 메모 삭제 API
 
-    private fun delMemo(userAccessToken: String, memoNum: String){
+    private fun delMemo(userAccessToken: String, memoNum: String) {
         val menoId = memoNum.toInt()
 
         retService.delMemo(userAccessToken, menoId).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("DelMemo API : ", result.toString())
@@ -300,6 +310,7 @@ class MemoEditFragment : Fragment() {
                     Log.d("DelMemo API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }
@@ -307,12 +318,15 @@ class MemoEditFragment : Fragment() {
     }
 
     // 메모 이미지 삭제
-    private fun delMemoImg(userAccessToken: String, memoNum: String){
+    private fun delMemoImg(userAccessToken: String, memoNum: String) {
         val menoId = memoNum.toInt()
 
         retService.delMemoImg(userAccessToken, menoId).enqueue(object :
             Callback<ResponseChallengeJoin> {
-            override fun onResponse(call: Call<ResponseChallengeJoin>, response: Response<ResponseChallengeJoin>) {
+            override fun onResponse(
+                call: Call<ResponseChallengeJoin>,
+                response: Response<ResponseChallengeJoin>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()?.message
                     Log.d("DelMemo API : ", result.toString())
@@ -321,6 +335,7 @@ class MemoEditFragment : Fragment() {
                     Log.d("DelMemo API : ", "fail")
                 }
             }
+
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
             }

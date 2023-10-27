@@ -24,7 +24,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var retService: APIS
-    private var authToken : String ?= null
+    private var authToken: String? = null
     val analytics = Firebase.analytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +92,8 @@ class MainActivity : AppCompatActivity() {
 //                string일 경우
 //                retService.signUp(PostLogin(accessToken = authToken)).enqueue
                 //RequestParam값으로 retrofit accessToken 보내기
-                retService.signUp(accessToken = authToken!!).enqueue(object : retrofit2.Callback<LoginResponse> {
+                retService.signUp(accessToken = authToken!!)
+                    .enqueue(object : retrofit2.Callback<LoginResponse> {
                         override fun onResponse(
                             call: Call<LoginResponse>,
                             response: Response<LoginResponse>
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                                 val signResult = receivedLoginItem?.result?.responseType
 //                                val signResult = "signUp"
 
-                                if(signResult == "signUp"){ //signUp일 경우
+                                if (signResult == "signUp") { //signUp일 경우
                                     Log.d("회원가입 signUp", "signUp")
 
                                     //signUp의 id값 받아오기
@@ -117,7 +118,8 @@ class MainActivity : AppCompatActivity() {
 //                                    GlobalApplication.prefs.setString("userAccessToken", myAccessToken.toString())
 
                                     //intent로 id값 넘기기
-                                    val intent = Intent(this@MainActivity, SigninActivity1::class.java)
+                                    val intent =
+                                        Intent(this@MainActivity, SigninActivity1::class.java)
                                     intent.putExtra("id", id)
                                     startActivity(intent)
                                     finish()
@@ -151,7 +153,7 @@ class MainActivity : AppCompatActivity() {
 //                                    startActivity(intent)
 //                                    finish()
                                 }
-                                
+
 
                             } else {
                                 Log.d("로그인 통신 실패", response.toString())
