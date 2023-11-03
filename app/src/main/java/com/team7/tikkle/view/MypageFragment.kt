@@ -46,6 +46,9 @@ class MypageFragment : Fragment() {
 
         val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         Log.d("MypageFragment", "userAccessToken : $userAccessToken")
+        
+        // ui 초기화
+        binding.mynickname.text = GlobalApplication.prefs.getString("userNickname", "")
 
 
         //계정 버튼 클릭시 MypageEditFragment로 이동
