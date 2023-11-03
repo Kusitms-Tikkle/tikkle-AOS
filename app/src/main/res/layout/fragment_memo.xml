@@ -47,7 +47,7 @@
                 android:layout_marginTop="55dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_memo_left"
+                android:src="@drawable/btn_memo_left_false"
                 app:layout_constraintStart_toEndOf="@+id/date"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="7월 24일 일요일"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
