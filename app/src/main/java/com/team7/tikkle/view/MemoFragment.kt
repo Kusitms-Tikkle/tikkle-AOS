@@ -36,6 +36,7 @@ import com.team7.tikkle.data.ResponseUnwrittenTodo
 import com.team7.tikkle.data.UnwrittenResult
 import com.team7.tikkle.data.memoDto
 import com.team7.tikkle.viewModel.DateViewModel
+import com.team7.tikkle.viewModel.MemoViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -58,6 +59,7 @@ class MemoFragment : Fragment() {
     var selectedImageUri: Uri? = null
     
     private val dateViewModel by viewModels<DateViewModel>()
+    private val memoViewModel by viewModels<MemoViewModel>()
     
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -165,13 +167,20 @@ class MemoFragment : Fragment() {
             
             // 메모가 작성 되었을 경우
             if (memo.isNotEmpty()) {
-                postMemo(userAccessToken, memoNum, memo, selectedImageUri)
-                
-                // homeFragment 이동
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, MemoFinishFragment())
-                    .addToBackStack(null)
-                    .commit()
+                memoViewModel.postMemo(userAccessToken, memoNum, memo, selectedImageUri)
+            }
+            
+            memoViewModel.postMemoResult.observe(viewLifecycleOwner) { result ->
+                result.onSuccess {
+                    // homeFragment 이동
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, MemoFinishFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }.onFailure { exception ->
+                    Log.d("error", exception.toString())
+                    Toast.makeText(context, "메모 저장에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         
@@ -193,20 +202,6 @@ class MemoFragment : Fragment() {
             binding.delImg.visibility = View.VISIBLE
         }
     }
-    
-    fun getImagePathFromUri(uri: Uri, context: Context): String {
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = context.contentResolver.query(uri, projection, null, null, null)
-        cursor?.let {
-            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            val path = cursor.getString(columnIndex)
-            cursor.close()
-            return path
-        }
-        return ""
-    }
-    
     
     // Calender
     private fun showDatePickerDialog() {
@@ -291,46 +286,6 @@ class MemoFragment : Fragment() {
                     Log.d(t.toString(), "error: ${t.message}")
                 }
             })
-    }
-    
-    // 메모 전송
-    private fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?) {
-        val num: Int = memoNum.toInt()
-        val memoDto = memoDto(memo, num)
-        
-        val gson = Gson()
-        val memoDtoRequestBody =
-            gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
-        
-        val imagePart: MultipartBody.Part? = if (uri != null) {
-            val imagePath = getImagePathFromUri(uri, requireContext())
-            val imageFile = File(imagePath)
-            val imageRequestBody = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
-            MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
-        } else {
-            // 이미지가 없을 경우 null 값으로 설정
-            null
-        }
-        
-        retService.memo(userAccessToken, memoDtoRequestBody, imagePart).enqueue(object :
-            Callback<ResponseChallengeJoin> {
-            override fun onResponse(
-                call: Call<ResponseChallengeJoin>,
-                response: Response<ResponseChallengeJoin>
-            ) {
-                if (response.isSuccessful) {
-                    val result = response.body()?.message
-                    Log.d("PostMemo API : ", result.toString())
-                    
-                } else {
-                    Log.d("PostMemo API : ", "fail")
-                }
-            }
-            
-            override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.message}")
-            }
-        })
     }
     
     private fun showDialog() {
