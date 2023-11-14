@@ -286,7 +286,7 @@ class MemoEditFragment : Fragment() {
 
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
                 Log.d(t.toString(), "error: ${t.toString()}")
-                Log.d("Update memo", "t.toString()")
+                Log.d("Update memo", t.toString())
             }
         })
     }
@@ -312,7 +312,7 @@ class MemoEditFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<ResponseChallengeJoin>, t: Throwable) {
-                Log.d(t.toString(), "error: ${t.toString()}")
+                Log.d("DelMemo", t.toString())
             }
         })
     }
