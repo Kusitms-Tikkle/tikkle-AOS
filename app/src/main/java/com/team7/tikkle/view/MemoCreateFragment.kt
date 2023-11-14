@@ -56,7 +56,6 @@ class MemoCreateFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     // 파일 액세스 권한 요청
@@ -112,16 +111,16 @@ class MemoCreateFragment : Fragment() {
                 val localDate = LocalDate.parse(memoDate)
                 val dayOfWeek = localDate.dayOfWeek
                 var dayOfWeekText = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-
-                when (dayOfWeekText) {
-                    "Monday" -> dayOfWeekText = "월요일"
-                    "Tuesday" -> dayOfWeekText = "화요일"
-                    "Wednesday" -> dayOfWeekText = "수요일"
-                    "Thursday" -> dayOfWeekText = "목요일"
-                    "Friday" -> dayOfWeekText = "금요일"
-                    "Saturday" -> dayOfWeekText = "토요일"
-                    "Sunday" -> dayOfWeekText = "일요일"
-                    else -> dayOfWeekText = dayOfWeekText
+    
+                dayOfWeekText = when (dayOfWeekText) {
+                    "Monday" -> "월요일"
+                    "Tuesday" -> "화요일"
+                    "Wednesday" -> "수요일"
+                    "Thursday" -> "목요일"
+                    "Friday" -> "금요일"
+                    "Saturday" -> "토요일"
+                    "Sunday" -> "일요일"
+                    else -> dayOfWeekText
                 }
 
                 Log.d("Memo Create memoId", memoId)

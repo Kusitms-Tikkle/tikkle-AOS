@@ -27,26 +27,29 @@ class MemoViewModel(application: Application) : AndroidViewModel(application) {
    
     private val _postMemoResult = MutableLiveData<Result<String>>()
     val postMemoResult: LiveData<Result<String>> = _postMemoResult
+    val missionList = MutableLiveData<List<String>>()
+    val missionIdList = MutableLiveData<List<String>>()
+    val selectedMissionId = MutableLiveData<String>()
     
     fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?) {
         viewModelScope.launch {
             try {
                 val num: Int = memoNum.toInt()
                 val memoDto = memoDto(memo, num)
-                
+
                 val gson = Gson()
                 val memoDtoRequestBody =
                     gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
-                
+
                 val imagePart: MultipartBody.Part? = uri?.let {
                     val imagePath = getImagePathFromUri(it, getApplication<Application>().applicationContext)
                     val imageFile = File(imagePath)
                     val imageRequestBody = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
                     MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
                 }
-                
+
                 val response = retService.postMemo(userAccessToken, memoDtoRequestBody, imagePart)
-                
+
                 if (response.isSuccessful) {
                     _postMemoResult.postValue(Result.success("Memo posted successfully!"))
                 } else {
@@ -70,5 +73,23 @@ class MemoViewModel(application: Application) : AndroidViewModel(application) {
             return path
         }
         return ""
+    }
+    
+    fun getMission(userAccessToken: String, date: String) {
+        viewModelScope.launch {
+            try {
+                val response = retService.getMissionUnwritten(userAccessToken, date)
+                if (response.isSuccessful) {
+                    Log.d("MissionViewModel", "getMission: ${response.body()}")
+                    val missions = response.body()?.result ?: emptyList()
+                    missionList.postValue(missions.map { it.title })
+                    missionIdList.postValue(missions.map { it.id.toString() })
+                } else {
+                    Log.d("MissionViewModel error", "getMission: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                Log.d("MissionViewModel error2", "getMission: ${e.message}")
+            }
+        }
     }
 }

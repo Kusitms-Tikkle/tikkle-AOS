@@ -29,10 +29,11 @@
 
             <ImageButton
                 android:id="@+id/btn_cal"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="48dp"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="38dp"
+                android:padding="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/btn_memo_cal"
@@ -41,10 +42,11 @@
 
             <ImageButton
                 android:id="@+id/btn_next"
-                android:layout_width="10dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="55dp"
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="45dp"
+                android:padding="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/btn_memo_left_false"
@@ -53,10 +55,11 @@
 
             <ImageButton
                 android:id="@+id/btn_back"
-                android:layout_width="10dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginEnd="15dp"
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="5dp"
+                android:padding="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/btn_memo_right"
