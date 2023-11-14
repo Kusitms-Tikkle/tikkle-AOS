@@ -5,9 +5,10 @@ data class ResponseUnwrittenTodo(
     val isSuccess: Boolean,
     val message: String,
     val result: List<UnwrittenResult>
-)
-
-data class UnwrittenResult(
-    val id: Long,
-    val title: String
-)
+) {
+    
+    data class UnwrittenResult(
+        val id: Long,
+        val title: String
+    )
+}

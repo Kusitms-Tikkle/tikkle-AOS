@@ -1,110 +1,69 @@
 package com.team7.tikkle.view
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
-import com.team7.tikkle.GlobalApplication
-import com.team7.tikkle.R
-import com.team7.tikkle.data.ResponseChallengeJoin
+import com.team7.tikkle.*
+import android.Manifest
+import com.team7.tikkle.Constants.PERMISSION_REQUEST_CODE
+import com.team7.tikkle.Constants.PICK_IMAGE_REQUEST_CODE
 import com.team7.tikkle.databinding.FragmentMemoBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
-import java.util.Calendar
-import com.team7.tikkle.data.ResponseUnwrittenTodo
-import com.team7.tikkle.data.UnwrittenResult
-import com.team7.tikkle.data.memoDto
 import com.team7.tikkle.viewModel.DateViewModel
 import com.team7.tikkle.viewModel.MemoViewModel
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.File
 
 class MemoFragment : Fragment() {
     
     lateinit var binding: FragmentMemoBinding
     lateinit var retService: APIS
+    private lateinit var dialogHelper: DialogHelper
     
-    private val PICK_IMAGE_REQUEST_CODE = 1
-    private val PERMISSION_REQUEST_CODE = 123
-    
-    val missionList: MutableList<String> = mutableListOf()
-    var selectedImageUri: Uri? = null
+    private val missionList: MutableList<String> = mutableListOf()
+    private val missionIdList: MutableList<String> = mutableListOf()
+    private var selectedImageUri: Uri? = null
     
     private val dateViewModel by viewModels<DateViewModel>()
     private val memoViewModel by viewModels<MemoViewModel>()
+    private val datePickerHelper = DatePickerHelper()
+    private val permissionHelper = PermissionHelper(this)
     
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentMemoBinding.inflate(inflater, container, false)
         retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
-        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-        var date: String
-        // 갤러리 권한 요청
+        dialogHelper = DialogHelper(requireContext())
+        
         requestPermissions()
+        setupListeners()
+        setupObservers()
         
-        dateViewModel.selectedDate.observe(viewLifecycleOwner) { newDate ->
-            date = newDate
-            binding.date.text = dateViewModel.updateFormattedDate(date)
-
-            // 화면 생성 시 오늘 날짜 미션 세팅
-            lifecycleScope.launch {
-                try {
-                    getMission(userAccessToken, date)
-            
-                    binding.delImg.visibility = View.GONE
-                } catch (e: Exception) {
-                    Log.d("error", e.toString())
-                }
-            }
-        }
-        
-        // spinner
-        val adapter = ArrayAdapter(
-            requireContext(),
-            R.layout.rounded_spinner_dropdown_item,
-            missionList.toMutableList()
-        )
-        adapter.setDropDownViewResource(R.layout.rounded_spinner_dropdown_item)
-        binding.spinner.adapter = adapter
-        
-        binding.constraintLayout4.setOnClickListener {
-            binding.constraintLayout4.setBackgroundResource(R.drawable.bg_memo_select_true)
-        }
-        
-        // Calender
-        binding.btnCal.setOnClickListener {
-            showDatePickerDialog()
-        }
+        return binding.root
+    }
     
+    private fun setupListeners() {
+        binding.btnCal.setOnClickListener {
+            datePickerHelper.showDatePickerDialog(requireContext(), dateViewModel)
+        }
+        
         binding.btnNext.setOnClickListener {
             if (dateViewModel.moveToNextDate()) {
                 binding.btnNext.setImageResource(R.drawable.btn_memo_left)
@@ -114,7 +73,6 @@ class MemoFragment : Fragment() {
             }
         }
         
-        // 이전 날
         binding.btnBack.setOnClickListener {
             if (dateViewModel.moveToPreviousDate()) {
                 binding.btnNext.setImageResource(R.drawable.btn_memo_left)
@@ -123,226 +81,159 @@ class MemoFragment : Fragment() {
             }
         }
         
-        // Memo
+        binding.btnExit.setOnClickListener {
+            dialogHelper.showDialog(
+                onDelete = { navigateToHomeFragment() },
+                onCancel = { dialogHelper.dismissDialog() }
+            )
+        }
+        
+        binding.btnSave.setOnClickListener {
+            saveMemo()
+        }
+        
+        binding.img.setOnClickListener {
+            selectImage()
+        }
+        
+        binding.delImg.setOnClickListener {
+            removeSelectedImage()
+        }
+        
         binding.memo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo)
-            }
-            
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            
-            @SuppressLint("SetTextI18n")
             override fun afterTextChanged(s: Editable?) {
-                binding.constraintLayout3.setBackgroundResource(R.drawable.bg_memo_true)
-                
-                // 입력한 텍스트의 글자 수를 세서 표시
-                val charCount = s?.length ?: 0
-                binding.count.text = "${charCount}/280자"
+                updateMemoTextCount(s?.length ?: 0)
             }
         })
-        
-        // 이미지 추가
-        binding.img.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            binding.delImg.visibility = View.VISIBLE
-            startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
-        }
-        
-        // 이미지 삭제
-        binding.delImg.setOnClickListener {
-            binding.img.setImageResource(R.drawable.btn_memo_img)
-            binding.delImg.visibility = View.GONE
-            selectedImageUri = null
-        }
-        
-        // 나가기
-        binding.btnExit.setOnClickListener {
-            showDialog()
-        }
-        
-        // 저장 하기
-        binding.btnSave.setOnClickListener {
-            val memoNum = GlobalApplication.prefs.getString("memoId", "")
-            val memo = binding.memo.text.toString()
-            
-            // 메모가 작성 되었을 경우
-            if (memo.isNotEmpty()) {
-                memoViewModel.postMemo(userAccessToken, memoNum, memo, selectedImageUri)
-            }
-            
-            memoViewModel.postMemoResult.observe(viewLifecycleOwner) { result ->
-                result.onSuccess {
-                    // homeFragment 이동
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, MemoFinishFragment())
-                        .addToBackStack(null)
-                        .commit()
-                }.onFailure { exception ->
-                    Log.d("error", exception.toString())
-                    Toast.makeText(context, "메모 저장에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        
-        return binding.root
     }
     
-    // 갤러리
+    private fun setupObservers() {
+        dateViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
+            binding.date.text = dateViewModel.updateFormattedDate(date)
+            getMission()
+        })
+    
+        memoViewModel.missionList.observe(viewLifecycleOwner, Observer { missions ->
+            updateSpinnerAdapter(missions)
+        })
+    
+        memoViewModel.missionIdList.observe(viewLifecycleOwner, Observer { ids ->
+            missionIdList.clear()
+            missionIdList.addAll(ids)
+        })
+        
+        memoViewModel.postMemoResult.observe(viewLifecycleOwner, Observer { result ->
+            result.onSuccess { navigateToHomeFragment() }
+                .onFailure { exception ->
+                    Log.d("메모 error", exception.toString())
+                    Toast.makeText(context, "메모 저장에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                }
+        })
+    }
+    
+    private fun handleDateChange(isNext: Boolean) {
+        val success =
+            if (isNext) dateViewModel.moveToNextDate() else dateViewModel.moveToPreviousDate()
+        if (!success) {
+            Toast.makeText(context, "더 이상 이동할 수 없습니다.", Toast.LENGTH_SHORT).show()
+            binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
+        }
+    }
+    
+    private fun updateSpinnerAdapter(missionTitles: List<String>) {
+        val adapter = ArrayAdapter(requireContext(), R.layout.rounded_spinner_dropdown_item, missionTitles)
+        binding.spinner.adapter = adapter
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position >= 0 && position < missionIdList.size) {
+                    GlobalApplication.prefs.setString("memoId", missionIdList[position])
+                }
+            }
+            
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+    
+    
+    private fun saveMemo() {
+        val memoNum = GlobalApplication.prefs.getString("memoId", "")
+        val memo = binding.memo.text.toString()
+        if (memo.isNotEmpty()) {
+//            Log.d("MemoViewModel", "${memoNum}, ${memo}, ${selectedImageUri}")
+            memoViewModel.postMemo(
+                GlobalApplication.prefs.getString("userAccessToken", ""),
+                memoNum,
+                memo,
+                selectedImageUri
+            )
+        }
+    }
+    
+    private fun selectImage() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
+    }
+    
+    private fun removeSelectedImage() {
+        binding.img.setImageResource(R.drawable.btn_memo_img)
+        binding.delImg.visibility = View.GONE
+        selectedImageUri = null
+    }
+    
+    private fun updateMemoTextCount(count: Int) {
+        binding.count.text = "${count}/280자"
+        binding.constraintLayout3.setBackgroundResource(if (count > 0) R.drawable.bg_memo_true else R.drawable.bg_memo)
+    }
+    
+    private fun navigateToHomeFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, HomeFragment())
+            .addToBackStack(null)
+            .commit()
+    }
+    
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.data!!
-            
-            // 이미지 세팅
-            Glide.with(this)
-                .load(selectedImageUri)
-                .into(binding.img)
-            
-            binding.delImg.visibility = View.VISIBLE
+            handleSelectedImage(data)
         }
     }
     
-    // Calender
-    private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        
-        // 현재 날짜 정보
-        val currentYear = calendar.get(Calendar.YEAR)
-        val currentMonth = calendar.get(Calendar.MONTH)
-        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
-        val currentDateInMillis = calendar.timeInMillis
-        
-        // 지난 달의 첫째 날
-        calendar.add(Calendar.MONTH, -1)
-        calendar.set(Calendar.DAY_OF_MONTH, 1)
-        val previousMonthFirstDayInMillis = calendar.timeInMillis
-        
-        // 현재 달의 마지막 날
-        calendar.add(Calendar.MONTH, 2)
-        calendar.set(Calendar.DAY_OF_MONTH, 0)
-        val currentMonthLastDayInMillis = calendar.timeInMillis
-        
-        val datePickerDialog = DatePickerDialog(
-            requireActivity(),
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedCalendar = Calendar.getInstance()
-                selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
-                val selectedDateInMillis = selectedCalendar.timeInMillis
-                
-                if (selectedDateInMillis > currentDateInMillis) {
-                    Toast.makeText(context, "미래의 날짜는 선택할 수 없습니다.", Toast.LENGTH_SHORT).show()
-                    dateViewModel.setSelectedDate(currentYear, currentMonth, currentDay)
-                } else {
-                    dateViewModel.setSelectedDate(selectedYear, selectedMonth, selectedDay)
-                }
-            },
-            currentYear,
-            currentMonth,
-            currentDay
-        )
-        
-        // 지난 달과 이번 달만 선택할 수 있도록 설정합니다.
-        datePickerDialog.datePicker.minDate = previousMonthFirstDayInMillis
-        datePickerDialog.datePicker.maxDate = currentMonthLastDayInMillis
-        
-        // DatePickerDialog를 보여줍니다.
-        datePickerDialog.show()
+    private fun handleSelectedImage(data: Intent) {
+        selectedImageUri = data.data
+        Glide.with(this).load(selectedImageUri).into(binding.img)
+        binding.delImg.visibility = View.VISIBLE
     }
     
-    // 미션 조회 API
-    private fun getMission(userAccessToken: String, date: String) {
-        retService.getMissionUnwritten(userAccessToken, date)
-            .enqueue(object : Callback<ResponseUnwrittenTodo> {
-                override fun onResponse(
-                    call: Call<ResponseUnwrittenTodo>,
-                    response: Response<ResponseUnwrittenTodo>
-                ) {
-                    if (response.isSuccessful) {
-                        val result: List<UnwrittenResult>? = response.body()?.result
-                        Log.d("getMission API : ", result.toString())
-                        Log.d("getMission date", date)
-                        missionList.clear() // 기존 데이터를 삭제
-                        if (result != null) {
-                            for (item in result) {
-                                missionList.add(item.title)
-                            }
-                        }
-                        
-                        // 어댑터를 다시 설정하고 데이터 갱신
-                        val adapter = ArrayAdapter(
-                            requireContext(),
-                            R.layout.rounded_spinner_dropdown_item,
-                            missionList.toMutableList()
-                        )
-                        binding.spinner.adapter = adapter
-                        
-                    } else {
-                        Log.d("getMission API : ", "fail")
-                    }
-                }
-                
-                override fun onFailure(call: Call<ResponseUnwrittenTodo>, t: Throwable) {
-                    Log.d(t.toString(), "error: ${t.message}")
-                }
-            })
+    private fun getMission() {
+        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+        val date = dateViewModel.selectedDate.value ?: return
+        memoViewModel.getMission(userAccessToken, date)
     }
     
-    private fun showDialog() {
-        val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_memo_back_new)
-        
-        val delete = dialog.findViewById<ConstraintLayout>(R.id.btn_delete)
-        val undo = dialog.findViewById<ConstraintLayout>(R.id.btn_undo)
-        val exit = dialog.findViewById<ImageButton>(R.id.btn_exit)
-        
-        exit.setOnClickListener {
-            dialog.dismiss()
-        }
-        
-        delete.setOnClickListener {// 나가기
-            dialog.dismiss()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, HomeFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-        
-        undo.setOnClickListener {// 취소
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-    
-    // 파일 액세스 권한 요청
     private fun requestPermissions() {
         val permissions = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
-        
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, PERMISSION_REQUEST_CODE)
-        }
+        permissionHelper.requestPermissions(permissions, PERMISSION_REQUEST_CODE)
     }
     
-    // 권한 요청 결과 처리
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 권한 획득 성공
-                // 파일 접근 관련 작업 수행
-            } else {
-                // 권한 거부
-                // 사용자에게 권한이 필요하다고 알릴 수 있음
-            }
-        }
+        permissionHelper.onRequestPermissionsResult(requestCode, grantResults, {
+            // 권한 획득 성공 시 실행할 로직
+        }, {
+            Toast.makeText(context, "권한이 거부되었습니다.", Toast.LENGTH_SHORT).show()
+        })
     }
 }
+
+

@@ -266,9 +266,9 @@ interface APIS {
 
     // todo : memo unwritten todo 조회
     @GET("/todo/{date}/unwritten")
-    fun getMissionUnwritten(
+    suspend fun getMissionUnwritten(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path(value = "date") date: String
-    ): Call<ResponseUnwrittenTodo>
+    ): Response<ResponseUnwrittenTodo>
 
 }
