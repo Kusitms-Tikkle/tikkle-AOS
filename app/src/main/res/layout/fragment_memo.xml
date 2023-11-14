@@ -29,10 +29,11 @@
 
             <ImageButton
                 android:id="@+id/btn_cal"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="48dp"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="38dp"
+                android:padding="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/btn_memo_cal"
@@ -41,22 +42,24 @@
 
             <ImageButton
                 android:id="@+id/btn_next"
-                android:layout_width="10dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="55dp"
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="45dp"
+                android:padding="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_memo_left"
+                android:src="@drawable/btn_memo_left_false"
                 app:layout_constraintStart_toEndOf="@+id/date"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/btn_back"
-                android:layout_width="10dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginEnd="15dp"
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="5dp"
+                android:padding="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/btn_memo_right"
@@ -69,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="7월 24일 일요일"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -213,16 +216,25 @@
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-            <ImageButton
-                android:id="@+id/img"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/btn_memo_img"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
-                app:layout_constraintTop_toBottomOf="@+id/text7" />
+                app:layout_constraintTop_toBottomOf="@+id/text7" >
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/btn_memo_img"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.cardview.widget.CardView>
 
             <ImageView
                 android:id="@+id/del_img"
@@ -231,8 +243,8 @@
                 android:layout_marginEnd="-13dp"
                 android:layout_marginBottom="-18dp"
                 android:src="@drawable/btn_del_img"
-                app:layout_constraintBottom_toTopOf="@+id/img"
-                app:layout_constraintEnd_toEndOf="@+id/img" />
+                app:layout_constraintBottom_toTopOf="@+id/cardView1"
+                app:layout_constraintEnd_toEndOf="@+id/cardView1" />
 
             <TextView
                 android:id="@+id/btn_save"
@@ -251,7 +263,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

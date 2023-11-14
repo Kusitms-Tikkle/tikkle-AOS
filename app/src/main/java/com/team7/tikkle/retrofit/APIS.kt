@@ -176,6 +176,14 @@ interface APIS {
         @Part("memoDto") memoDto: okhttp3.RequestBody,
         @Part image: MultipartBody.Part?
     ): Call<ResponseChallengeJoin>
+    
+    @Multipart
+    @POST("/memo")
+    suspend fun postMemo(
+        @Header("X-ACCESS-TOKEN") accessToken: String,
+        @Part("memoDto") memoDto: okhttp3.RequestBody,
+        @Part image: MultipartBody.Part?
+    ): Response<ResponseChallengeJoin>
 
     // todo : memo todo 조회
     @GET("/todo/{date}")
@@ -258,9 +266,9 @@ interface APIS {
 
     // todo : memo unwritten todo 조회
     @GET("/todo/{date}/unwritten")
-    fun getMissionUnwritten(
+    suspend fun getMissionUnwritten(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path(value = "date") date: String
-    ): Call<ResponseUnwrittenTodo>
+    ): Response<ResponseUnwrittenTodo>
 
 }

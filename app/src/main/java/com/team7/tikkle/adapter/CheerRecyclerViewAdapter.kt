@@ -61,7 +61,7 @@ class CheerRecyclerViewAdapter(
         RecyclerView.ViewHolder(view) {
         private val memo: TextView = view.findViewById(R.id.tv_memo)
         private val title: TextView = view.findViewById(R.id.tv_memo_title)
-        private val imageView: ImageView = view.findViewById(R.id.iv_memo_image)
+        private val backgroundImageView: ImageView = view.findViewById(R.id.iv_memo_image)
         private val cardView1: CardView = view.findViewById(R.id.cardView1)
         private val nickname: TextView = view.findViewById(R.id.tv_nickname)
         private val imageView1: ImageView = view.findViewById(R.id.iv_image)
@@ -77,11 +77,13 @@ class CheerRecyclerViewAdapter(
         fun bind(task: CheerResponse.Result, clickListener: (CheerResponse.Result) -> Unit) {
             title.text = task.missionTitle ?: "제목"
             memo.text = task.content ?: "내용"
+            var backgroundImageUrl = task.imageUrl ?: ""
 
-            if (task.imageUrl?.isNotEmpty() == true) {
-                Glide.with(view).load(task.imageUrl).into(imageView)
+            if (backgroundImageUrl.isNotEmpty()) {
+                backgroundImageView.visibility = View.VISIBLE
+                Glide.with(view).load(task.imageUrl).into(backgroundImageView)
             } else {
-                cardView1.visibility = View.INVISIBLE
+                backgroundImageView.visibility = View.INVISIBLE
             }
 
             layout.setOnClickListener {
