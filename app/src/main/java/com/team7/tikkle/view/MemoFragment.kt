@@ -114,18 +114,23 @@ class MemoFragment : Fragment() {
             binding.date.text = dateViewModel.updateFormattedDate(date)
             getMission()
         })
-    
+        
         memoViewModel.missionList.observe(viewLifecycleOwner, Observer { missions ->
             updateSpinnerAdapter(missions)
         })
-    
+        
         memoViewModel.missionIdList.observe(viewLifecycleOwner, Observer { ids ->
             missionIdList.clear()
             missionIdList.addAll(ids)
         })
         
         memoViewModel.postMemoResult.observe(viewLifecycleOwner, Observer { result ->
-            result.onSuccess { navigateToHomeFragment() }
+            result.onSuccess {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MemoFinishFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
                 .onFailure { exception ->
                     Log.d("메모 error", exception.toString())
                     Toast.makeText(context, "메모 저장에 실패하였습니다.", Toast.LENGTH_SHORT).show()
@@ -143,10 +148,16 @@ class MemoFragment : Fragment() {
     }
     
     private fun updateSpinnerAdapter(missionTitles: List<String>) {
-        val adapter = ArrayAdapter(requireContext(), R.layout.rounded_spinner_dropdown_item, missionTitles)
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.rounded_spinner_dropdown_item, missionTitles)
         binding.spinner.adapter = adapter
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (position >= 0 && position < missionIdList.size) {
                     GlobalApplication.prefs.setString("memoId", missionIdList[position])
                 }
@@ -161,7 +172,7 @@ class MemoFragment : Fragment() {
         val memoNum = GlobalApplication.prefs.getString("memoId", "")
         val memo = binding.memo.text.toString()
         if (memo.isNotEmpty()) {
-//            Log.d("MemoViewModel", "${memoNum}, ${memo}, ${selectedImageUri}")
+            Log.d("MemoViewModel", "${memoNum}, ${memo}, ${selectedImageUri}")
             memoViewModel.postMemo(
                 GlobalApplication.prefs.getString("userAccessToken", ""),
                 memoNum,
