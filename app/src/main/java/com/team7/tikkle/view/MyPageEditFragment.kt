@@ -15,10 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.team7.tikkle.EditProfileActivity
 import com.team7.tikkle.GlobalApplication
-import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
-import com.team7.tikkle.consumptionType.ConsumptionIntroActivity
-import com.team7.tikkle.consumptionType.ConsumptionTypeActivity_1
 import com.team7.tikkle.databinding.FragmentMypageEditBinding
 import com.team7.tikkle.login.MainActivity
 import com.team7.tikkle.retrofit.APIS
@@ -26,7 +23,7 @@ import com.team7.tikkle.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
 
 
-class MypageEditFragment : Fragment() {
+class MyPageEditFragment : Fragment() {
 
     private lateinit var retService: APIS
     lateinit var binding: FragmentMypageEditBinding
@@ -96,8 +93,6 @@ class MypageEditFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    // TODO: Handle successful response
-                    Log.d("logout", "logout")
                     Log.d("logout", "responseBody : $responseBody")
 
                     Toast.makeText(activity, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
@@ -108,13 +103,11 @@ class MypageEditFragment : Fragment() {
 
 
                 } else {
-                    // TODO: Handle error response
-                    Log.d("logout error", "logout error")
+                    Log.d("logout error1", "logout error1")
                     Toast.makeText(activity, "로그아웃에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                // TODO: Handle exception
-                Log.d("logout error", "logout error")
+                Log.d("logout error2", "logout error2")
                 Toast.makeText(activity, "로그아웃에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -127,8 +120,6 @@ class MypageEditFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    // TODO: Handle successful response
-                    Log.d("accountDeletion", "accountDeletion")
                     Log.d("accountDeletion", "accountDeletion : $responseBody")
 
                     //내부 저장 데이터 삭제
@@ -140,13 +131,11 @@ class MypageEditFragment : Fragment() {
 
 
                 } else {
-                    // TODO: Handle error response
-                    Log.d("accountDeletion error", "accountDeletion error")
+                    Log.d("accountDeletion error1", "accountDeletion error1")
                     Toast.makeText(activity, "회원탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                // TODO: Handle exception
-                Log.d("accountDeletion error", "accountDeletion error")
+                Log.d("accountDeletion error2", "accountDeletion error2")
                 Toast.makeText(activity, "회원탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -172,12 +161,13 @@ class MypageEditFragment : Fragment() {
 
         undo.setOnClickListener {// 취소
             dialog.dismiss()
-            val homeFragment = HomeFragment()
-            fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.FrameconstraintLayout, homeFragment)
-                addToBackStack(null)
-                commit()
-            }
+            val secondFragment = HomeFragment()
+            val fragmentManager = activity?.supportFragmentManager
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+    
+            fragmentTransaction?.replace(R.id.frameConstraintLayout, secondFragment)
+            fragmentTransaction?.addToBackStack(null)
+            fragmentTransaction?.commit()
         }
         dialog.show()
     }

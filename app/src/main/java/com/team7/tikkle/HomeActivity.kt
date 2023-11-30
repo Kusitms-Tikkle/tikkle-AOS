@@ -2,15 +2,12 @@ package com.team7.tikkle
 
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -131,9 +128,9 @@ class HomeActivity : AppCompatActivity() {
 
                 R.id.mypageFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, MypageFragment())
+                        .replace(R.id.main_frm, MyPageFragment())
                         .commitAllowingStateLoss()
-                    logScreenView(MypageFragment::class.java.simpleName)
+                    logScreenView(MyPageFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
             }
