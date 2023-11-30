@@ -15,7 +15,7 @@ class MyPageViewModel : ViewModel() {
     val error = MutableLiveData<String>()
     private val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
     
-    fun getMyPageData(userAccessToken: String) {
+    fun getMyPageData() {
         viewModelScope.launch {
             try {
                 val response = retService.getMyPage(userAccessToken)

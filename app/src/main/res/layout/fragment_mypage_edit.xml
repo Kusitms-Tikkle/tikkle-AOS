@@ -44,7 +44,7 @@
             android:id="@+id/string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="43dp"
             android:layout_marginTop="80dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/pretendard_semibold"
@@ -60,17 +60,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:layout_marginStart="80dp"
             android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:text="쿠쿠콧구멍"
-            android:textStyle="bold"
             android:textColor="@color/orange_100"
             android:textSize="22dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/string"
             app:layout_constraintTop_toBottomOf="@+id/string"
             app:layout_constraintVertical_bias="0.01" />
 
@@ -96,11 +95,10 @@
             android:id="@+id/change_nickname"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginStart="80dp"
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/mynickname"
             app:layout_constraintTop_toBottomOf="@+id/mynickname">
 
             <ImageView
@@ -119,11 +117,10 @@
             android:id="@+id/terms_of_use"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/change_nickname"
             app:layout_constraintTop_toBottomOf="@+id/change_nickname">
 
             <ImageView
@@ -142,11 +139,10 @@
             android:id="@+id/privacy_policy"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/terms_of_use"
             app:layout_constraintTop_toBottomOf="@+id/terms_of_use">
 
             <ImageView
@@ -166,11 +162,10 @@
             android:id="@+id/logout"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/privacy_policy"
             app:layout_constraintTop_toBottomOf="@+id/privacy_policy">
 
             <ImageView

@@ -47,8 +47,7 @@ class MyPageFragment : Fragment() {
     }
     
     private fun observeViewModel() {
-        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-        viewModel.getMyPageData(userAccessToken)
+        viewModel.getMyPageData()
         
         viewModel.myPageData.observe(viewLifecycleOwner, Observer { data ->
             updateUI(data)
