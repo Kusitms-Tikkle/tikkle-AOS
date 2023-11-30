@@ -18,8 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.team7.tikkle.*
 import android.Manifest
+import com.team7.tikkle.*
 import com.team7.tikkle.Constants.PERMISSION_REQUEST_CODE
 import com.team7.tikkle.Constants.PICK_IMAGE_REQUEST_CODE
 import com.team7.tikkle.databinding.FragmentMemoBinding
@@ -32,14 +32,13 @@ class MemoFragment : Fragment() {
     
     lateinit var binding: FragmentMemoBinding
     lateinit var retService: APIS
-    private lateinit var dialogHelper: DialogHelper
     
-    private val missionList: MutableList<String> = mutableListOf()
     private val missionIdList: MutableList<String> = mutableListOf()
     private var selectedImageUri: Uri? = null
     
     private val dateViewModel by viewModels<DateViewModel>()
     private val memoViewModel by viewModels<MemoViewModel>()
+    private lateinit var dialogHelper: DialogHelper
     private val datePickerHelper = DatePickerHelper()
     private val permissionHelper = PermissionHelper(this)
     
@@ -101,8 +100,8 @@ class MemoFragment : Fragment() {
         }
         
         binding.memo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun beforeTextChanged(s: CharSequence?,start: Int,count: Int,after: Int) {} // 사용 안함
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} // 사용 안함
             override fun afterTextChanged(s: Editable?) {
                 updateMemoTextCount(s?.length ?: 0)
             }
@@ -138,15 +137,6 @@ class MemoFragment : Fragment() {
         })
     }
     
-    private fun handleDateChange(isNext: Boolean) {
-        val success =
-            if (isNext) dateViewModel.moveToNextDate() else dateViewModel.moveToPreviousDate()
-        if (!success) {
-            Toast.makeText(context, "더 이상 이동할 수 없습니다.", Toast.LENGTH_SHORT).show()
-            binding.btnNext.setImageResource(R.drawable.btn_memo_left_false)
-        }
-    }
-    
     private fun updateSpinnerAdapter(missionTitles: List<String>) {
         val adapter =
             ArrayAdapter(requireContext(), R.layout.rounded_spinner_dropdown_item, missionTitles)
@@ -163,7 +153,7 @@ class MemoFragment : Fragment() {
                 }
             }
             
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onNothingSelected(parent: AdapterView<*>?) {} //
         }
     }
     
@@ -174,7 +164,6 @@ class MemoFragment : Fragment() {
         if (memo.isNotEmpty()) {
             Log.d("MemoViewModel", "${memoNum}, ${memo}, ${selectedImageUri}")
             memoViewModel.postMemo(
-                GlobalApplication.prefs.getString("userAccessToken", ""),
                 memoNum,
                 memo,
                 selectedImageUri
@@ -220,9 +209,8 @@ class MemoFragment : Fragment() {
     }
     
     private fun getMission() {
-        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
         val date = dateViewModel.selectedDate.value ?: return
-        memoViewModel.getMission(userAccessToken, date)
+        memoViewModel.getMission(date)
     }
     
     private fun requestPermissions() {

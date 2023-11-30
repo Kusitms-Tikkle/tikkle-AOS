@@ -76,6 +76,7 @@ class DateViewModel : ViewModel() {
         }
     }
     
+    // 선택된 날짜 format 메서드
     fun setSelectedDate(year: Int, month: Int, day: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
