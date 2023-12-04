@@ -1,0 +1,27 @@
+
+7kotlin:S125İ"Remove this commented out code.(º²Ù˜
+Akotlin:S108“")Either remove or fill this block of code.(å¥‡
+Jkotlin:S1481Û"1Remove this unused "selectedDate" local variable.(İ‚œ¶
+dkotlin:S1871`"LThis branch's code block is the same as the block for the branch on line 86.(“¡øÔ
+ikotlin:S1871j"LThis branch's code block is the same as the block for the branch on line 86.(º»ıÅùÿÿÿÿ
+ikotlin:S1871t"LThis branch's code block is the same as the block for the branch on line 86.(÷‹×Ôşÿÿÿÿ
+dkotlin:S1871y"LThis branch's code block is the same as the block for the branch on line 86.(·ØÅå
+dkotlin:S1871ƒ"LThis branch's code block is the same as the block for the branch on line 86.(‡Ì•#
+jkotlin:S1871"LThis branch's code block is the same as the block for the branch on line 86.(·Ù™äşÿÿÿÿ
+ekotlin:S1871o"MThis branch's code block is the same as the block for the branch on line 101.(“œÈ‘
+ekotlin:S1871~"MThis branch's code block is the same as the block for the branch on line 101.(€•Şï
+kkotlin:S1871ˆ"MThis branch's code block is the same as the block for the branch on line 101.(Ø¹³–ùÿÿÿÿ
+jkotlin:S3776,"RRefactor this method to reduce its Cognitive Complexity from 52 to the 15 allowed.(©Àùè
+Ekotlin:S6518Ñ",Replace function call with indexed accessor.(Ÿ‡ î
+Jkotlin:S6518Õ",Replace function call with indexed accessor.(“Ì¤±ıÿÿÿÿ
+Jkotlin:S6518 ",Replace function call with indexed accessor.(áğÔûÿÿÿÿ
+Jkotlin:S6518¢",Replace function call with indexed accessor.(öÀ¨ƒüÿÿÿÿ
+Jkotlin:S6518£",Replace function call with indexed accessor.(”Í›øÿÿÿÿ
+Jkotlin:S6518Ì",Replace function call with indexed accessor.(áğÔûÿÿÿÿ
+Jkotlin:S6518Í",Replace function call with indexed accessor.(€íÙóüÿÿÿÿ
+Jkotlin:S6518Î",Replace function call with indexed accessor.(öÀ¨ƒüÿÿÿÿ
+Ekotlin:S6518“",Replace function call with indexed accessor.(ì°ÄÏ
+Jkotlin:S6518¡",Replace function call with indexed accessor.(’òØ­ûÿÿÿÿ
+Jkotlin:S6518•",Replace function call with indexed accessor.(öÀ¨ƒüÿÿÿÿ
+Jkotlin:S6518â",Replace function call with indexed accessor.(Ù­€ıÿÿÿÿ
+Ekotlin:S6518ã",Replace function call with indexed accessor.(Íïö¨

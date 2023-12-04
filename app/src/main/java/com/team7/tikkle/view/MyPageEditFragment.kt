@@ -46,11 +46,12 @@ class MyPageEditFragment : Fragment() {
     
     private fun setupClickListeners() {
         binding.logout.setOnClickListener {
+            // 로그아웃
             viewModel.logout()
         }
-        
-        // 회원 탈퇴
+       
         binding.accountDeletion.setOnClickListener {
+            // 회원 탈퇴
             showDialog()
         }
         
@@ -111,14 +112,11 @@ class MyPageEditFragment : Fragment() {
         Toast.makeText(activity, "회원탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show()
     }
     
-    // 웹 페이지
     private fun openWebPage(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
     }
     
-    
-    // Dialog
     private fun showDialog() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_withdraw)

@@ -157,7 +157,6 @@ class MemoFragment : Fragment() {
         }
     }
     
-    
     private fun saveMemo() {
         val memoNum = GlobalApplication.prefs.getString("memoId", "")
         val memo = binding.memo.text.toString()
