@@ -1,5 +1,6 @@
 package com.team7.tikkle.adapter
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,16 +32,20 @@ class MemoListRecyclerViewAdapter : RecyclerView.Adapter<MemoListViewHolder>() {
     }
 }
 
-class MemoListViewHolder(private val binding: ItemMemoBinding) : RecyclerView.ViewHolder(binding.root) {
+class MemoListViewHolder(private val binding: ItemMemoBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     fun bind(task: MemoResult) {
-        binding.title.text = task.title ?: " " // title이 null일 경우 기본값 사용
+        binding.title.text = task.title ?: " "
         
         // memo 객체가 null이 아닐 때만 내부 속성에 접근
         task.memo?.let { memo ->
+            binding.title.paintFlags = binding.title.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG //취소선
             binding.memo.text = memo.content ?: " "
-            binding.like1.text = memo.sticker1?.toString() ?: "0"
-            binding.like2.text = memo.sticker2?.toString() ?: "0"
-            binding.like3.text = memo.sticker3?.toString() ?: "0"
+            binding.like1.text = memo.sticker1.toString() ?: "0"
+            binding.like2.text = memo.sticker2.toString() ?: "0"
+            binding.like3.text = memo.sticker3.toString() ?: "0"
+            binding.btnCheck.setImageResource(R.drawable.btn_memo_check_orange)
+            binding.btnEdit.setImageResource(R.drawable.btn_memo_edit)
             binding.memo.visibility = View.VISIBLE
             binding.like1.visibility = View.VISIBLE
             binding.like2.visibility = View.VISIBLE
@@ -80,6 +85,9 @@ class MemoListViewHolder(private val binding: ItemMemoBinding) : RecyclerView.Vi
                 }
             }
         } ?: run {
+            binding.title.paintFlags = binding.title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() //취소선 해제
+            binding.btnCheck.setImageResource(R.drawable.btn_memo_check_black)
+            binding.btnEdit.setImageResource(R.drawable.btn_memo_create)
             binding.memo.visibility = View.GONE
             binding.like1.visibility = View.GONE
             binding.like2.visibility = View.GONE

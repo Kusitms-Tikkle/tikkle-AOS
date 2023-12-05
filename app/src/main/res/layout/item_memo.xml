@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
+    android:paddingBottom="4dp"
     android:background="@drawable/bg_gray"
     android:layout_marginBottom="15dp">
 
@@ -12,9 +13,9 @@
         android:layout_width="13dp"
         android:layout_height="13dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title"
         app:srcCompat="@drawable/btn_memo_check_black" />
 
     <TextView
@@ -26,9 +27,9 @@
         android:text="30분 미만 자전거 타고 다니기"
         android:textColor="@color/gray_500"
         android:textSize="13dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_check"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_edit"
         app:layout_constraintStart_toEndOf="@+id/btn_check"
-        app:layout_constraintTop_toTopOf="@+id/btn_check" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_edit"
