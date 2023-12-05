@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/btn_memo_check_black" />
 
     <TextView
-        android:id="@+id/todo"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
@@ -52,7 +52,7 @@
         android:text="좌우 여백 20 좌우 여백 20 좌우 여백 20 좌우 여백 20 프리텐다드 레귤러 12 프리텐다드 레귤러 12 프리텐다드 레귤러 12 위 여백 50 위 여백 50 행간 18"
         android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/todo" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <ImageView
         android:id="@+id/img"

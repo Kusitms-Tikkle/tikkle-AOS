@@ -46,7 +46,7 @@
             android:layout_marginTop="55dp"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/btn_memo_left"
+            android:src="@drawable/btn_memo_left_false"
             app:layout_constraintStart_toEndOf="@+id/date"
             app:layout_constraintTop_toTopOf="parent" />
 

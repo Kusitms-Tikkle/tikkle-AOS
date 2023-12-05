@@ -57,14 +57,12 @@ class HomeFragment : Fragment() {
                         val secondFragment = HomeExistenceFragment()
                         fragmentManager?.beginTransaction()?.apply {
                             replace(R.id.home_fragment, secondFragment)
-                            addToBackStack(null)
                             commit()
                         }
                     } else {
                         val secondFragment = HomeNoneExistenceFragment()
                         fragmentManager?.beginTransaction()?.apply {
                             replace(R.id.home_fragment, secondFragment)
-                            addToBackStack(null)
                             commit()
                         }
                     }

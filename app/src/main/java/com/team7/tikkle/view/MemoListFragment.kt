@@ -1,12 +1,16 @@
 package com.team7.tikkle.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.DatePickerHelper
 import com.team7.tikkle.R
 import com.team7.tikkle.adapter.MemoListRecyclerViewAdapter
@@ -17,9 +21,8 @@ import com.team7.tikkle.viewModel.MemoListViewModel
 class MemoListFragment : Fragment() {
     
     lateinit var binding: FragmentMemoListBinding
-    private lateinit var memoViewModel: MemoListViewModel
-    private lateinit var dateViewModel: DateViewModel
-    private lateinit var recyclerViewAdapter: MemoListRecyclerViewAdapter
+    private val memoListViewModel by viewModels<MemoListViewModel>()
+    private val dateViewModel by viewModels<DateViewModel>()
     private val datePickerHelper = DatePickerHelper()
     
     override fun onCreateView(
@@ -31,6 +34,7 @@ class MemoListFragment : Fragment() {
         
         setupListeners()
         setupObservers()
+        initRecyclerView()
         
         return binding.root
     }
@@ -38,6 +42,7 @@ class MemoListFragment : Fragment() {
     private fun setupListeners() {
         binding.btnCal.setOnClickListener {
             datePickerHelper.showDatePickerDialog(requireContext(), dateViewModel)
+            binding.btnNext.setImageResource(R.drawable.btn_memo_left)
         }
         
         binding.btnNext.setOnClickListener {
@@ -65,17 +70,28 @@ class MemoListFragment : Fragment() {
     private fun navigateToHomeFragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_frm, HomeFragment())
-            .addToBackStack(null)
             .commit()
     }
     
     private fun setupObservers() {
         dateViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
             binding.date.text = dateViewModel.updateFormattedDate(date)
-            // Todo: 미션 리스트 가져오기
-            //getMissionList()
+            memoListViewModel.fetchMemoList(date)
         })
-        
     }
-    // Todo: 미션 리스트 가져오기 함수
+    
+    private fun initRecyclerView() {
+        val recyclerViewAdapter = MemoListRecyclerViewAdapter()
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.adapter = recyclerViewAdapter
+        memoListViewModel.memo.observe(viewLifecycleOwner, Observer { memo ->
+            if (memo != null) {
+                recyclerViewAdapter.setList(memo)
+                recyclerViewAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(context, "데이터가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+    
 }

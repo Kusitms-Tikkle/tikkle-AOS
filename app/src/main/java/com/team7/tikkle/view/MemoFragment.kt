@@ -189,7 +189,6 @@ class MemoFragment : Fragment() {
     private fun navigateToHomeFragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_frm, HomeFragment())
-            .addToBackStack(null)
             .commit()
     }
     

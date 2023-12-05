@@ -30,10 +30,6 @@ class HomeNoneExistenceFragment : Fragment() {
     val week: Int = cal.get(Calendar.DAY_OF_WEEK)
     val day_of_week = cal.get(Calendar.DAY_OF_WEEK)
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

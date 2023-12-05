@@ -17,37 +17,20 @@ import retrofit2.Response
 
 class MemoListViewModel : ViewModel() {
     private lateinit var retService: APIS
+    private val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
+    
     private val _memo = MutableLiveData<List<MemoResult>>()
     val memo: LiveData<List<MemoResult>> = _memo
-
-    private val _date = MutableLiveData<String>()
-    val date2: LiveData<String> = _date
-
-    fun updateDate(newDate: String) {
-        _date.value = newDate
-    }
-
-    // SharedPreferences
-    val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-    val date = GlobalApplication.prefs.getString("date", "")
-
+    
     init {
-        fetchMemoList()
+//        fetchMemoList()
     }
-
-    init {
-        date2.observeForever { newDate ->
-            fetchMemoList(newDate)
-        }
-    }
-
+    
     fun updateMemoList(newList: List<MemoResult>) {
         _memo.postValue(newList)
     }
-
+    
     fun fetchMemoList(newDate: String) {
-
-        // retrofit
         retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
         viewModelScope.launch {
             try {
@@ -59,49 +42,19 @@ class MemoListViewModel : ViewModel() {
                     ) {
                         if (response.isSuccessful) {
                             _memo.value = response.body()?.result
-                            Log.d("getMemo : ", "${response.body()?.result}")
+                            Log.d("getMemoList : ", "${response.body()?.result}")
                         } else {
-                            Log.d("getMemo : ", "fail")
+                            Log.d("getMemoList : ", "fail1")
                         }
                     }
-
+                    
                     override fun onFailure(call: Call<ResponseMemoList>, t: Throwable) {
-                        Log.d(t.toString(), "error: ${t.toString()}")
+                        Log.d(t.toString(), "error: $t")
                     }
                 })
             } catch (e: Exception) {
-                Log.d("getMemo : ", e.message.toString())
+                Log.d("getMemoList fail2 : ", e.message.toString())
             }
         }
     }
-
-    fun fetchMemoList() {
-        // retrofit
-        retService = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
-        viewModelScope.launch {
-            try {
-                retService.getMemo(userAccessToken, date).enqueue(object :
-                    Callback<ResponseMemoList> {
-                    override fun onResponse(
-                        call: Call<ResponseMemoList>,
-                        response: Response<ResponseMemoList>
-                    ) {
-                        if (response.isSuccessful) {
-                            _memo.value = response.body()?.result
-                            Log.d("getMemo : ", "${response.body()?.result}")
-                        } else {
-                            Log.d("getMemo : ", "fail")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseMemoList>, t: Throwable) {
-                        Log.d(t.toString(), "error: ${t.toString()}")
-                    }
-                })
-            } catch (e: Exception) {
-                Log.d("getMemo : ", e.message.toString())
-            }
-        }
-    }
-
 }
