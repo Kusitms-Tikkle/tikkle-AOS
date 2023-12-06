@@ -10,8 +10,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.team7.tikkle.R
 import com.team7.tikkle.data.MemoResult
 import com.team7.tikkle.databinding.ItemMemoBinding
+import com.team7.tikkle.viewModel.MemoListViewModel
 
-class MemoListRecyclerViewAdapter : RecyclerView.Adapter<MemoListViewHolder>() {
+class MemoListRecyclerViewAdapter(private val editClickListener: MemoEditClickListener) :
+    RecyclerView.Adapter<MemoListViewHolder>() {
     private val memoList = ArrayList<MemoResult>()
     
     fun setList(memos: List<MemoResult>) {
@@ -28,13 +30,14 @@ class MemoListRecyclerViewAdapter : RecyclerView.Adapter<MemoListViewHolder>() {
     override fun getItemCount(): Int = memoList.size
     
     override fun onBindViewHolder(holder: MemoListViewHolder, position: Int) {
-        holder.bind(memoList[position])
+        holder.bind(memoList[position], editClickListener)
     }
 }
 
-class MemoListViewHolder(private val binding: ItemMemoBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    fun bind(task: MemoResult) {
+class MemoListViewHolder(private val binding: ItemMemoBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(task: MemoResult, editClickListener: MemoEditClickListener) {
+        val viewModel = MemoListViewModel()
+        
         binding.title.text = task.title ?: " "
         
         // memo 객체가 null이 아닐 때만 내부 속성에 접근
@@ -53,10 +56,10 @@ class MemoListViewHolder(private val binding: ItemMemoBinding) :
             binding.btnLock.visibility = View.VISIBLE
             binding.bg.visibility = View.VISIBLE
             
-            if (memo.image != null) {
+            val imageUrl = memo.image
+            if (imageUrl != null) {
                 binding.img.visibility = View.VISIBLE
                 
-                val imageUrl = memo.image
                 val requestOptions = RequestOptions()
                     .placeholder(R.drawable.bg_memo)
                     .error(R.drawable.bg_memo)
@@ -74,18 +77,19 @@ class MemoListViewHolder(private val binding: ItemMemoBinding) :
                 binding.btnLock.setOnClickListener {
                     // 메모 공개
                     binding.btnLock.setImageResource(R.drawable.btn_memo_lock)
-                    // Todo: 서버에 메모 공개 요청
+                    viewModel.updateMemoPrivacy(memo.memoId)
                 }
             } else {
                 binding.btnLock.setImageResource(R.drawable.btn_memo_lock)
                 binding.btnLock.setOnClickListener {
                     // 메모 비공개
                     binding.btnLock.setImageResource(R.drawable.btn_memo_unlock)
-                    // Todo: 서버에 메모 비공개 요청
+                    viewModel.updateMemoPrivacy(memo.memoId)
                 }
             }
         } ?: run {
-            binding.title.paintFlags = binding.title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() //취소선 해제
+            binding.title.paintFlags =
+                binding.title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() //취소선 해제
             binding.btnCheck.setImageResource(R.drawable.btn_memo_check_black)
             binding.btnEdit.setImageResource(R.drawable.btn_memo_create)
             binding.memo.visibility = View.GONE
@@ -99,6 +103,7 @@ class MemoListViewHolder(private val binding: ItemMemoBinding) :
         
         binding.btnEdit.setOnClickListener {
             // 메모 수정
+            editClickListener.onEditClick(task.todoId)
         }
     }
 }

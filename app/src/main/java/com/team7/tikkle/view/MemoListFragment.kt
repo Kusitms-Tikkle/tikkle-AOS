@@ -1,7 +1,6 @@
 package com.team7.tikkle.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.DatePickerHelper
 import com.team7.tikkle.R
+import com.team7.tikkle.adapter.MemoEditClickListener
 import com.team7.tikkle.adapter.MemoListRecyclerViewAdapter
 import com.team7.tikkle.databinding.FragmentMemoListBinding
 import com.team7.tikkle.viewModel.DateViewModel
 import com.team7.tikkle.viewModel.MemoListViewModel
 
-class MemoListFragment : Fragment() {
+class MemoListFragment : Fragment(), MemoEditClickListener {
     
     lateinit var binding: FragmentMemoListBinding
     private val memoListViewModel by viewModels<MemoListViewModel>()
@@ -81,7 +80,7 @@ class MemoListFragment : Fragment() {
     }
     
     private fun initRecyclerView() {
-        val recyclerViewAdapter = MemoListRecyclerViewAdapter()
+        val recyclerViewAdapter = MemoListRecyclerViewAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = recyclerViewAdapter
         memoListViewModel.memo.observe(viewLifecycleOwner, Observer { memo ->
@@ -94,4 +93,9 @@ class MemoListFragment : Fragment() {
         })
     }
     
+    override fun onEditClick(memoId: Long) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, MemoCreateFragment())
+            .commit()
+    }
 }

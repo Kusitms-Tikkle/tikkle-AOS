@@ -1,0 +1,35 @@
+
+Ykotlin:S6615Ò";Remove this variable, which is assigned but never accessed.(ÊõĞÆıÿÿÿÿ
+?kotlin:S6615ï"&The value assigned here is never used.(ÎÑÒ
+?kotlin:S6615Ù"&The value assigned here is never used.(ŒÁé¸
+?kotlin:S6615á"&The value assigned here is never used.(ÁÑ€à
+?kotlin:S6615æ"&The value assigned here is never used.(æ¡ß
+?kotlin:S6615Õ"&The value assigned here is never used.(™ğ„¾
+?kotlin:S6615ë"&The value assigned here is never used.(ÛƒŒÙ
+Dkotlin:S6615İ"&The value assigned here is never used.(ìİÂûÿÿÿÿ
+7kotlin:S125Š"Remove this commented out code.(©Æõ
+pkotlin:S117¦"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(ÇÔ©çşÿÿÿÿ
+Akotlin:S14817")Remove this unused "view" local variable.(´÷Ó
+Ikotlin:S1481É"+Remove this unused "sunday" local variable.(ÕÇ•ûÿÿÿÿ
+Kkotlin:S1481Ä"-Remove this unused "saturday" local variable.(À·Ëçùÿÿÿÿ
+Dkotlin:S1481¿"+Remove this unused "friday" local variable.(ÌÁŞù
+Fkotlin:S1481º"-Remove this unused "thursday" local variable.(àŞŞ
+Lkotlin:S1481µ".Remove this unused "wednesday" local variable.(›ÄÍóÿÿÿÿÿ
+Ekotlin:S1481°",Remove this unused "tuesday" local variable.(áÈû
+1kotlin:S1128"Remove this unused import.(Ş‚½
+2kotlin:S1128"Remove this unused import.(´Ùí
+fkotlin:S1192İ"HDefine a constant instead of duplicating this literal "#D9D9D9" 3 times.(ÕˆŠ¬úÿÿÿÿ
+fkotlin:S1192×"HDefine a constant instead of duplicating this literal "#F56508" 7 times.(¼Í„Öùÿÿÿÿ
+ckotlin:S1192„"JDefine a constant instead of duplicating this literal "Post todo" 3 times.(¢ Ÿé
+Akotlin:S1874¬"#Deprecated code should not be used.(‰ûëşÿÿÿÿ
+jkotlin:S37761"RRefactor this method to reduce its Cognitive Complexity from 38 to the 15 allowed.(©Àùè
+pkotlin:S3776—"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(¿¡ãçüÿÿÿÿ
+[kotlin:S6511Ô"=Merge chained "if" statements into a single "when" statement.( –œüÿÿÿÿ
+Dkotlin:S6518&",Replace function call with indexed accessor.(ŞŠı¿
+Ikotlin:S6518n",Replace function call with indexed accessor.(´Öìüÿÿÿÿ
+Jkotlin:S6518¦",Replace function call with indexed accessor.(ÇÔ©çşÿÿÿÿ
+Jkotlin:S6518Ó",Replace function call with indexed accessor.(í°É¾øÿÿÿÿ
+Jkotlin:S6518Í",Replace function call with indexed accessor.(¾ı¤ğúÿÿÿÿ
+Jkotlin:S6518Ï",Replace function call with indexed accessor.(‹şœÌşÿÿÿÿ
+Jkotlin:S6518ş",Replace function call with indexed accessor.(û…Øüÿÿÿÿ
+Ekotlin:S6518Î",Replace function call with indexed accessor.(ÿÈÇ£

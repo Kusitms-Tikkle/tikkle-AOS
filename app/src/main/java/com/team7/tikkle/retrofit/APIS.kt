@@ -201,10 +201,10 @@ interface APIS {
 
     // 메모 비공개/공개 전환
     @POST("/memo/private/{id}")
-    fun private(
+    suspend fun private(
         @Header("X-ACCESS-TOKEN") accessToken: String,
-        @Path("id") id: Int
-    ): Call<ResponseChallengeJoin>
+        @Path("id") id: Long
+    ): Response<ResponseChallengeJoin>
 
     // updateMemo : 메모 수정
     @Multipart
