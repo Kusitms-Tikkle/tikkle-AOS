@@ -16,7 +16,11 @@ import com.team7.tikkle.data.ResponseMyPage
 import com.team7.tikkle.databinding.ActivityHomeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
-import com.team7.tikkle.view.*
+import com.team7.tikkle.view.challenge.ChallengeDetailFragment
+import com.team7.tikkle.view.challenge.ChallengeFragment
+import com.team7.tikkle.view.cheer.CheerFragment
+import com.team7.tikkle.view.home.HomeFragment
+import com.team7.tikkle.view.mypage.MyPageFragment
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.home
 
 import android.content.ContentValues
 import android.content.Intent
@@ -14,7 +14,6 @@ import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
 import com.team7.tikkle.data.ResponseHomeExistence
-import com.team7.tikkle.databinding.FragmentHomeBinding
 import com.team7.tikkle.databinding.FragmentHomeNoneExistenceBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient

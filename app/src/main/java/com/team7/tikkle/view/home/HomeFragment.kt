@@ -1,8 +1,6 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.home
 
 import android.content.ContentValues
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,17 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.team7.tikkle.EditProfileActivity
 import com.team7.tikkle.GlobalApplication
-import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
 import com.team7.tikkle.data.ResponseHomeExistence
 import com.team7.tikkle.databinding.FragmentHomeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class HomeFragment : Fragment() {

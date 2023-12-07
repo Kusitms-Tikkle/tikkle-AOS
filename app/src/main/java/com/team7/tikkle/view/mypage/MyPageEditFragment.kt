@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.mypage
 
 import android.app.Dialog
 import android.content.Intent
@@ -18,6 +18,7 @@ import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
 import com.team7.tikkle.databinding.FragmentMypageEditBinding
 import com.team7.tikkle.login.MainActivity
+import com.team7.tikkle.view.home.HomeFragment
 import com.team7.tikkle.viewModel.MyPageEditViewModel
 
 class MyPageEditFragment : Fragment() {

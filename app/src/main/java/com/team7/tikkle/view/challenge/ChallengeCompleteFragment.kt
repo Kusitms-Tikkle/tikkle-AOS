@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.challenge
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.team7.tikkle.R
 import com.team7.tikkle.databinding.FragmentChallengeCompleteBinding
+import com.team7.tikkle.view.home.HomeFragment
 
 
 class ChallengeCompleteFragment : Fragment() {

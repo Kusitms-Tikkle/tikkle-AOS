@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.mypage
 
 import android.content.ContentValues.TAG
 import android.content.Intent

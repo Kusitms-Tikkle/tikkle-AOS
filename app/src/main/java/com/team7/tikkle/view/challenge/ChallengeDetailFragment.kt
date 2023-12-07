@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.challenge
 
 import android.app.Dialog
 import android.content.Intent

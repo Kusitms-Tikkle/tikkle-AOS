@@ -1,21 +1,17 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.cheer
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.team7.tikkle.GlobalApplication
-import com.team7.tikkle.R
 import com.team7.tikkle.adapter.CheerRecyclerViewAdapter
-import com.team7.tikkle.data.ResponseGetSticker
 import com.team7.tikkle.databinding.FragmentCheerBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.viewModel.CheerViewModel

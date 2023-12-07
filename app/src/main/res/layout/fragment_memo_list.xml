@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.MemoListFragment">
+    tools:context=".view.memo.MemoListFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,27 +40,29 @@
 
         <ImageButton
             android:id="@+id/btn_next"
-            android:layout_width="10dp"
-            android:layout_height="15dp"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="55dp"
             android:background="@android:color/transparent"
+            android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/btn_memo_left_false"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
             app:layout_constraintStart_toEndOf="@+id/date"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/date" />
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="10dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="55dp"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="15dp"
             android:background="@android:color/transparent"
+            android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/btn_memo_right"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
             app:layout_constraintEnd_toStartOf="@+id/date"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/date" />
 
         <TextView
             android:id="@+id/date"

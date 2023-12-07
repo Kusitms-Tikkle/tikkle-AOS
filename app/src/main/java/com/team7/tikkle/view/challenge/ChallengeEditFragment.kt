@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.challenge
 
 import android.app.Dialog
 import android.os.Bundle
@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +24,7 @@ import com.team7.tikkle.data.ResponseChallengeJoin
 import com.team7.tikkle.databinding.FragmentChallengeEditBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
+import com.team7.tikkle.view.home.HomeFragment
 import com.team7.tikkle.viewModel.ChallengeEditViewModel
 import retrofit2.Call
 import retrofit2.Callback

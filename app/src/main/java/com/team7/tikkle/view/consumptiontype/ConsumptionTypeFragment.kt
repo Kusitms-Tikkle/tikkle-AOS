@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.consumptiontype
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

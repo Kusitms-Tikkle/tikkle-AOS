@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.memo
 
 import android.Manifest
 import android.app.Activity
@@ -27,7 +27,6 @@ import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.R
 import com.team7.tikkle.data.ResponseChallengeJoin
 import com.team7.tikkle.data.memoDto
-import com.team7.tikkle.databinding.FragmentMemoCreateBinding
 import com.team7.tikkle.databinding.FragmentMemoEditBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient

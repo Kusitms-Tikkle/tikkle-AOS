@@ -1,7 +1,6 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.home
 
 import android.content.ContentValues
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
@@ -22,6 +20,10 @@ import com.team7.tikkle.data.*
 import com.team7.tikkle.databinding.FragmentHomeExistenceBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
+import com.team7.tikkle.view.challenge.ChallengeDetailFragment
+import com.team7.tikkle.view.challenge.ChallengeEditFragment
+import com.team7.tikkle.view.memo.MemoFragment
+import com.team7.tikkle.view.memo.MemoListFragment
 import com.team7.tikkle.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call

@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.memo
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.team7.tikkle.R
-import com.team7.tikkle.databinding.FragmentMemoEditBinding
 import com.team7.tikkle.databinding.FragmentMemoFinishBinding
-import com.team7.tikkle.databinding.FragmentMypageBinding
 import com.team7.tikkle.retrofit.APIS
 
 class MemoFinishFragment : Fragment() {

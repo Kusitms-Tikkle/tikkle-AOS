@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.memo
 
 import android.Manifest
 import android.app.Activity
@@ -38,7 +38,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.Console
 import java.io.File
 import java.time.LocalDate
 import java.time.format.TextStyle

@@ -194,10 +194,10 @@ interface APIS {
 
     // memo date : 날짜별 내 메모 조회
     @GET("/memo/{date}")
-    fun getMemo(
+    suspend fun getMemo(
         @Header("X-ACCESS-TOKEN") accessToken: String,
         @Path(value = "date") date: String
-    ): Call<ResponseMemoList>
+    ): Response<ResponseMemoList>
 
     // 메모 비공개/공개 전환
     @POST("/memo/private/{id}")

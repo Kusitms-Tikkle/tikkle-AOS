@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.memo
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -25,6 +25,7 @@ import com.team7.tikkle.Constants.PICK_IMAGE_REQUEST_CODE
 import com.team7.tikkle.databinding.FragmentMemoBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
+import com.team7.tikkle.view.home.HomeFragment
 import com.team7.tikkle.viewModel.DateViewModel
 import com.team7.tikkle.viewModel.MemoViewModel
 
@@ -127,7 +128,6 @@ class MemoFragment : Fragment() {
             result.onSuccess {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, MemoFinishFragment())
-                    .addToBackStack(null)
                     .commit()
             }
                 .onFailure { exception ->
@@ -153,7 +153,7 @@ class MemoFragment : Fragment() {
                 }
             }
             
-            override fun onNothingSelected(parent: AdapterView<*>?) {} //
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
     

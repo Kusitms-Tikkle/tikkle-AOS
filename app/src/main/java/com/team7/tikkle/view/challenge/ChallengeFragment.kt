@@ -1,4 +1,4 @@
-package com.team7.tikkle.view
+package com.team7.tikkle.view.challenge
 
 
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.team7.tikkle.data.ChallengeCheck
 import com.team7.tikkle.databinding.FragmentChallengeBinding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
+import com.team7.tikkle.view.consumptiontype.ConsumptionTypeFragment
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
