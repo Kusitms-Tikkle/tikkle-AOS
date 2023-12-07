@@ -1,23 +1,0 @@
-
-8kotlin:S6615+" Remove this useless initializer.(â±»³
-okotlin:S117]"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(Åôšÿøÿÿÿÿ
-Gkotlin:S1481R"*Remove this unused "today" local variable.(ééæƒıÿÿÿÿ
-Ikotlin:S1481"+Remove this unused "sunday" local variable.(ÕÇ•ûÿÿÿÿ
-Jkotlin:S1481|"-Remove this unused "saturday" local variable.(À·Ëçùÿÿÿÿ
-Ckotlin:S1481w"+Remove this unused "friday" local variable.(ÌÁŞù
-Ekotlin:S1481r"-Remove this unused "thursday" local variable.(àŞŞ
-Kkotlin:S1481m".Remove this unused "wednesday" local variable.(›ÄÍóÿÿÿÿÿ
-Dkotlin:S1481h",Remove this unused "tuesday" local variable.(áÈû
-Hkotlin:S1481c"+Remove this unused "monday" local variable.(¯³üïşÿÿÿÿ
-Nkotlin:S1481]"1Remove this unused "week_of_year" local variable.(Åôšÿøÿÿÿÿ
-2kotlin:S1128"Remove this unused import.(²Õû 
-fkotlin:S1192"HDefine a constant instead of duplicating this literal "#F56508" 7 times.(¼Í„Öùÿÿÿÿ
-@kotlin:S1874A"#Deprecated code should not be used.(‰ûëşÿÿÿÿ
-[kotlin:S6511Œ"=Merge chained "if" statements into a single "when" statement.( –œüÿÿÿÿ
-Dkotlin:S6518",Replace function call with indexed accessor.(ŞŠı¿
-Dkotlin:S6518",Replace function call with indexed accessor.(Ï§Ñ
-Ikotlin:S6518]",Replace function call with indexed accessor.(Åôšÿøÿÿÿÿ
-Jkotlin:S6518‹",Replace function call with indexed accessor.(í°É¾øÿÿÿÿ
-Jkotlin:S6518…",Replace function call with indexed accessor.(¾ı¤ğúÿÿÿÿ
-Jkotlin:S6518‡",Replace function call with indexed accessor.(‹şœÌşÿÿÿÿ
-Ekotlin:S6518†",Replace function call with indexed accessor.(ÿÈÇ£

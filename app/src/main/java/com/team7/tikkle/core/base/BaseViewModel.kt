@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 
 abstract class BaseViewModel: ViewModel() {
-    private val _errMsg = MutableLiveData<Event<String>>()
+    val _errMsg = MutableLiveData<Event<String>>()
     var errMsg: LiveData<Event<String>> = _errMsg
 
     protected val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwalbe ->
