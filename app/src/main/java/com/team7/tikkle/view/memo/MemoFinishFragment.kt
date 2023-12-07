@@ -1,43 +1,29 @@
 package com.team7.tikkle.view.memo
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.team7.tikkle.R
+import com.team7.tikkle.core.base.BaseFragment
 import com.team7.tikkle.databinding.FragmentMemoFinishBinding
-import com.team7.tikkle.retrofit.APIS
 
-class MemoFinishFragment : Fragment() {
-
-    lateinit var binding: FragmentMemoFinishBinding
-    lateinit var retService: APIS
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+/**
+ * 메모 작성 완료시 보여지는 Fragment.
+ * @author yujeong -> chaehyun
+ * @since 2023.12.07
+ */
+class MemoFinishFragment : BaseFragment<FragmentMemoFinishBinding>(R.layout.fragment_memo_finish) {
+    
+    override fun onPause() {
+        super.onPause()
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMemoFinishBinding.inflate(inflater, container, false)
-
-        //requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
-        binding.btnGo.setOnClickListener {
+    
+    override fun setup() {
+        binding?.btnGo?.setOnClickListener {
             val memoListFragment = MemoListFragment()
-            fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.main_frm, memoListFragment)
-                addToBackStack(null)
-                commit()
-            }
+            val fragmentManager = activity?.supportFragmentManager
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            
+            fragmentTransaction?.replace(R.id.main_frm, memoListFragment)
+            fragmentTransaction?.addToBackStack(null)
+            fragmentTransaction?.commit()
         }
-
-        return binding.root
     }
-
 }
