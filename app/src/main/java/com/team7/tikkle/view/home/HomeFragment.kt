@@ -19,7 +19,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         homeViewModel.checkHomeChallengeExistence { existence ->
             val fragment = if (existence) HomeExistenceFragment() else HomeNoneExistenceFragment()
             parentFragmentManager.beginTransaction().apply {
-                replace(R.id.home_fragment, fragment)
+                replace(R.id.main_frm, fragment)
                 commit()
             }
         }
