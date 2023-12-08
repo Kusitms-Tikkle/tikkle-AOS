@@ -1,180 +1,66 @@
 package com.team7.tikkle.view.home
 
-import android.content.ContentValues
-import android.content.Intent
-import android.graphics.Color
-import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.team7.tikkle.GlobalApplication
-import com.team7.tikkle.HomeActivity
 import com.team7.tikkle.R
-import com.team7.tikkle.data.ResponseHomeExistence
+import com.team7.tikkle.core.base.BaseFragment
 import com.team7.tikkle.databinding.FragmentHomeNoneExistenceBinding
-import com.team7.tikkle.retrofit.APIS
-import com.team7.tikkle.retrofit.RetrofitClient
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
+import com.team7.tikkle.viewModel.DateViewModel
 
-class HomeNoneExistenceFragment : Fragment() {
-    lateinit var binding: FragmentHomeNoneExistenceBinding
-    private lateinit var retService: APIS
-
-    val cal = Calendar.getInstance()
-    val week: Int = cal.get(Calendar.DAY_OF_WEEK)
-    val day_of_week = cal.get(Calendar.DAY_OF_WEEK)
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeNoneExistenceBinding.inflate(inflater, container, false)
-
-        val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
-        val userNickname = GlobalApplication.prefs.getString("userNickname", "")
-        binding.mynickname.text = userNickname
-
-        var existence: Boolean = false
-
-        binding.challengeContainer.setOnClickListener {
-            startActivity(Intent(activity, HomeActivity::class.java))
-        }
-
-        //retrofit
-        retService = RetrofitClient
-            .getRetrofitInstance()
-            .create(APIS::class.java)
-
-        //home challenge 존재 여부 조회
-        lifecycleScope.launch {
-            try {
-                val response1 = retService.homeExistence(userAccessToken)
-                if (response1.isSuccessful) {
-                    // Response body를 ResponseHomeExistence 타입으로 변환
-                    val myexistence: ResponseHomeExistence? = response1.body()
-                    Log.d("my existence", "my existence : $myexistence")
-                    existence = myexistence?.result ?: false
-                    if (existence) {
-                        val secondFragment = HomeExistenceFragment()
-                        fragmentManager?.beginTransaction()?.apply {
-                            replace(R.id.home_fragment, secondFragment)
-                            addToBackStack(null)
-                            commit()
-                        }
-                    }
-                } else {
-                    // Error handling
-                    Log.d(ContentValues.TAG, "Error: ${response1.code()} ${response1.message()}")
-                }
-            } catch (e: Exception) {
-                // Exception handling
-                Log.e(ContentValues.TAG, "Exception: ${e.message}", e)
+/**
+ * 참여하는 챌린지가 존재하지 않을 경우 이동하는 Fragment.
+ * @author chaehyuns
+ * @since 2023.12.08
+ * @property [DateViewModel] 현재 요일을 가져오기 위한 ViewModel
+ * 현재 요일을 가져와서 오늘 날짜를 강조한다.
+ */
+class HomeNoneExistenceFragment :
+    BaseFragment<FragmentHomeNoneExistenceBinding>(R.layout.fragment_home_none_existence) {
+    private val dateViewModel by viewModels<DateViewModel>()
+    
+    override fun setup() {
+        val userNickname = GlobalApplication.prefs.getString("userNickname", "티끌 유저")
+        binding?.mynickname?.text = userNickname
+        
+        /** ViewModel에서 현재 요일 가져오기 */
+        val currentDayOfWeek = dateViewModel.getCurrentDayOfWeek()
+        highlightToday(currentDayOfWeek)
+    }
+    
+    private fun highlightToday(dayOfWeek: Int) {
+        val highlightImage = R.drawable.ic_calendar_today
+        val highlightColor = ContextCompat.getColor(requireContext(), R.color.orange_100)
+        
+        when (dayOfWeek) {
+            1 -> {
+                binding?.sun?.setImageResource(highlightImage)
+                binding?.textsun?.setTextColor(highlightColor)
+            }
+            2 -> {
+                binding?.mon?.setImageResource(highlightImage)
+                binding?.textmon?.setTextColor(highlightColor)
+            }
+            3 -> {
+                binding?.tue?.setImageResource(highlightImage)
+                binding?.texttue?.setTextColor(highlightColor)
+            }
+            4 -> {
+                binding?.wed?.setImageResource(highlightImage)
+                binding?.textwed?.setTextColor(highlightColor)
+            }
+            5 -> {
+                binding?.thu?.setImageResource(highlightImage)
+                binding?.textthu?.setTextColor(highlightColor)
+            }
+            6 -> {
+                binding?.fri?.setImageResource(highlightImage)
+                binding?.textfri?.setTextColor(highlightColor)
+            }
+            7 -> {
+                binding?.sat?.setImageResource(highlightImage)
+                binding?.textsat?.setTextColor(highlightColor)
             }
         }
-
-        //calendar
-        val today: String? = doDayOfWeek()
-        // Inflate the layout for this fragment
-        return binding.root
     }
-
-    private fun doDayOfWeek(): String? {
-
-        val calendar = Calendar.getInstance()
-        calendar.time = Date()
-
-        // 오늘 날짜의 주 구하기
-        val week_of_year = calendar.get(Calendar.WEEK_OF_YEAR)
-
-        //이번주 날짜 불러와서 서버에 보내고 output으로 받아오기
-        // 월요일
-        calendar.add(Calendar.DAY_OF_MONTH, (2 - day_of_week))
-        val mondayDate = calendar.time
-        val monday = dateDay(mondayDate)
-
-        // 화요일
-        calendar.add(Calendar.DAY_OF_MONTH, (3 - day_of_week))
-        val tuesdayDate = calendar.time
-        val tuesday = dateDay(tuesdayDate)
-
-        // 수요일
-        calendar.add(Calendar.DAY_OF_MONTH, (4 - day_of_week))
-        val wednesdayDate = calendar.time
-        val wednesday = dateDay(wednesdayDate)
-
-        // 목요일
-        calendar.add(Calendar.DAY_OF_MONTH, (5 - day_of_week))
-        val thursdayDate = calendar.time
-        val thursday = dateDay(thursdayDate)
-
-        // 금요일
-        calendar.add(Calendar.DAY_OF_MONTH, (6 - day_of_week))
-        val fridayDate = calendar.time
-        val friday = dateDay(fridayDate)
-
-        // 토요일
-        calendar.add(Calendar.DAY_OF_MONTH, (7 - day_of_week))
-        val saturdayDate = calendar.time
-        val saturday = dateDay(saturdayDate)
-
-        // 일요일
-        calendar.add(Calendar.DAY_OF_MONTH, (8 - day_of_week))
-        val sundayDate = calendar.time
-        val sunday = dateDay(sundayDate)
-
-
-        //calendar
-        val year = cal.get(Calendar.YEAR).toString()
-        val month = (cal.get(Calendar.MONTH) + 1).toString()
-        val day = cal.get(Calendar.DATE).toString()
-        Log.d(ContentValues.TAG, "DailyMenuActivity - onCreate is called ${year}-${month}-${day}")
-
-        var strWeek: String? = null
-        val nWeek: Int = cal.get(Calendar.DAY_OF_WEEK)
-        if (nWeek == 1) {
-            strWeek = "일"
-            binding.sun.setImageResource(R.drawable.ic_calendar_today)
-            binding.textsun.setTextColor(Color.parseColor("#F56508"))
-        } else if (nWeek == 2) {
-            strWeek = "월"
-            binding.mon.setImageResource(R.drawable.ic_calendar_today)
-            binding.textmon.setTextColor(Color.parseColor("#F56508"))
-        } else if (nWeek == 3) {
-            strWeek = "화"
-            binding.tue.setImageResource(R.drawable.ic_calendar_today)
-            binding.texttue.setTextColor(Color.parseColor("#F56508"))
-        } else if (nWeek == 4) {
-            strWeek = "수"
-            binding.wed.setImageResource(R.drawable.ic_calendar_today)
-            binding.textwed.setTextColor(Color.parseColor("#F56508"))
-
-        } else if (nWeek == 5) {
-            strWeek = "목"
-            binding.thu.setImageResource(R.drawable.ic_calendar_today)
-            binding.textthu.setTextColor(Color.parseColor("#F56508"))
-        } else if (nWeek == 6
-        ) {
-            strWeek = "금"
-            binding.fri.setImageResource(R.drawable.ic_calendar_today)
-            binding.textfri.setTextColor(Color.parseColor("#F56508"))
-        } else if (nWeek == 7) {
-            strWeek = "토"
-            binding.sat.setImageResource(R.drawable.ic_calendar_today)
-            binding.textsat.setTextColor(Color.parseColor("#F56508"))
-        }
-
-        return strWeek
-    }
-
-    fun dateDay(date: Date): String {
-        val dayFormat = SimpleDateFormat("MM/dd", Locale.getDefault())
-        val day = dayFormat.format(date)
-        return day
-    }
-
 }

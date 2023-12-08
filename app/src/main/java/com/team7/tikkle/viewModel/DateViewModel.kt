@@ -2,11 +2,11 @@ package com.team7.tikkle.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.team7.tikkle.core.base.BaseViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DateViewModel : ViewModel() {
+class DateViewModel : BaseViewModel() {
     private val _selectedDate = MutableLiveData<String>()
     val selectedDate: LiveData<String>
         get() = _selectedDate
@@ -23,30 +23,30 @@ class DateViewModel : ViewModel() {
     private val today: Calendar = Calendar.getInstance()
     
     init {
-        // ViewModel이 초기화될 때 오늘 날짜로 설정
+        /** ViewModel이 초기화될 때 오늘 날짜로 설정 */
         updateSelectedDate()
     }
     
-    // 오늘 날짜로 설정하는 메서드
+    /** 오늘 날짜로 설정하는 메서드 */
     fun updateSelectedDate() {
         val date = calendar.time
         val currentDate = dateFormat.format(date)
         _selectedDate.value = currentDate
     }
     
-    // 변환된 날짜를 반환하는 메서드
+    /** 변환된 날짜를 반환하는 메서드 */
     fun updateFormattedDate(date: String): String {
         return dateFormat.parse(date)?.let {
             formattedDateFormat.format(it)
         } ?: "" // 파싱에 실패하면 빈 문자열 반환
     }
     
-    // 선택된 날짜가 이동 가능한지 체크
+    /** 선택된 날짜가 범위 내에 있는지 확인하는 메서드 */
     private fun isWithinRange(date: Date): Boolean {
         return !(date.before(startOfLastMonth.time) || date.after(today.time))
     }
     
-    // 다음 날짜로 이동하는 메서드
+    /** 다음 날짜로 이동하는 메서드 */
     fun moveToNextDate(): Boolean {
         val currentDateParsed = dateFormat.parse(_selectedDate.value ?: return false)
         calendar.time = currentDateParsed
@@ -61,7 +61,7 @@ class DateViewModel : ViewModel() {
         }
     }
     
-    // 이전 날짜로 이동하는 메서드
+    /** 이전 날짜로 이동하는 메서드 */
     fun moveToPreviousDate(): Boolean {
         val currentDateParsed = dateFormat.parse(_selectedDate.value ?: return false)
         calendar.time = currentDateParsed
@@ -76,11 +76,17 @@ class DateViewModel : ViewModel() {
         }
     }
     
-    // 선택된 날짜 format 메서드
+    /** 선택된 날짜 format 메서드 */
     fun setSelectedDate(year: Int, month: Int, day: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
         val formattedDate = dateFormat.format(calendar.time)
         _selectedDate.value = formattedDate
+    }
+    
+    /** 현재 요일을 반환하는 함수 */
+    fun getCurrentDayOfWeek(): Int {
+    val calendar = Calendar.getInstance()
+    return calendar.get(Calendar.DAY_OF_WEEK)
     }
 }

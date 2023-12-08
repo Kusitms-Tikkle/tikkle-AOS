@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
@@ -54,7 +53,6 @@
                 app:layout_constraintTop_toTopOf="@+id/mynickname" />
 
             <!--캘린더-->
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/beach_container"
                 android:layout_width="match_parent"
@@ -68,7 +66,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mynickname"
                 app:layout_constraintVertical_bias="0.033">
-
 
                 <ImageView
                     android:id="@+id/mon"
@@ -192,7 +189,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@+id/mon"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.094" />
+                    app:layout_constraintVertical_bias="0.1" />
 
                 <TextView
                     android:id="@+id/textthu"
@@ -253,7 +250,6 @@
                     app:layout_constraintStart_toStartOf="@+id/sun"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.1" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -284,18 +280,6 @@
                 app:layout_constraintStart_toStartOf="@+id/string1"
                 app:layout_constraintTop_toBottomOf="@+id/string1" />
 
-
-<!--            <ImageView-->
-<!--                android:id="@+id/challenge_container"-->
-<!--                android:layout_width="300dp"-->
-<!--                android:layout_height="85dp"-->
-<!--                android:layout_marginTop="51dp"-->
-<!--                android:src="@drawable/btn_start_challenge"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.5"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/string1"/>-->
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bg_my_challenge_banner"
                 android:layout_width="match_parent"
@@ -308,7 +292,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/string1">
-
 
                 <ImageView
                     android:id="@+id/challenge_container"
@@ -323,7 +306,6 @@
                     app:layout_constraintTop_toTopOf="@+id/bg_my_challenge_banner"
                     app:layout_constraintVertical_bias="0.509" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <ImageView
                 android:id="@+id/icon"

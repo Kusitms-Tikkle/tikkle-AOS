@@ -32,6 +32,11 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * 챌린지가 존재하는 홈 화면
+ * @author chaehyun
+ * @since 2023-12-08
+ */
 class HomeExistenceFragment : Fragment() {
     private lateinit var retService: APIS
     private lateinit var binding: FragmentHomeExistenceBinding

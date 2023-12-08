@@ -12,6 +12,11 @@ class HomeViewModel : BaseViewModel() {
     private val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
     private val retService: APIS = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
     
+    /**
+     * home challenge 존재 여부 조회
+     *
+     * 존재 여부에 따라 HomeExistenceFragment 또는 HomeNoneExistenceFragment로 이동
+     */
     fun checkHomeChallengeExistence(onSuccess: (Boolean) -> Unit) {
         viewModelScope.launch(coroutineExceptionHandler) {
             try {
