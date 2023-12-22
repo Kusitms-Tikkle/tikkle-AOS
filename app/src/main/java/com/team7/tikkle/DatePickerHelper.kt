@@ -34,7 +34,7 @@ class DatePickerHelper {
                 selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
                 val selectedDateInMillis = selectedCalendar.timeInMillis
                 
-                if (selectedDateInMillis > currentDateInMillis) {
+                if (selectedDateInMillis > (currentDateInMillis + 86400000)) {
                     Toast.makeText(context, "미래의 날짜는 선택할 수 없습니다.", Toast.LENGTH_SHORT).show()
                     dateViewModel.setSelectedDate(currentYear, currentMonth, currentDay)
                 } else {

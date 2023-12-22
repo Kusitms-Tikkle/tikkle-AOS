@@ -11,14 +11,14 @@ data class MemoResult(
     val color: String,
     val memo: Memo,
     val title: String,
-    val todoId: Int,
+    val todoId: Long,
     val checked: Boolean
 )
 
 data class Memo(
     val content: String,
     val image: String,
-    val memoId: Int,
+    val memoId: Long,
     var private: Boolean,
     val sticker1: Long,
     val sticker2: Long,

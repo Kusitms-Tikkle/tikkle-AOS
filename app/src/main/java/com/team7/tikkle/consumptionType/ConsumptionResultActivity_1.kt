@@ -1,6 +1,5 @@
 package com.team7.tikkle.consumptionType
 
-import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,7 +19,6 @@ import com.team7.tikkle.data.ResponseMbti
 import com.team7.tikkle.databinding.ActivityConsumptionResult1Binding
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
-import com.team7.tikkle.view.ChallengeDetailFragment
 import com.team7.tikkle.viewModel.ConsumptionResultViewModel
 import retrofit2.Call
 import retrofit2.Callback

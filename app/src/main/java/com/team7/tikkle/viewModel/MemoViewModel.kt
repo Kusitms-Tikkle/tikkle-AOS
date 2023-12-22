@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.team7.tikkle.GlobalApplication
 import com.team7.tikkle.data.memoDto
 import com.team7.tikkle.retrofit.APIS
 import com.team7.tikkle.retrofit.RetrofitClient
@@ -24,32 +25,34 @@ class MemoViewModel(application: Application) : AndroidViewModel(application) {
     
     private val context: Context get() = getApplication<Application>().applicationContext
     private val retService: APIS = RetrofitClient.getRetrofitInstance().create(APIS::class.java)
-   
+    
     private val _postMemoResult = MutableLiveData<Result<String>>()
     val postMemoResult: LiveData<Result<String>> = _postMemoResult
     val missionList = MutableLiveData<List<String>>()
     val missionIdList = MutableLiveData<List<String>>()
     val selectedMissionId = MutableLiveData<String>()
+    private val userAccessToken = GlobalApplication.prefs.getString("userAccessToken", "")
     
-    fun postMemo(userAccessToken: String, memoNum: String, memo: String, uri: Uri?) {
+    fun postMemo(memoNum: String, memo: String, uri: Uri?) {
         viewModelScope.launch {
             try {
                 val num: Int = memoNum.toInt()
                 val memoDto = memoDto(memo, num)
-
+                
                 val gson = Gson()
                 val memoDtoRequestBody =
                     gson.toJson(memoDto).toRequestBody("application/json".toMediaTypeOrNull())
-
+                
                 val imagePart: MultipartBody.Part? = uri?.let {
-                    val imagePath = getImagePathFromUri(it, getApplication<Application>().applicationContext)
+                    val imagePath =
+                        getImagePathFromUri(it, getApplication<Application>().applicationContext)
                     val imageFile = File(imagePath)
                     val imageRequestBody = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
                     MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
                 }
-
+                
                 val response = retService.postMemo(userAccessToken, memoDtoRequestBody, imagePart)
-
+                
                 if (response.isSuccessful) {
                     _postMemoResult.postValue(Result.success("Memo posted successfully!"))
                 } else {
@@ -75,7 +78,7 @@ class MemoViewModel(application: Application) : AndroidViewModel(application) {
         return ""
     }
     
-    fun getMission(userAccessToken: String, date: String) {
+    fun getMission(date: String) {
         viewModelScope.launch {
             try {
                 val response = retService.getMissionUnwritten(userAccessToken, date)
